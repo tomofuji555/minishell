@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2023/12/02 16:41:03 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2023/12/02 19:42:11 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#include <stdlib.h>
 
 typedef enum e_bool
 {
@@ -55,6 +57,7 @@ typedef struct s_token
 {
 	enum e_token_type	token_type;
 	char				*val;
+	struct s_token		*next;
 	t_bool				last_token_flag;
 }	t_token;
 
@@ -62,7 +65,16 @@ typedef struct s_chunk
 {
 	enum e_chunk_type	chunk_type;
 	t_token				*tokens;
+	struct s_chunk		*next;
 	t_bool				last_chunk_flag;
 }	t_chunk;
+
+typedef struct s_tree
+{
+	t_chunk			*chunks;
+	struct s_tree	*prev;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}	t_tree;
 
 #endif
