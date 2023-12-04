@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2023/12/02 19:42:11 by toshi            ###   ########.fr       */
+/*   Updated: 2023/12/04 17:30:06 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 #include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef enum e_bool
 {
@@ -62,7 +64,7 @@ typedef struct s_token
 }	t_token;
 
 typedef struct s_chunk
-{
+
 	enum e_chunk_type	chunk_type;
 	t_token				*tokens;
 	struct s_chunk		*next;
