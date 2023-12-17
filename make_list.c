@@ -24,5 +24,5 @@ t_Node	*make_list(int argc, char **argv)
 
 int main()
 {
-	char **strs1 = {""}
+	char **strs1 = {"ls"}
 }
