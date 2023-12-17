@@ -1,0 +1,17 @@
+{
+	たどる
+		コマンドがあったら
+			1.inとoutのトークンの読み込み
+			2.子プロセスを生成し、実行
+			3.親プロセスのpipe_inを保存
+			
+}
+
+
+heredoc
+{
+	readline
+	delimと同じじゃないか確認
+	line内のexpansion
+	write
+}
