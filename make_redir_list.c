@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   make_redir_list.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/18 21:00:37 by tozeki            #+#    #+#             */
+/*   Updated: 2023/12/18 21:01:28 by tozeki           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "execute.h"
 
 size_t	ft_strlen(const char *s)
@@ -81,7 +93,7 @@ t_redir	*append_redir_node(t_token *tkn_ptr, t_redir *redir_ptr)
 	return (append_first_node);
 }
 
-t_redir *make_redir_list(t_token *tkns_head)
+t_redir	*make_redir_list(t_token *tkns_head)
 {
 	t_redir	*redir_head;
 
