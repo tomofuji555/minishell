@@ -71,7 +71,7 @@ t_redir *make_redir_list(t_token *tkns_head)
 	count = 0;
 	while(tkn_ptr != NULL)
 	{
-		if (is_redir_token(tkn_ptr->next->kind))
+		if (is_redir_token(tkn_ptr->kind))
 		{
 			redir_ptr->next = make_redir_node(tkn_start, count, tkn_start->kind);
 			if (redir_ptr->next == NULL)
