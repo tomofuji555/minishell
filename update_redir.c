@@ -60,17 +60,17 @@ int update_redir(t_token *redir_tokens)
 	t_token *start;
 	size_t	count;
 
-	ptr = redir_tokens->next;
-	start = ptr;
+	start = redir_tokens->next;
+	ptr = start->next;
 	count = 0;
 	while(ptr->next != NULL)
 	{
 		if (is_redir_token(ptr->kind))
 		{
 			char *str = (char *)malloc(sizeof(char) * count);
-			if (strlcpy_from_list(str, start, count) != 0)
+			if (strlcpy_from_list(str, start, count) != count)
 				//error
-			start = ptr->next;
+			start = ptr;
 			count = 0;
 		}
 		else
