@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2023/12/18 15:59:29 by tozeki           ###   ########.fr       */
+/*   Updated: 2023/12/18 18:03:00 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum e_bool
 
 enum e_token_kind
 {
+	TKN_HEAD		= -1,
 	TKN_SPACE		= 0,
 	TKN_TEXT		= 1,
 	TKN_S_QUOTE		= 2,
