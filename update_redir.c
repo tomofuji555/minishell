@@ -10,24 +10,6 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
-{
-	size_t	i;
-
-	if (n == 0)
-		return (ft_strlen(src));
-	i = 0;
-	while (i + 1 < n && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	while (src[i] != '\0')
-		i++;
-	return (i);
-}
-
 int	is_redir_token(int 	kind)
 {
 	return (kind == TKN_IN_FILE || kind == TKN_HERE_DOC 
@@ -40,7 +22,7 @@ size_t strlcpy_from_list(char *dest, t_token *src, size_t n)
 	size_t	src_i;
 
 	dest_i = 0;
-	while(dest_i < n || src != NULL)
+	while(dest_i < n && src != NULL)
 	{
 		src_i = 0;
 		while (src->val[src_i] != '\0')
@@ -51,30 +33,57 @@ size_t strlcpy_from_list(char *dest, t_token *src, size_t n)
 		}
 		src = src->next;
 	}
+	dest[dest_i] = '\0';
 	return (dest_i);
 }
 
-int update_redir(t_token *redir_tokens)
+t_redir *make_redir_node(t_token *start, size_t count, int kind)
 {
-	t_token	*ptr;
-	t_token *start;
-	size_t	count;
+	t_redir *node;
 
-	start = redir_tokens->next;
-	ptr = start->next;
+	node = (t_redir *)malloc(sizeof(t_redir));
+	if (node == NULL)
+		;//error
+	node->val = (char *)malloc(sizeof(char) * (count + 1));
+	if (node->val == NULL)
+		;//error
+	if (strlcpy_from_list(node->val, start, count) != count)
+		;//error
+	node->kind = kind;
+	node->next = NULL;
+	return (node);
+}
+
+t_redir *make_redir_list(t_token *tkns_head)
+{
+	t_token	*tkn_start;
+	t_token	*tkn_ptr;
+	size_t	count;
+	t_redir	*redir_head;
+	t_redir	*redir_ptr;
+
+	tkn_start = tkns_head->next;
+	tkn_ptr = tkn_start->next;
+	redir_head = make_redir_node(tkn_start, 0, TKN_SPACE);
+	if (redir_head == NULL)
+		;//error
+	redir_ptr = redir_head;
 	count = 0;
-	while(ptr->next != NULL)
+	while(tkn_ptr != NULL)
 	{
-		if (is_redir_token(ptr->kind))
+		if (is_redir_token(tkn_ptr->next->kind))
 		{
-			char *str = (char *)malloc(sizeof(char) * count);
-			if (strlcpy_from_list(str, start, count) != count)
-				//error
-			start = ptr;
+			redir_ptr->next = make_redir_node(tkn_start, count, tkn_start->kind);
+			if (redir_ptr->next == NULL)
+				;//error
+			redir_ptr = redir_ptr->next;
+			tkn_start = tkn_ptr;
 			count = 0;
 		}
 		else
-			count += ft_strlen(ptr->val);
-		ptr = ptr->next;
+			count += ft_strlen(tkn_ptr->val);
+		tkn_ptr = tkn_ptr->next;
 	}
+	redir_ptr->next = make_redir_node(tkn_start, count, tkn_start->kind);
+	return (redir_head);
 }
