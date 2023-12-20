@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:00:37 by tozeki            #+#    #+#             */
-/*   Updated: 2023/12/19 20:01:52 by toshi            ###   ########.fr       */
+/*   Updated: 2023/12/20 14:57:12 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ size_t	strlcpy_from_list(char *dest, t_token *src, size_t n)
 	return (dest_i);
 }
 
-int	convert_redir_kind(int token_kind)
+enum e_redir_kind	convert_redir_kind(enum e_token_kind token_kind)
 {
 	if (token_kind == TKN_IN_FILE)
 		return (REDIR_IN_FILE);
@@ -86,6 +86,7 @@ t_redir	*make_redir_node(t_token *begining, t_token *last)
 	return (node);
 }
 
+
 t_redir	*find_last_node(t_redir *first)
 {
 	t_redir	*ptr;
@@ -96,17 +97,17 @@ t_redir	*find_last_node(t_redir *first)
 	return (ptr);
 }
 
-void	add_node_last(t_redir **first_node, t_redir *new_node)
+void	reidr_add_node_last(t_redir **first_node, t_redir *new_node)
 {
 	t_redir *last_node;
 
-	if (*first_node == NULL)
-		*first_node = new_node;
-	else
+	last_node = find_last_node(*first_node);
+	if (last_node == *first_node)
 	{
-		last_node = find_last_node(*first_node);
-		last_node->next = new_node;
+		*first_node = new_node;
+		return;
 	}
+	last_node->next = new_node;
 }
 
 t_redir	*make_redir_list(t_token *tkn_ptr)
@@ -126,7 +127,7 @@ t_redir	*make_redir_list(t_token *tkn_ptr)
 			redir_new_node = make_redir_node(tkn_begining, tkn_ptr);
 			if (redir_new_node == NULL)
 				;//error
-			redir_add_last(&redir_first, redir_new_node);
+			add_node_last(&redir_first, redir_new_node);
 			tkn_begining = tkn_ptr->next;
 		}
 		tkn_ptr = tkn_ptr->next;
