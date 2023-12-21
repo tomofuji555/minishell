@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:00:37 by tozeki            #+#    #+#             */
-/*   Updated: 2023/12/20 14:57:12 by toshi            ###   ########.fr       */
+/*   Updated: 2023/12/20 15:03:55 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ size_t	strlen_of_list_untill_last(t_token *begining, t_token *last)
 	return (i);
 }
 
-size_t	strlcpy_from_list(char *dest, t_token *src, size_t n)
+size_t	strlcpy_from_list(char *dest, t_token *src, size_t len)
 {
 	size_t	dest_i;
 	size_t	val_i;
 
 	dest_i = 0;
-	while (dest_i + 1 < n && src != NULL)
+	while (dest_i + 1 < len && src != NULL)
 	{
 		val_i = 0;
 		while (src->val[val_i] != '\0')
