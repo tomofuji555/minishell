@@ -6,17 +6,18 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:00:37 by tozeki            #+#    #+#             */
-/*   Updated: 2023/12/20 15:03:55 by toshi            ###   ########.fr       */
+/*   Updated: 2023/12/23 17:21:39 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-int	_is_redir_token(int kind)
+int	is_redir_token(enum e_token_kind kind)
 {
 	return (kind == TKN_IN_FILE || kind == TKN_HERE_DOC \
 		|| kind == TKN_OUT_FILE || kind == TKN_APPEND_FILE);
 }
+
 size_t	strlen_of_list_untill_last(t_token *begining, t_token *last)
 {
 	t_token	*ptr;
@@ -27,7 +28,7 @@ size_t	strlen_of_list_untill_last(t_token *begining, t_token *last)
 	while(ptr != last->next)
 	{
 		while(ptr->val[i] != '\0')
-			i++; 
+			i++;
 		ptr = ptr->next;
 	}
 	return (i);
@@ -87,59 +88,97 @@ t_redir	*make_redir_node(t_token *begining, t_token *last)
 }
 
 
-t_redir	*find_last_node(t_redir *first)
+t_redir	*find_last_redir_node(t_redir *head)
 {
 	t_redir	*ptr;
 
-	ptr = first;
+	ptr = head;
 	while(ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
 }
 
-void	reidr_add_node_last(t_redir **first_node, t_redir *new_node)
+void	add_redir_node_last(t_redir **head_node, t_redir *new_node)
 {
 	t_redir *last_node;
 
-	last_node = find_last_node(*first_node);
-	if (last_node == *first_node)
+	printf("%d\n", new_node->kind);
+	if (*head_node == NULL)
 	{
-		*first_node = new_node;
+		*head_node = new_node;
 		return;
 	}
-	last_node->next = new_node;
+	else
+	{
+		last_node = find_last_redir_node(*head_node);
+		last_node->next = new_node;
+	}
 }
 
 t_redir	*make_redir_list(t_token *tkn_ptr)
 {
-	t_redir	*redir_first;
-	t_token	*tkn_begining;
+	t_redir	*redir_head;
 	t_redir *redir_new_node;
+	t_token	*tkn_begining;
 
 	if (tkn_ptr == NULL)
 		return (NULL);
-	redir_first = NULL;
+	redir_head = NULL;
 	tkn_begining = tkn_ptr;
 	while (tkn_ptr != NULL)
 	{
 		if (tkn_ptr->next == NULL || is_redir_token(tkn_ptr->next->kind))
 		{
 			redir_new_node = make_redir_node(tkn_begining, tkn_ptr);
-			if (redir_new_node == NULL)
-				;//error
-			add_node_last(&redir_first, redir_new_node);
+			add_redir_node_last(&redir_head, redir_new_node);
 			tkn_begining = tkn_ptr->next;
 		}
 		tkn_ptr = tkn_ptr->next;
 	}
-	return (redir_first);
+	return (redir_head);
+}
+
+void print_redir_token_list(t_redir *head)
+{
+	t_redir *ptr;
+	
+	ptr = head;
+	while(ptr != NULL)
+	{	
+		if (ptr->kind == REDIR_IN_FILE)
+			printf("kind= IN; val= %s\n", ptr->val);
+		else if (ptr->kind == REDIR_HERE_DOC)
+			printf("kind= HERE; val= %s\n", ptr->val);
+		else if (ptr->kind == REDIR_OUT_FILE)
+			printf("kind= OUT; val= %s\n", ptr->val);
+		else if (ptr->kind == REDIR_APPEND_FILE)
+			printf("kind= APP; val= %s\n", ptr->val);
+		ptr = ptr->next;
+	}
 }
 
 
-
-
-
-
-
-
-
+int main()
+{
+	char *strs[]			=	{
+								">",
+								"aaa",
+								"ABC",
+								">>",
+								"ABC",
+								"hij",
+								NULL
+								};
+	enum e_token_kind kinds[]	=	{
+								TKN_OUT_FILE,
+								TKN_TEXT,
+								TKN_ENV,
+								TKN_APPEND_FILE,
+								TKN_ENV,
+								TKN_TEXT
+								};
+	t_token *redir_tokens = test_make_token_list(strs, kinds);
+	print_token_list(redir_tokens);
+	t_redir *redir_head = make_redir_list(redir_tokens);
+	print_redir_token_list(redir_head);
+}
