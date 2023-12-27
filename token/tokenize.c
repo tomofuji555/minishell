@@ -30,7 +30,6 @@ int	main(void)
 			break ;
 		if (!split_to_token (&head, line))
 			free (line);
-		//split_to_token (&head, line);
 		while (head != NULL)
 		{
 			printf ("%s %d\n", head->val, head->kind);
@@ -38,11 +37,11 @@ int	main(void)
 		}
 		if (*line)
 			add_history(line);
-		//if (head)
-		//{
-			//free_lst_all (head);
-			//free(line);
-		//}
+		if (head)
+		{
+			free_lst_all (head);
+			free(line);
+		}
 	}
 	exit(0);
 }
