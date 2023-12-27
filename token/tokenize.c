@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+//__attribute__((destructor))
+//static void destructor() {
+	//system("leaks -q minishell");
+//}
+
 int	main(void)
 {
 	char	*line;
@@ -23,7 +28,9 @@ int	main(void)
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
-		split_to_token (&head, line);
+		if (!split_to_token (&head, line))
+			free (line);
+		//split_to_token (&head, line);
 		while (head != NULL)
 		{
 			printf ("%s %d\n", head->val, head->kind);
@@ -31,8 +38,11 @@ int	main(void)
 		}
 		if (*line)
 			add_history(line);
-		free_lst_all (head);
-		free(line);
+		//if (head)
+		//{
+			//free_lst_all (head);
+			//free(line);
+		//}
 	}
 	exit(0);
 }
@@ -68,7 +78,7 @@ void	token_list(t_token **head, char *start, ssize_t count, int kind)
 	lst_add_back (head, new);
 }
 
-void	split_to_token(t_token **head, char *line)
+ssize_t	split_to_token(t_token **head, char *line)
 {
 	ssize_t	mv_count;
 
@@ -90,5 +100,8 @@ void	split_to_token(t_token **head, char *line)
 		else
 			mv_count = text_token (head, line);
 		line = line + mv_count;
+		if (mv_count < 0)
+			return (0);
 	}
+	return (1);
 }

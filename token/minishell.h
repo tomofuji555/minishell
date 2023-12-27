@@ -56,7 +56,7 @@ size_t	ft_strlen(const char *s);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 t_token	*lstlast(t_token *lst);
 void	lst_add_back(t_token **lst, t_token *new);
-void	split_to_token(t_token **head, char *line);
+ssize_t	split_to_token(t_token **head, char *line);
 void	judge_token_type(t_token **node, char char1, char char2);
 t_token	*make_new_token(char *start, ssize_t mv_count, int token_kind);
 void	token_list(t_token **head, char *start, ssize_t count, int kind);
@@ -70,6 +70,6 @@ ssize_t	input_token(t_token **head, char *line);
 ssize_t	quort_in_env(t_token **head, char *line);
 ssize_t	env_token(t_token **head, char *line);
 int		is_metachar(char c);
-void	quort_error(t_token *head);
+ssize_t	quort_error(t_token **head);
 
 #endif
