@@ -26,14 +26,14 @@ int	main(void)
 	head = NULL;
 	while (1)
 	{
-		current = head;
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
-		if (!split_to_token (&head, line))
-			free_lst_all (&current);
+		if (split_to_token (&head, line) < 0)
+			free_lst_all (&head);
 		else
 		{
+			current = head;
 			while (current != NULL)
 			{
 				printf ("%s %d\n", current->val, current->kind);
