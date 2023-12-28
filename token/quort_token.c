@@ -12,19 +12,8 @@
 
 #include "minishell.h"
 
-ssize_t	quort_error(t_token **head)
+ssize_t	quort_error(void)
 {
-	t_token	*temp;
-	t_token	*next;
-
-	temp = *head;
-	while (temp != NULL)
-	{
-		next = temp->next;
-		free (temp);
-		temp = next;
-	}
-	*head = NULL;
 	printf ( "Argument is not surrounded by quort\n");
 	return (-1);
 }
@@ -52,6 +41,6 @@ ssize_t	quort_token(t_token **head, char *line)
 		}
 	}
 	if (!flag)
-		return (quort_error (head));
+		return (quort_error ( ));
 	return (line - start + 1);
 }

@@ -61,7 +61,7 @@ void	judge_token_type(t_token **node, char char1, char char2);
 t_token	*make_new_token(char *start, ssize_t mv_count, int token_kind);
 void	token_list(t_token **head, char *start, ssize_t count, int kind);
 ssize_t	space_token(t_token **head, char *line);
-void	free_lst_all(t_token *head);
+void	free_lst_all(t_token **head);
 ssize_t	text_token(t_token **head, char *line);
 ssize_t	pipe_token(t_token **head, char *line);
 ssize_t	quort_token(t_token **head, char *line);
@@ -70,6 +70,6 @@ ssize_t	input_token(t_token **head, char *line);
 ssize_t	quort_in_env(t_token **head, char *line);
 ssize_t	env_token(t_token **head, char *line);
 int		is_metachar(char c);
-ssize_t	quort_error(t_token **head);
+ssize_t	quort_error(void);
 
 #endif
