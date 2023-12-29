@@ -30,7 +30,7 @@ ssize_t	quort_in_env(t_token **head, char *line)
 		}
 	}
 	if (!flag)
-		quort_error ( );
+		return (quort_error ( ));
 	return (line - start + 1);
 }
 

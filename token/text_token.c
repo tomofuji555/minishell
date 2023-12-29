@@ -14,17 +14,12 @@
 
 ssize_t	text_token(t_token **head, char *line)
 {
-	ssize_t	rt;
 	char	*start;
 
-	rt = 0;
 	start = line;
 	while (*line != '\0' && !is_metachar (*line) \
 		&& *line != '\t' && *line != '\n')
-	{
-		rt++;
 		line++;
-	}
-	token_list (head, start, rt, TKN_TEXT);
-	return (rt);
+	token_list (head, start, line - start, TKN_TEXT);
+	return (line - start);
 }

@@ -30,7 +30,9 @@ int	main(void)
 		if (line == NULL)
 			break ;
 		if (split_to_token (&head, line) < 0)
+		{
 			free_lst_all (&head);
+		}
 		else
 		{
 			current = head;

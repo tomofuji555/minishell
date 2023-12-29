@@ -14,16 +14,11 @@
 
 ssize_t	space_token(t_token **head, char *line)
 {
-	ssize_t	rt;
 	char	*start;
 
-	rt = 0;
 	start = line;
 	while (*line != '\0' && (*line == ' ' || *line == '\t' || *line == '\n'))
-	{
-		rt++;
 		line++;
-	}
-	token_list (head, start, rt, TKN_SPACE);
-	return (rt);
+	token_list (head, start, line - start, TKN_SPACE);
+	return (line - start);
 }
