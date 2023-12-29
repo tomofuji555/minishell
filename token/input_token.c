@@ -18,7 +18,7 @@ ssize_t	input_token(t_token **head, char *line)
 	int		kind;
 
 	start = line;
-	while (*line != '\0' && *line == '<' && line - start <= 2)
+	while (*line != '\0' && *line == '<' && line - start <= 1)
 		line++;
 	if (*start == '<' && *(start + 1) == '<')
 		kind = TKN_HERE_DOC;
