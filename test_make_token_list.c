@@ -5,7 +5,7 @@ t_token *make_token_node(char *str, enum e_token_kind kind)
 	t_token *new;
 
 	new = (t_token *)malloc(sizeof(t_token));
-	new->val = str; //strがfreeさるとエラーになる
+	new->val = str; //strがfreeされるとエラーになる
 	new->kind = kind;
 	new->next = NULL;
 	return (new);

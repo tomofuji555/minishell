@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:00:37 by tozeki            #+#    #+#             */
-/*   Updated: 2023/12/23 17:21:39 by toshi            ###   ########.fr       */
+/*   Updated: 2023/12/30 23:58:11 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,20 @@ size_t	strlen_of_list_untill_last(t_token *begining, t_token *last)
 {
 	t_token	*ptr;
 	size_t	i;
+	size_t	len;
 
 	ptr = begining;
-	i = 0;
+	len = 0;
 	while(ptr != last->next)
 	{
+		i = 0;
 		while(ptr->val[i] != '\0')
 			i++;
+		// printf("i == %zd\n", i);
+		len += i;
 		ptr = ptr->next;
 	}
-	return (i);
+	return (len);
 }
 
 size_t	strlcpy_from_list(char *dest, t_token *src, size_t len)
@@ -51,6 +55,7 @@ size_t	strlcpy_from_list(char *dest, t_token *src, size_t len)
 		}
 		src = src->next;
 	}
+	// printf("dest_i == %zd\n", dest_i);
 	dest[dest_i] = '\0';
 	return (dest_i);
 }
@@ -77,7 +82,8 @@ t_redir	*make_redir_node(t_token *begining, t_token *last)
 	node = (t_redir *)malloc(sizeof(t_redir));
 	if (node == NULL)
 		return (NULL);
-	len = strlen_of_list_untill_last(begining, last) + 1;
+	len = 1 + strlen_of_list_untill_last(begining, last);
+	// printf("last->val == %s;  len == %zd\n", last->val, len);
 	node->val = (char *)malloc(sizeof(char) * len);
 	if (node->val == NULL)
 		;//error
@@ -101,8 +107,6 @@ t_redir	*find_last_redir_node(t_redir *head)
 void	add_redir_node_last(t_redir **head_node, t_redir *new_node)
 {
 	t_redir *last_node;
-
-	printf("%d\n", new_node->kind);
 	if (*head_node == NULL)
 	{
 		*head_node = new_node;
@@ -167,6 +171,10 @@ int main()
 								">>",
 								"ABC",
 								"hij",
+								"<<",
+								"ABC",
+								"lkj",
+								"PPPPPPPPPP",
 								NULL
 								};
 	enum e_token_kind kinds[]	=	{
@@ -175,10 +183,14 @@ int main()
 								TKN_ENV,
 								TKN_APPEND_FILE,
 								TKN_ENV,
+								TKN_TEXT,
+								TKN_HERE_DOC,
+								TKN_TEXT,
+								TKN_D_QUOTE,
 								TKN_TEXT
 								};
 	t_token *redir_tokens = test_make_token_list(strs, kinds);
-	print_token_list(redir_tokens);
+	// print_token_list(redir_tokens);
 	t_redir *redir_head = make_redir_list(redir_tokens);
 	print_redir_token_list(redir_head);
 }
