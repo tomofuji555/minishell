@@ -2,6 +2,8 @@
 *.txt
 .vscode/
 libft/
+a.out
+minishell
 
 # Prerequisites
 *.d
