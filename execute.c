@@ -1,14 +1,57 @@
 #include "execute.h"
 
+int get_last_input_fd(t_redir *first_path_node)
+{
+	t_redir *ptr;
+	int in_fd;
+
+	ptr = first_path_node;
+	in_fd = -1;
+	while(ptr->next != NULL)
+	{
+		if (in_fd != -1)
+			close(in_fd);
+		in_fd = open(ptr->val, O_RDONLY);
+		if (in_fd == -1)
+			;//error
+		ptr = ptr->next;
+	}
+	return (in_fd);
+}
+
+int get_last_output_fd(t_redir *first_path_node)
+{
+	t_redir *ptr;
+	int out_fd;
+
+	ptr = first_path_node;
+	out_fd = -1;
+	while(ptr->next != NULL)
+	{
+		if (out_fd != -1)
+			close(out_fd);
+		if (ptr->kind == REDIR_APPEND_FILE)
+			out_fd = open(ptr->val, O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
+		else
+			out_fd = open(ptr->val, O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
+		if (out_fd == -1)
+			;//error
+		ptr = ptr->next;
+	}
+	return (out_fd);
+}
+
 int change_input_fd(t_exec_handler *handler)
 {
+	int in_fd;
+
 	if (handler->infile_paths)
-		change_input_infile(handler->infile_paths);
-		// if (infile) //ファイルからread
-		// in_fd = open(infile)
-		// dup2(in_fd, stdIN)
-		// close(in_fd)
-		// close(prev_pipe_in)
+	{
+		in_fd = get_last_input_fd(handler->infile_paths);
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+		close(handler->prev_pipe_in_fd);
+	}
 	else
 	{
 		if (handler->prev_pipe_in_fd != STDIN_FILENO)
@@ -17,19 +60,25 @@ int change_input_fd(t_exec_handler *handler)
 	}
 }
 
+int is_last_cmd(t_tree_node *cur_node)
+{
+	return (cur_node->prev == NULL || cur_node->prev->prev == NULL);
+}
 
 int change_output_fd(t_exec_handler *handler, int pipe_out_fd)
 {
+	int out_fd;
+
 	if (handler->outfile_paths)
-		change_output_infile(handler->outfile_paths, pipe_out_fd);
-		// if (outfile) //ファイルへwrite
-		// out_fd = open(outfile)
-		// dup2(out_fd, stdOUT)
-		// close(out_fd)
-		// close(pipe_out)
+	{
+		out_fd = get_last_output_fd(handler->outfile_paths);
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+		close(pipe_out_fd);
+	}
 	else
 	{
-		if (handler->last_cmd_flag != TRUE)
+		if (is_last_cmd(handler->cur_node))
 			dup2(pipe_out_fd, STDOUT_FILENO);
 		close(pipe_out_fd);
 	}
@@ -63,7 +112,7 @@ int execute(t_tree_node *tree_node)
 			close(handler->prev_pipe_in_fd);
 		if (handler->last_cmd_flag != TRUE)
 		{
-			// handler->prev_pipe_in_fd = pipe_fd[IN];
+			handler->prev_pipe_in_fd = pipe_fd[IN];
 			return (pipe_fd[IN]);
 		}
 		else
