@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/01/05 17:24:58 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/05 17:30:06 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ typedef enum e_bool
 
 enum e_token_kind
 {
-	TKN_SPACE,
-	TKN_TEXT,
-	TKN_S_QUOTE,
-	TKN_D_QUOTE,
-	TKN_ENV,
-	TKN_PIPE,
-	TKN_IN_FILE,
-	TKN_HERE_DOC,
-	TKN_OUT_FILE,
-	TKN_APPEND_FILE,
+	TKN_SPACE			= 0,
+	TKN_TEXT			= 1,
+	TKN_S_QUOTE			= 2,
+	TKN_D_QUOTE			= 3,
+	TKN_ENV				= 4,
+	TKN_PIPE			= 5,
+	TKN_IN_FILE			= 6,
+	TKN_HERE_DOC		= 7,
+	TKN_OUT_FILE		= 8,
+	TKN_APPEND_FILE		= 9,
 };
 
 typedef struct s_token
