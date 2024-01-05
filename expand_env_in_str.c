@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:59 by toshi             #+#    #+#             */
-/*   Updated: 2023/12/31 00:13:01 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/04 19:51:34 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,14 @@ size_t	count_envname(char *dollar_ptr)
 	return (i);
 }
 
+// wordsplit(char *str)
+// {
+// 	strtrimのhelper関数
+// 	スペースの連チャンをなくす
+// }
 
-char *search_env_val(char *dollar_ptr, size_t env_name_len)
+
+static char *search_env_val(char *dollar_ptr, size_t env_name_len)
 {
 	char *env_name;
 	char *env_val;
@@ -40,7 +46,7 @@ char *search_env_val(char *dollar_ptr, size_t env_name_len)
 	return (env_val);
 }
 
-size_t	ms_strlcat(char *dest, const char *src, size_t size)
+size_t	ft2_strlcat(char *dest, const char *src, size_t size)
 {
 	size_t	dest_len;
 	size_t	i;
@@ -91,7 +97,7 @@ size_t strlcat_env_expanded(char *dest, char *str, size_t len)
 		{
 			env_val = search_env_val(str, count_envname(str));
 			if (env_val)
-				dest_i += ms_strlcat(dest, env_val, len);
+				dest_i += ft2_strlcat(dest, env_val, len);
 			str += (sizeof(char) * (count_envname(str)));
 		}
 		else
@@ -102,14 +108,14 @@ size_t strlcat_env_expanded(char *dest, char *str, size_t len)
 	return (dest_i);
 }
 
-char *expand_env_in_str(char *str)
+char *expand_env_and_update_str(char *str)
 {
 	size_t len;
 	char *expanded_str;
 
 	if (str == NULL)
 		return (NULL);
-	len = 1 + strlen_env_expanded(str);
+	len = strlen_env_expanded(str) + 1;
 	if (len  == ft_strlen(str) + 1)
 		return (str);
 	expanded_str = (char *)ft_xmalloc(sizeof(char) * len);

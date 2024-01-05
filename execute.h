@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2023/12/30 23:56:07 by toshi            ###   ########.fr       */
+/*   Updated: 2023/12/31 00:42:34 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_exec_handler
 	int				prev_pipe_in_fd;
 }	t_exec_handler;
 
-char	*expand_env_in_str(char *str);
+char *expand_env_and_update_str(char *str);
 char	*ft_getenv(const char *name);
 int		is_equal_str_untill_delim(const char *s1, const char *s2, const char delim);
 void	*ft_xrealloc(void *ptr, size_t size);

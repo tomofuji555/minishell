@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2023/12/31 00:13:33 by toshi            ###   ########.fr       */
+/*   Updated: 2023/12/31 00:24:11 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main()
 	printf("%s\n", str);
 	printf("----------old----------\n");
 
-	char *new_str = expand_env_in_str(str);
+	char *new_str = expand_env_and_update_str(str);
 	printf("----------new----------\n");
 	printf("sum %zd; %s;\n", ft_strlen(new_str) + 1,new_str);
 
