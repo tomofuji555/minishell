@@ -1,69 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_env_in_str.c                                :+:      :+:    :+:   */
+/*   expand_env_in_dquote.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/04 19:51:34 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/17 23:34:31 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-size_t	count_envname(char *dollar_ptr)
-{
-	char *ptr;
-	size_t i;
-
-	ptr = ++dollar_ptr;
-	if (*ptr == '?' || *ptr == '$')
-		return (1);
-	i = 0;
-	while(ptr[i] != '\0' && ft_isalpha(ptr[i]))
-		i++;
-	return (i);
-}
-
-// wordsplit(char *str)
-// {
-// 	strtrimのhelper関数
-// 	スペースの連チャンをなくす
-// }
-
-
-static char *search_env_val(char *dollar_ptr, size_t env_name_len)
-{
-	char *env_name;
-	char *env_val;
-
-	env_name = ft_substr(++dollar_ptr, 0, env_name_len);
-	if (env_name == NULL)
-		perror_and_exit("malloc", 1);
-	env_val = ft_getenv(env_name);
-	free(env_name);
-	return (env_val);
-}
-
-size_t	ft2_strlcat(char *dest, const char *src, size_t size)
-{
-	size_t	dest_len;
-	size_t	i;
-	
-	dest_len = ft_strlen(dest);
-	if (size == 0 || size < dest_len)
-		return (0);
-	i = 0;
-	while(src[i] != '\0' && i + 1 < size)
-	{
-		dest[dest_len + i] = src[i];
-		i++;
-	}
-	return (i);
-}
-
-size_t strlen_env_expanded(char *str)
+static size_t _strlen_env_expanded(char *str)
 {
 	size_t len;
 	char *env_val;
@@ -85,7 +34,7 @@ size_t strlen_env_expanded(char *str)
 	return (len);
 }
 
-size_t strlcat_env_expanded(char *dest, char *str, size_t len)
+static size_t _strlcat_env_expanded(char *dest, char *str, size_t len)
 {
 	size_t dest_i;
 	char *env_val;
@@ -108,18 +57,19 @@ size_t strlcat_env_expanded(char *dest, char *str, size_t len)
 	return (dest_i);
 }
 
-char *expand_env_and_update_str(char *str)
+//文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
+char *expand_env_in_dquote(char *str)
 {
 	size_t len;
 	char *expanded_str;
 
 	if (str == NULL)
 		return (NULL);
-	len = strlen_env_expanded(str) + 1;
+	len = _strlen_env_expanded(str) + 1;
 	if (len  == ft_strlen(str) + 1)
 		return (str);
 	expanded_str = (char *)ft_xmalloc(sizeof(char) * len);
-	strlcat_env_expanded(expanded_str, str, len);
+	_strlcat_env_expanded(expanded_str, str, len);
 	free(str);
 	return (expanded_str);
 }

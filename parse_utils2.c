@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_valuable_token.c                                :+:      :+:    :+:   */
+/*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/31 00:13:27 by toshi             #+#    #+#             */
-/*   Updated: 2023/12/31 00:13:28 by toshi            ###   ########.fr       */
+/*   Created: 2024/01/17 12:10:35 by toshi             #+#    #+#             */
+/*   Updated: 2024/01/17 16:13:28 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-int is_valuable_token(enum e_token_kind kind)
+t_tree_node	*tnode_find_last_right(t_tree_node *head)
 {
-	return (kind == TKN_TEXT || kind == TKN_S_QUOTE || kind == TKN_D_QUOTE || kind == TKN_ENV);
+	t_tree_node *ptr;
+
+	ptr = head;
+	while(ptr->right != NULL)
+		ptr = ptr->right;
+	return (ptr);
+}
+
+void	tnode_add_last_right(t_tree_node **head, t_tree_node *new)
+{
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
+	tnode_find_last_right(*head)->right = new;
 }

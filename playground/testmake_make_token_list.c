@@ -53,36 +53,7 @@ t_token	*test_make_token_list(char *strs[], enum e_token_kind kinds[])
 	return (head);
 }
 
-void print_token_list(t_token *head)
-{
-	t_token *ptr;
-	
-	ptr = head;
-	while(ptr != NULL)
-	{	
-		if (ptr->kind == TKN_SPACE)
-			printf("kind= SPACE; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_TEXT)
-			printf("kind= TEXT; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_S_QUOTE)
-			printf("kind= S_Q; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_D_QUOTE)
-			printf("kind= D_Q; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_ENV)
-			printf("kind= ENV; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_PIPE)
-			printf("kind= PIPE; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_IN_FILE)
-			printf("kind= IN; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_HERE_DOC)
-			printf("kind= HERE; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_OUT_FILE)
-			printf("kind= OUT; val= %s\n", ptr->val);
-		else if (ptr->kind == TKN_APPEND_FILE)
-			printf("kind= APP; val= %s\n", ptr->val);
-		ptr = ptr->next;
-	}
-}
+
 
 // int main()
 // {

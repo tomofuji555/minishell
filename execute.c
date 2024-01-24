@@ -6,152 +6,95 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2023/12/31 00:12:18 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/14 23:07:25 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "execute.h"
 
-int get_last_input_fd(t_redir *first_path_node)
-{
-	t_redir *ptr;
-	int in_fd;
-
-	ptr = first_path_node;
-	in_fd = -1;
-	while(ptr->next != NULL)
-	{
-		if (in_fd != -1)
-			close(in_fd);
-		in_fd = open(ptr->val, O_RDONLY);
-		if (in_fd == -1)
-			;//error
-		ptr = ptr->next;
-	}
-	return (in_fd);
-}
-
-int get_last_output_fd(t_redir *first_path_node)
-{
-	t_redir *ptr;
-	int out_fd;
-
-	ptr = first_path_node;
-	out_fd = -1;
-	while(ptr->next != NULL)
-	{
-		if (out_fd != -1)
-			close(out_fd);
-		if (ptr->kind == REDIR_APPEND_FILE)
-			out_fd = open(ptr->val, O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
-		else
-			out_fd = open(ptr->val, O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
-		if (out_fd == -1)
-			;//error
-		ptr = ptr->next;
-	}
-	return (out_fd);
-}
-
-int change_input_fd(t_exec_handler *handler)
+int change_instream(t_redir *redir_head, int prev_output_fd)
 {
 	int in_fd;
 
-	if (handler->infile_paths)
-	{
-		in_fd = get_last_input_fd(handler->infile_paths);
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
-		close(handler->prev_pipe_in_fd);
-	}
+	if (redir_head)
+		change_stream_to_redir(redir_head, STDIN_FILENO);
 	else
 	{
-		if (handler->prev_pipe_in_fd != STDIN_FILENO)
-			dup2(handler->prev_pipe_in_fd, STDIN_FILENO);
-		close(handler->prev_pipe_in_fd);
+		if (prev_output_fd != STDIN_FILENO)
+		{
+			if (dup2(prev_output_fd, STDIN_FILENO) == SYS_FAILURE)
+				;//exit
+		}
 	}
+	if (close(prev_output_fd) == SYS_FAILURE)
+		;//検討
 }
 
-int is_last_cmd(t_tree_node *cur_node)
-{
-	return (cur_node->prev == NULL || cur_node->prev->prev == NULL);
-}
-
-int change_output_fd(t_exec_handler *handler, int pipe_out_fd)
+int change_outstream(t_redir *redir_head, int pipe_out_fd)
 {
 	int out_fd;
 
-	if (handler->outfile_paths)
-	{
-		out_fd = get_last_output_fd(handler->outfile_paths);
-		dup2(out_fd, STDOUT_FILENO);
-		close(out_fd);
-		close(pipe_out_fd);
-	}
+	if (redir_head)
+		change_stream_to_redir(redir_head, STDOUT_FILENO);
 	else
 	{
 		if (is_last_cmd(handler->cur_node))
-			dup2(pipe_out_fd, STDOUT_FILENO);
-		close(pipe_out_fd);
+		{
+			if (dup2(pipe_out_fd, STDOUT_FILENO) == SYS_FAILURE)
+				;//exit
+		}
 	}
-}
-
-void update_prev_pipe_in_fd(t_exec_handler *handler, int *pipe_fd)
-{
-	
+	if (close(pipe_out_fd) == SYS_FAILURE)
+		;//検討
 }
 
 
-int execute(t_tree_node *tree_node)
+int exec_external_cmd(t_tree_node *tree_node)
 {
-	int				pipe_fd[2];
-	pid_t			pid;
+	int		pipe_fd[2];
+	pid_t	pid;
 
-	if (pipe(pipe_fd) == -1)
+	if (pipe(pipe_fd) == SYS_FAILURE)
 		return (1);
 	pid = fork();
-	if (pid == -1)
-		return (1);
-	else if (pid == 0)
+	if (pid == SYS_FAILURE)
+		;//エラー文を吐き、exit
+	else if (pid == CHILD)
 	{
-		//----------子プロセスで実行----------
-		printf("子プロセス\n");
+		//子プロセスで実行
 	}
 	else
 	{
-		close(pipe_fd[OUT]);
-		if (handler->prev_pipe_in_fd != STDIN_FILENO)
-			close(handler->prev_pipe_in_fd);
-		if (handler->last_cmd_flag != TRUE)
-		{
-			handler->prev_pipe_in_fd = pipe_fd[IN];
-			return (pipe_fd[IN]);
-		}
-		else
-		{
-			close(pipe_fd[IN]);
-			return (-1);
-		}
+		// 親プロセス側の処理
 	}
 }
 
-exec_in_dfs(t_exec_handler handler)
+void	do_exec()
 {
-	if (handler.cur_node->left != NULL)
-	{
-		handler.cur_node= handler.cur_node->left;
-		run_exec_in_dfs(handler);
-	}
-	if (handler.cur_node->cmd_tokens != NULL)
-	{
-		set_()
-		handler.prev_pipe_in_fd = execute_ret_pipe_out_fd();
-
-	}
-	if(handler.cur_node->right != NULL)
-	{
-		handler.cur_node = handler.cur_node->right;
-		run_exec_in_dfs(handler);
-	}
+	if (0) //ビルトインコマンドなら
+		exec_builtin_cmd()
+	else
+		exec_external_cmd()
 }
+
+
+// exec_in_while(t_tree_node *root_node)
+// {
+// 	t_tree_node *cur_node;
+
+// 	cur_node = root_node;
+// 	while (cur_node->left != NULL)
+// 		cur_node = cur_node->left;
+// 	do_exec(cur_node); //forkし、ストリームを変え、実行、prev_fd＆last_pidを更新
+// 	while (cur_node != NULL)
+// 	{
+// 		if (cur_node->right != NULL)
+// 			de_exec(cur_node->right->exec_arg_data); //forkし、ストリームを変え、実行、prev_fd＆last_pidを更新
+// 		cur_node = cur_node->prev;
+// 	}
+// 	while(0) //forkしたカウント
+// 	{
+// 		if (pid == wait(&status)) //last_pidとwaitの返り値が同じなら
+// 			printf("最終終了ステータス%d\n", WEXITSTATUS(status));
+// 	}
+// }

@@ -8,11 +8,12 @@ static void destructor() {
 
 int main()
 {
-	int i = 0;
-	char *str = (char *)malloc(sizeof(char) * (i + 1));
+	// size_t i = 4294967295;
+	char *str = (char *)malloc(sizeof(char) * (999999999999999 + 1));
 	if (str == NULL)
 	{
-		printf("error\n");
+		perror("");
+		// printf("error\n");
 	}
 	else
 	{

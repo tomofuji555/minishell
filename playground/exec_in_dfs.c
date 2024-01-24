@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:36 by toshi             #+#    #+#             */
-/*   Updated: 2023/12/31 00:12:43 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/10 03:41:13 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,23 @@ exec_in_dfs(t_tree_node *tree_root)
 }
 
 
+exec_in_while(t_tree_node *root_node)
+{
+	t_tree_node *cur_node;
 
-
+	cur_node = root_node;
+	while (cur_node->left != NULL)
+		cur_node = cur_node->left;
+	do_exec(cur_node); //forkし、ストリームを変え、実行、prev_fd＆last_pidを更新
+	while (cur_node != NULL)
+	{
+		if (cur_node->right != NULL)
+			de_exec(cur_node->right->exec_arg_data); //forkし、ストリームを変え、実行、prev_fd＆last_pidを更新
+		cur_node = cur_node->prev;
+	}
+	while(0) //forkしたカウント
+	{
+		if (pid == wait(&status)) //last_pidとwaitの返り値が同じなら
+			printf("最終終了ステータス%d\n", WEXITSTATUS(status));
+	}
+}

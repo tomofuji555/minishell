@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include "../execute.h"
 
 int fork_exec(char *path, char *arg[], char **envp)
 {

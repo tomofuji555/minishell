@@ -1,17 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getenv.c                                        :+:      :+:    :+:   */
+/*   _env_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/31 00:13:06 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/04 16:31:16 by toshi            ###   ########.fr       */
+/*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
+/*   Updated: 2024/01/17 23:34:43 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
+size_t	count_envname(char *dollar_ptr)
+{
+	char *ptr;
+	size_t i;
+
+	ptr = ++dollar_ptr;
+	if (is_delim(*ptr))
+		return (0);
+	i = 0;
+	while(ptr[i] != '\0' && ft_isalnum(ptr[i]))
+		i++;
+	return (i);
+}
+
+//envに必ず=がある前提で実装している
 char	*ft_getenv(const char *target_str)
 {
 	extern char	**environ;
@@ -32,3 +47,17 @@ char	*ft_getenv(const char *target_str)
 	}
 	return (NULL);
 }
+
+char *search_env_val(char *dollar_ptr, size_t env_name_len)
+{
+	char *env_name;
+	char *env_val;
+
+	env_name = ft_substr(++dollar_ptr, 0, env_name_len);
+	if (env_name == NULL)
+		perror_and_exit("malloc", 1);
+	env_val = ft_getenv(env_name);
+	free(env_name);
+	return (env_val);
+}
+

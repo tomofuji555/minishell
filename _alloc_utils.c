@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alloc_utils.c                                      :+:      :+:    :+:   */
+/*   _alloc_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:26 by toshi             #+#    #+#             */
-/*   Updated: 2023/12/31 00:12:28 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/16 20:34:20 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-void perror_and_exit(char *err_title, int exit_status)
-{
-	perror(err_title);
-	exit(exit_status);
-}
 
 void *ft_xmalloc(size_t size)
 {
 	void *ret;
 
+	if (size == 0)
+		return(NULL);
 	ret = (void *)malloc(size);
 	if (ret == NULL)
 		perror_and_exit("malloc", 1);
