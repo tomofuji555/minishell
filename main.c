@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/23 01:32:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/25 22:03:04 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,6 @@
 //    system("leaks -q minishell");
 // }
 
-t_token *_tokenize1(char *line_ptr)
-{
-	char		*last;
-	ssize_t		count;
-	t_token 	*head;
-	t_token 	*new;
-
-	head = NULL;
-	while(*line_ptr)
-	{
-		count =  count_last(line_ptr);
-		// print_to_last(line_ptr, &line_ptr[count - 1]);
-		printf("%zd=%s;",count, ft_substr(line_ptr, 0, count));
-		// new = tkn_make_new(line_ptr, last);
-		// tkn_add_last(&head, new);
-		line_ptr += count;
-		printf("val=%c;\n", line_ptr[count - 1]);
-	}
-	return (head);
-}
-
 // tokenizeの確認用
 int main()
 {
@@ -45,7 +24,7 @@ int main()
 	char *str2 = "gnal|n'ga'<<<nga||lng$\'alnglag\"anlgn\'gna ";
 	char *str3 = " abc d eg";
 	char *str4 = "ggg\"g\" hhhh";
-	t_token *head = _tokenize1(str4);
+	t_token *head = _tokenize(str4);
 	tkn_print_lst(head);
 	tkn_free_lst(head);
 }

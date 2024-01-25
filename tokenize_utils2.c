@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:39:39 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/18 17:04:14 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/25 23:22:40 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,12 @@ enum e_token_kind	save_env_or_text_kind(char *begining)
 	return (TKN_ENV);
 }
 
-
-char *tkn_substr(char *begining, char *last)
-{
-	size_t len;
-
-	len = (size_t)((last - begining)/sizeof(char) + sizeof(char));
-	return (ft_xsubstr(begining, 0, len));
-}
-
 //lenはクォーテーション内の文字数+1文字分
-char *tkn_substr_into_quote(char *begining, char *last)
+char *tkn_substr_into_quote(char *begining, ssize_t count)
 {
-	size_t len;
-
-	while(*begining != *last)
+	if (*begining == '$')
 		begining++;
-	len = (size_t)((--last - ++begining)/sizeof(char) + sizeof(char));
-	return (ft_xsubstr(begining, 0, len));
+	if (*begining == *(begining + 1))
+		count = 0;
+	return (ft_xsubstr(begining, 1, (size_t)len - 1));
 }

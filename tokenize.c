@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/19 23:48:15 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/25 23:23:18 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-
-char *save_last_chr(char *begining)
-{
-	if (*begining == '$')
-		return (save_env_last(begining));
-	else if (*begining == '\"' || *begining == '\'')
-		return (save_quote_last(begining));
-	else if (*begining == '>' || *begining == '<')
-		return (save_redir_last(begining));
-	else if (*begining == '|')
-		return (begining);
-	else if(is_ifs(*begining))
-		return (save_space_last(begining));
-	else
-		return (save_text_last(begining));
-}
 
 ssize_t count_last(char *begining)
 {
@@ -63,40 +47,37 @@ enum e_token_kind	tkn_save_kind(char *begining)
 }
 
 // is_quote(*last)で判断したいのは、クォートトークンか{$""/$''}の形かどうか
-t_token *tkn_make_new(char *begining, char *last)
+t_token *tkn_make_new(char *begining, ssize_t count, enum e_token_kind kind)
 {
-	t_token *node = (t_token *)malloc(sizeof(t_token));
-	if(is_quote(*last))
-		node->val = tkn_substr_into_quote(begining, last);
+	t_token	*node;
+	node = (t_token *)malloc(sizeof(t_token));
+	if (is_quote(begining[count - 1]))
+		node->val = substr_into_quote(begining, count);
 	else
-		node->val = tkn_substr(begining, last);
-	node->kind = tkn_save_kind(begining);
+		node->val = ft_xsubstr(begining, 0, (size_t)count);
+	node->kind = kind;
 	node->next = NULL;
 	return (node);
 }
 
 t_token *tokenize(char *line_ptr)
 {
-	char		*last;
-	// ssize_t		count;
-	t_token 	*head;
-	t_token 	*new;
+	t_token		*head;
+	t_token		*new;
+	ssize_t		count;
 
 	head = NULL;
-	while(*line_ptr)
+	while (*line_ptr)
 	{
-		// count =  count_last(line_ptr);
-		last = save_last_chr(line_ptr);
-		// print_to_last(line_ptr, &line_ptr[count - 1]);
-		if (last == NULL)
+		count = count_last(line_ptr);
+		if (count == -1)
 		{
 			tkn_free_lst(head);
 			return (NULL);
 		}
-		new = tkn_make_new(line_ptr, last);
+		new = tkn_make_new(line_ptr, count, tkn_save_kind(line_ptr));
 		tkn_add_last(&head, new);
-		// line_ptr += sizeof(char) * (count);
-		line_ptr = ++last;
+		line_ptr += count;
 	}
 	return (head);
 }

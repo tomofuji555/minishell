@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _utils_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/16 20:15:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/25 23:13:00 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,9 +149,7 @@ char	*ft_xsubstr(const char *s, unsigned int start, size_t len)
 		return (ft_xstrdup(""));
 	if (len > len_s)
 		len = len_s - start;
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
-		perror_and_exit("malloc", 1);
+	str = (char *)ft_xmalloc(sizeof(char) * (len + 1));
 	ft_strlcpy(str, &s[start], len + 1);
 	return (str);
 }
