@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/25 22:03:04 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/01/26 08:35:54 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int main()
 	char *str1 = " 		 ls -a|l naln>la ><<<$AA\"\"A>||>BB$B$<<CCC<<>DDD <<<LLL";
 	char *str2 = "gnal|n'ga'<<<nga||lng$\'alnglag\"anlgn\'gna ";
 	char *str3 = " abc d eg";
-	char *str4 = "ggg\"g\" hhhh";
-	t_token *head = _tokenize(str4);
+	char *str4 = "ggg\"gh\" hhhh";
+	char *str5 = "aaa$\"ABCD\" $\'ABCDEF\' \"abc\'defg\" ";
+	char *str6 = "$$$\"ABC\" $$$\"\" \"ABC\" \"\" ";
+	t_token *head = tokenize(str5);
 	tkn_print_lst(head);
 	tkn_free_lst(head);
 }
@@ -34,6 +36,7 @@ int main()
 // {
 // 	char *str1 = "cat >  aaa$PED$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk | aaa<<gaga>>glnagal";
 // 	t_token *tkn_head = tokenize(str1);
+// 	tkn_print_lst(tkn_head);
 // 	t_tree_node *tnode_head = parse(tkn_head);
 // 	tnode_print_lst(tnode_head);
 // 	tnode_free_lst(tnode_head);

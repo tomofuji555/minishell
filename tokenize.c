@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/25 23:23:18 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/01/26 08:14:44 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-ssize_t count_last(char *begining)
+ssize_t _count_last(char *begining)
 {
 	if (*begining == '$')
 		return (count_dollar_last(begining));
@@ -28,31 +28,26 @@ ssize_t count_last(char *begining)
 		return (count_text_last(begining));
 }
 
-enum e_token_kind	tkn_save_kind(char *begining)
+//lenはクォーテーション内の文字数+1文字分
+static char *_substr_into_quote(char *begining, size_t count)
 {
 	if (*begining == '$')
-		return (save_env_or_text_kind(begining));
-	else if (*begining == '\'')
-		return (TKN_S_QUOTE);
-	else if (*begining == '\"')
-		return (TKN_D_QUOTE);
-	else if (*begining == '<' || *begining == '>')
-		return (save_redir_tkn_kind(begining));
-	else if (*begining == '|')
-		return (TKN_PIPE);
-	else if(is_ifs(*begining))
-		return (TKN_SPACE);
-	else
-		return (TKN_TEXT);
+	{
+		begining++;
+		count--;
+	}
+	// if (*begining == *(begining + 1))
+	// 	return (ft_xstrdup(""));
+	return (ft_xsubstr(begining, 1, count - 2));
 }
 
 // is_quote(*last)で判断したいのは、クォートトークンか{$""/$''}の形かどうか
-t_token *tkn_make_new(char *begining, ssize_t count, enum e_token_kind kind)
+t_token *make_new_tkn(char *begining, ssize_t count, enum e_token_kind kind)
 {
 	t_token	*node;
 	node = (t_token *)malloc(sizeof(t_token));
 	if (is_quote(begining[count - 1]))
-		node->val = substr_into_quote(begining, count);
+		node->val = _substr_into_quote(begining, (size_t)count);
 	else
 		node->val = ft_xsubstr(begining, 0, (size_t)count);
 	node->kind = kind;
@@ -69,13 +64,13 @@ t_token *tokenize(char *line_ptr)
 	head = NULL;
 	while (*line_ptr)
 	{
-		count = count_last(line_ptr);
+		count = _count_last(line_ptr);
 		if (count == -1)
 		{
 			tkn_free_lst(head);
 			return (NULL);
 		}
-		new = tkn_make_new(line_ptr, count, tkn_save_kind(line_ptr));
+		new = make_new_tkn(line_ptr, count, save_tkn_kind(line_ptr));
 		tkn_add_last(&head, new);
 		line_ptr += count;
 	}

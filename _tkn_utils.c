@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/20 19:03:36 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/26 06:58:06 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,7 @@ t_token *tkn_find_valuable_last(t_token *head)
 	return (ptr);
 }
 
-t_token *tkn_find_last(t_token *head)
-{
-	t_token *ptr;
-
-	ptr = head;
-	while(ptr->next != NULL)
-		ptr = ptr->next;
-	return (ptr);
-}
-
-void tkn_add_last(t_token **head, t_token *new)
-{
-	if (*head == NULL)
-	{
-		*head = new;
-		return ;
-	}
-	tkn_find_last(*head)->next = new;
-}
-
-
-size_t	_strlen_of_list_untill_last(t_token *begining, t_token *last)
+static size_t	_strlen_from_tkn(t_token *begining, t_token *last)
 {
 	t_token	*ptr;
 	size_t	i;
@@ -76,7 +55,7 @@ size_t	_strlen_of_list_untill_last(t_token *begining, t_token *last)
 	return (len);
 }
 
-size_t	_strlcpy_from_list(char *dest, t_token *src, size_t len)
+static size_t	_strlcpy_from_tkn(char *dest, t_token *src, size_t len)
 {
 	size_t	dest_i;
 	size_t	val_i;
@@ -103,9 +82,9 @@ char *substr_from_tkn(t_token *begining, t_token *last)
 	size_t	len;
 	char	*str;
 
-	len = 1 + _strlen_of_list_untill_last(begining, last);
+	len = 1 + _strlen_from_tkn(begining, last);
 	str = (char *)ft_xmalloc(sizeof(char) * len);
-	_strlcpy_from_list(str, begining, len);
+	_strlcpy_from_tkn(str, begining, len);
 	// printf("last->val == %s;  len == %zd\n", last->val, len);
 	return (str);
 }

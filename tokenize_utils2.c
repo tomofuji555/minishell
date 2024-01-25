@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:39:39 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/25 23:22:40 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/01/26 08:28:25 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-enum e_token_kind	save_redir_tkn_kind(char *begining)
+enum e_token_kind	_save_redir_tkn_kind(char *begining)
 {
 	char *ptr;
 
@@ -34,7 +34,7 @@ enum e_token_kind	save_redir_tkn_kind(char *begining)
 }
 
 //$の次がヌル終端か、?・$以外の区切り文字ならTKN_TEXT
-enum e_token_kind	save_env_or_text_kind(char *begining)
+enum e_token_kind	_save_env_or_text_kind(char *begining)
 {
 	char *ptr;
 
@@ -44,12 +44,40 @@ enum e_token_kind	save_env_or_text_kind(char *begining)
 	return (TKN_ENV);
 }
 
-//lenはクォーテーション内の文字数+1文字分
-char *tkn_substr_into_quote(char *begining, ssize_t count)
+enum e_token_kind	save_tkn_kind(char *begining)
 {
 	if (*begining == '$')
-		begining++;
-	if (*begining == *(begining + 1))
-		count = 0;
-	return (ft_xsubstr(begining, 1, (size_t)len - 1));
+		return (_save_env_or_text_kind(begining));
+	else if (*begining == '\'')
+		return (TKN_S_QUOTE);
+	else if (*begining == '\"')
+		return (TKN_D_QUOTE);
+	else if (*begining == '<' || *begining == '>')
+		return (_save_redir_tkn_kind(begining));
+	else if (*begining == '|')
+		return (TKN_PIPE);
+	else if(is_ifs(*begining))
+		return (TKN_SPACE);
+	else
+		return (TKN_TEXT);
+}
+
+t_token	*tkn_find_last(t_token *head)
+{
+	t_token *ptr;
+
+	ptr = head;
+	while(ptr->next != NULL)
+		ptr = ptr->next;
+	return (ptr);
+}
+
+void tkn_add_last(t_token **head, t_token *new)
+{
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
+	tkn_find_last(*head)->next = new;
 }
