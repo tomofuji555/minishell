@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/01/23 00:20:10 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/26 12:21:31 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,12 +139,7 @@ t_token				*make_new_token(char *start, ssize_t mv_count, int token_kind);
 t_token				*lstlast(t_token *lst);
 //redir_utils.c
 void				change_stream_to_redir(t_redir *redir_head, int dest_fd);
-//tkn_utils.c
-t_token *save_prev_tkn(t_token *head, t_token *target);
-t_token				*tkn_find_valuable_last(t_token *tkn_ptr);
-t_token				*tkn_find_last(t_token *head);
-void				tkn_add_last(t_token **head, t_token *new);
-char				*substr_from_tkn(t_token *begining, t_token *last);
+
 //utils_1.c
 void				perror_and_exit(char *err_title, int exit_status);
 size_t				ft2_strlcat(char *dest, const char *src, size_t size);
@@ -159,40 +154,39 @@ char				*ft_xsubstr(const char *s, unsigned int start, size_t len);
 //~~~~ tokenize start~~~~
 //tokenize.c
 t_token				*tokenize(char *line_ptr);
-t_token 			*tkn_make_new(char *begining, char *last);
-enum e_token_kind	tkn_save_kind(char *begining);
-char				*save_last_chr(char *begining);
-ssize_t count_last(char *begining);
+ssize_t				_count_untill_last(char *begining);
+t_token				*make_new_tkn(char *begining, ssize_t count, enum e_token_kind kind);
+
 //tokenize_utils1.c
-char				*save_text_last(char *begining);
-char				*save_space_last(char *begining);
-char				*save_redir_last(char *begining);
-char				*save_quote_last(char *begining);
-char				*save_env_last(char *begining);
+ssize_t				count_untill_text_last(char *begining);
+ssize_t				count_untill_ifs_last(char *begining);
+ssize_t				count_untill_redir_last(char *begining);
+ssize_t				count_untill_quote_last(char *begining);
+ssize_t				count_untill_dollar_last(char *begining);
 //tokenize_utils2.c
-enum e_token_kind	save_redir_tkn_kind(char *begining);
-enum e_token_kind	save_env_or_text_kind(char *begining);
-char 				*tkn_substr(char *begining, char *last);
-char 				*tkn_substr_into_quote(char *begining, char *last);
-//tokenize_utils3.c
-ssize_t				count_text_last(char *begining);
-ssize_t				count_ifs_last(char *begining);
-ssize_t				count_redir_last(char *begining);
-ssize_t				count_quote_last(char *begining);
-ssize_t				count_dollar_last(char *begining);
+enum e_token_kind	_save_redir_tkn_kind(char *begining);
+enum e_token_kind	_save_env_or_text_kind(char *begining);
+enum e_token_kind	save_tkn_kind(char *begining);
+t_token				*find_last_tkn(t_token *head);
+void				add_last_tkn(t_token **head, t_token *new);
+//tkn_utils.c
+t_token				*save_prev_tkn(t_token *head, t_token *target);
+t_token				*find_last_valuable_tkn(t_token *tkn_ptr);
+char				*substr_from_tkn(t_token *begining, t_token *last);
 //~~~~ tokenize end~~~~
 
 //~~~~ parse start~~~~
 // // paese.c
-t_tree_node			*parse(t_token *tkn_head);
-void				push_all_redir_tkns(t_tree_node *tnode_ptr);
-t_tree_node			*make_tree_lst(t_token *tkn_ptr);
+t_tree_node			*parse(t_token *tkn_ptr);
+static t_tree_node	*_make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr);
+static void			_fill_null_last_tkn_of_tnode(t_tree_node *tnode_ptr);
+static void			_add_last_tnode(t_tree_node **head, t_tree_node *new);
+static t_tree_node	*_find_last_tnode(t_tree_node *head);
 // parse_utils1.c
-t_token *push_redir_tkns(t_token *ptr, t_bool (*is_func)(enum e_token_kind));
-t_token *save_last_for_redir_tkns(t_token *tkn_ptr);
-// parse_utils2.c
-void				tnode_add_last_right(t_tree_node **head, t_tree_node *new);
-t_tree_node			*tnode_find_last_right(t_tree_node *head);
+void				push_to_redir_tkns(t_tree_node *tnode_ptr);
+t_token				*separate_and_make_redir_tkns_lst(t_token *ptr, t_bool (*is_func)(enum e_token_kind));
+static void			_add_redir_tkns_last(t_token **head, t_token *prev_of_first, t_token *last);
+t_token				*save_redir_tkn_last(t_token *tkn_ptr);
 //~~~~parse end~~~~
 
 
@@ -201,7 +195,7 @@ t_tree_node			*tnode_find_last_right(t_tree_node *head);
 void	expansion(t_tree_node *ptr);
 void	expansion_tkns(t_token **tkn_head);
 //expand_env.c
-t_token *expand_env(t_token *env_tkn);
+void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of_env_tkn);
 //expand_env_in_dquote.c
 char *expand_env_in_dquote(char *str);
 //make_cmd_args.c
