@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/26 10:15:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/26 13:38:57 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@
 // 	tkn_free_lst(head);
 // }
 
-// parserの確認 syntax_errorなし
-int main(int argc, char **argv)
-{
-	char *str1 = "cat >  aaa$PED$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk | aaa<<gaga>>glnagal";
-	t_token *tkn_head = tokenize(str1);
-	tkn_print_lst(tkn_head);
-	t_tree_node *tnode_head = parse(tkn_head);
-	tnode_print_lst(tnode_head);
-	tnode_free_lst(tnode_head);
-}
+// // parserの確認 syntax_errorなし
+// int main(int argc, char **argv)
+// {
+// 	char *str1 = "cat >  aaa$PED$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk | aaa<<gaga>>glnagal";
+// 	t_token *tkn_head = tokenize(str1);
+// 	tkn_print_lst(tkn_head);
+// 	t_tree_node *tnode_head = parse(tkn_head);
+// 	tnode_print_lst(tnode_head);
+// 	tnode_free_lst(tnode_head);
+// }
 
 
 // // redir_listの確認
@@ -58,21 +58,22 @@ int main(int argc, char **argv)
 // }
 
 
-// // expand_envの確認
-// int main()
-// {
-// 	char *str1 = "  $AA aaaa";
-// 	char *str2 = "cat >  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS";
-// 	t_token *tkn_head = tokenize(str2);
-// 	if (tkn_head == NULL)
-// 		return (1);
-// 	t_tree_node *tnode_head = parse(tkn_head);
-// 	tnode_print_lst(tnode_head);
-// 	printf("---------------------------------------------------------------------------------\n");
-// 	expansion(tnode_head);
-// 	tnode_print_lst(tnode_head);
-// 	tnode_free_lst(tnode_head);
-// }
+// expand_envの確認
+int main()
+
+{
+	char *str1 = "  $AA aaaa";
+	char *str2 = "cat >  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |zzz$LS";
+	t_token *tkn_head = tokenize(str2);
+	if (tkn_head == NULL)
+		return (1);
+	t_tree_node *tnode_head = parse(tkn_head);
+	tnode_print_lst(tnode_head);
+	printf("---------------------------------------------------------------------------------\n");
+	expansion(tnode_head);
+	tnode_print_lst(tnode_head);
+	// tnode_free_lst(tnode_head);
+}
 
 // // expansion_env_in_dquoteの確認
 // int main()

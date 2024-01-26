@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/17 23:34:31 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/26 10:34:54 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,16 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len)
 //文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
 char *expand_env_in_dquote(char *str)
 {
-	size_t len;
+	size_t expanded_len;
 	char *expanded_str;
 
 	if (str == NULL)
 		return (NULL);
-	len = _strlen_env_expanded(str) + 1;
-	if (len  == ft_strlen(str) + 1)
+	expanded_len = _strlen_env_expanded(str) + 1;
+	if (expanded_len  == ft_strlen(str) + 1)
 		return (str);
-	expanded_str = (char *)ft_xmalloc(sizeof(char) * len);
-	_strlcat_env_expanded(expanded_str, str, len);
+	expanded_str = (char *)ft_xmalloc(sizeof(char) * expanded_len);
+	_strlcat_env_expanded(expanded_str, str, expanded_len);
 	free(str);
 	return (expanded_str);
 }
