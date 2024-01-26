@@ -6,13 +6,13 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:45:31 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/26 07:18:12 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/26 10:11:31 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-ssize_t	count_text_last(char *begining)
+ssize_t	count_untill_text_last(char *begining)
 {
 	ssize_t	i;
 
@@ -22,7 +22,7 @@ ssize_t	count_text_last(char *begining)
 	return (i);
 }
 
-ssize_t	count_ifs_last(char *begining)
+ssize_t	count_untill_ifs_last(char *begining)
 {
 	ssize_t	i;
 
@@ -32,7 +32,7 @@ ssize_t	count_ifs_last(char *begining)
 	return (i);
 }
 
-ssize_t	count_redir_last(char *begining)
+ssize_t	count_untill_redir_last(char *begining)
 {
 	// ssize_t	i;
 
@@ -43,7 +43,7 @@ ssize_t	count_redir_last(char *begining)
 		return (1);
 }
 
-ssize_t	count_quote_last(char *begining)			//クォート内を抜き出す
+ssize_t	count_untill_quote_last(char *begining)			//クォート内を抜き出す
 {
 	ssize_t	i;
 
@@ -55,7 +55,7 @@ ssize_t	count_quote_last(char *begining)			//クォート内を抜き出す
 	return (i + 1);
 }
 
-ssize_t	count_dollar_last(char *begining)
+ssize_t	count_untill_dollar_last(char *begining)
 {
 	char *next;
 
@@ -63,8 +63,8 @@ ssize_t	count_dollar_last(char *begining)
 	if (*next == '?' || *next == '$') 			//そのまま
 		return (2);
 	if (is_quote(*next))							//クォート内を抜き出す
-		return (1 + count_quote_last(next));
+		return (1 + count_untill_quote_last(next));
 	if (*next == '\0' || is_delim(*next))			//そのまま
 		return (1);
-	return (1 + count_text_last(next));				//そのまま
+	return (1 + count_untill_text_last(next));				//そのまま
 }

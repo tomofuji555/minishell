@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:39:39 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/26 08:28:25 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/26 10:13:31 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ enum e_token_kind	save_tkn_kind(char *begining)
 		return (TKN_TEXT);
 }
 
-t_token	*tkn_find_last(t_token *head)
+t_token	*find_last_tkn(t_token *head)
 {
 	t_token *ptr;
 
@@ -72,12 +72,12 @@ t_token	*tkn_find_last(t_token *head)
 	return (ptr);
 }
 
-void tkn_add_last(t_token **head, t_token *new)
+void add_last_tkn(t_token **head, t_token *new)
 {
 	if (*head == NULL)
 	{
 		*head = new;
 		return ;
 	}
-	tkn_find_last(*head)->next = new;
+	find_last_tkn(*head)->next = new;
 }

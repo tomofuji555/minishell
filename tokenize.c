@@ -6,26 +6,26 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/26 08:14:44 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/26 10:14:42 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-ssize_t _count_last(char *begining)
+ssize_t _count_untill_last(char *begining)
 {
 	if (*begining == '$')
-		return (count_dollar_last(begining));
+		return (count_untill_dollar_last(begining));
 	else if (*begining == '\"' || *begining == '\'')
-		return (count_quote_last(begining));
+		return (count_untill_quote_last(begining));
 	else if (*begining == '>' || *begining == '<')
-		return (count_redir_last(begining));
+		return (count_untill_redir_last(begining));
 	else if (*begining == '|')
 		return (1);
 	else if(is_ifs(*begining))
-		return (count_ifs_last(begining));
+		return (count_untill_ifs_last(begining));
 	else
-		return (count_text_last(begining));
+		return (count_untill_text_last(begining));
 }
 
 //lenはクォーテーション内の文字数+1文字分
@@ -64,14 +64,14 @@ t_token *tokenize(char *line_ptr)
 	head = NULL;
 	while (*line_ptr)
 	{
-		count = _count_last(line_ptr);
+		count = _count_untill_last(line_ptr);
 		if (count == -1)
 		{
 			tkn_free_lst(head);
 			return (NULL);
 		}
 		new = make_new_tkn(line_ptr, count, save_tkn_kind(line_ptr));
-		tkn_add_last(&head, new);
+		add_last_tkn(&head, new);
 		line_ptr += count;
 	}
 	return (head);

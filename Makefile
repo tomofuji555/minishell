@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/01/20 18:44:30 by toshi            ###   ########.fr        #
+#    Updated: 2024/01/26 09:51:08 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,15 +27,8 @@ SRCS		=	_alloc_utils.c \
 				tokenize.c \
 				tokenize_utils1.c \
 				tokenize_utils2.c \
-				tokenize_utils3.c \
 				parse.c \
 				parse_utils1.c \
-				parse_utils2.c \
-				expansion.c \
-				expand_env.c \
-				expand_env_in_dquote.c \
-				make_redir_list.c \
-				make_cmd_args.c \
 				main.c
 OBJS		=	$(SRCS:.c=.o)
 LIBFTPATH	=	libft/

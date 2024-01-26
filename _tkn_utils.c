@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/26 06:58:06 by toshi            ###   ########.fr       */
+/*   Updated: 2024/01/26 10:07:51 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token *save_prev_tkn(t_token *head, t_token *target)
 	return (ptr);
 }
 
-t_token *tkn_find_valuable_last(t_token *head)
+t_token *find_last_valuable_tkn(t_token *head)
 {
 	t_token *ptr;
 
