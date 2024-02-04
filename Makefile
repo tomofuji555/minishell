@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/01/26 13:22:10 by toshi            ###   ########.fr        #
+#    Updated: 2024/02/02 21:06:01 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRCS		=	_alloc_utils.c \
 				expand_env_of_tkn.c\
 				expand_env_in_dquote.c\
 				expansion.c\
+				make_cmd_args.c\
+				make_redir_lst.c\
 				main.c
 OBJS		=	$(SRCS:.c=.o)
 LIBFTPATH	=	libft/

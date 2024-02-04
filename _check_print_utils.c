@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/26 06:26:06 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/02 21:04:11 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,30 +76,30 @@ void	tnode_print_lst(t_tree_node *tnode_ptr)
 	while(tnode_ptr != NULL)
 	{
 		printf("----------tnode_ptr==%zd----------\n", i++);
-		printf("<cmd_tokens_ptr>\n");
-		tkn_print_lst(tnode_ptr->init_data.cmd_tokens);
-		if (tnode_ptr->init_data.infile_tokens != NULL)
+		// printf("<cmd_tokens_ptr>\n");
+		// tkn_print_lst(tnode_ptr->init_data.cmd_tokens);
+		// if (tnode_ptr->init_data.infile_tokens != NULL)
+		// {
+		// 	printf("<infile_tkns>\n");
+		// 	tkn_print_lst(tnode_ptr->init_data.infile_tokens);
+		// }
+		// if (tnode_ptr->init_data.outfile_tokens != NULL)
+		// {
+		// 	printf("<outfile_tkns>\n");
+		// 	tkn_print_lst(tnode_ptr->init_data.outfile_tokens);
+		// }
+		if (tnode_ptr->exec_data.cmd_args)
 		{
-			printf("<infile_tkns>\n");
-			tkn_print_lst(tnode_ptr->init_data.infile_tokens);
+			print_cmd_args(tnode_ptr->exec_data.cmd_args);
 		}
-		if (tnode_ptr->init_data.outfile_tokens != NULL)
+		if (tnode_ptr->exec_data.infile_paths)
 		{
-			printf("<outfile_tkns>\n");
-			tkn_print_lst(tnode_ptr->init_data.outfile_tokens);
+			redir_print_lst(tnode_ptr->exec_data.infile_paths);
 		}
-		// if (tnode_ptr->exec_data.cmd_args)
-		// {
-		// 	print_cmd_args(tnode_ptr->exec_data.cmd_args);
-		// }
-		// if (tnode_ptr->exec_data.infile_paths)
-		// {
-		// 	redir_print_lst(tnode_ptr->exec_data.infile_paths);
-		// }
-		// if (tnode_ptr->exec_data.outfile_paths)
-		// {
-		// 	redir_print_lst(tnode_ptr->exec_data.outfile_paths);
-		// }
+		if (tnode_ptr->exec_data.outfile_paths)
+		{
+			redir_print_lst(tnode_ptr->exec_data.outfile_paths);
+		}
 		tnode_ptr = tnode_ptr->right;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/26 10:14:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/02 20:44:29 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_token *tokenize(char *line_ptr)
 		count = _count_untill_last(line_ptr);
 		if (count == -1)
 		{
-			tkn_free_lst(head);
+			free_tkn_lst(head);
 			return (NULL);
 		}
 		new = make_new_tkn(line_ptr, count, save_tkn_kind(line_ptr));

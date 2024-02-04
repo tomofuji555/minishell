@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:10:12 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/26 13:38:49 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/02 20:44:11 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of_env_tk
 		else
 		{
 			*head = expanded_head;
+			// tkn_print_lst(*head);
+			// printf("------\n");
+			// printf("lastnext=%p\n", env_tkn->next);
 			find_last_tkn(expanded_head)->next = env_tkn->next;
 		}
 	}
@@ -78,5 +81,5 @@ void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of_env_tk
 			find_last_tkn(expanded_head)->next = env_tkn->next;
 		}
 	}
-	tkn_free(env_tkn);
+	free_tkn(env_tkn);
 }

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/01/26 12:21:31 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/02 21:06:15 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,10 @@ size_t				count_envname(char *dollar_ptr);
 char				*ft_getenv(const char *target_str);
 char				*search_env_val(char *dollar_ptr, size_t env_name_len);
 //free_utils.c
-void				tkn_free(t_token *tkn);
-void				tkn_free_lst(t_token *head);
-void				tnode_free(t_tree_node 	*tnode);
-void				tnode_free_lst(t_tree_node *head);
+void				free_tkn(t_token *tkn);
+void				free_tkn_lst(t_token *head);
+void				free_tnode(t_tree_node 	*tnode);
+void				free_tnode_lst(t_tree_node *head);
 //fujiwa_utils.c
 void				lst_add_back(t_token **lst, t_token *new);
 t_token				*make_new_token(char *start, ssize_t mv_count, int token_kind);
@@ -201,5 +201,5 @@ char *expand_env_in_dquote(char *str);
 //make_cmd_args.c
 char **make_cmd_args(t_token *tkn_head);
 //make_redir_list.c
-t_redir	*redir_make_list(t_token *tkn_ptr);
+t_redir	*redir_make_lst(t_token *tkn_ptr);
 #endif 
