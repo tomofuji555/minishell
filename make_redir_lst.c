@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_redir_list.c                                  :+:      :+:    :+:   */
+/*   make_redir_lst.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:00:37 by tozeki            #+#    #+#             */
-/*   Updated: 2024/01/21 09:30:29 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/02 21:34:38 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static t_bool	_contains_quote_tkn(t_token *begining)
 	t_token *ptr;
 
 	ptr = begining->next;
-	while (ptr && !is_redir_token(ptr->kind))
+	while (ptr && !is_redir_token(ptr->kind)) //is_valuable_tkn()でもアリ
 	{
 		if (ptr->kind == TKN_S_QUOTE || ptr->kind == TKN_D_QUOTE)
 			return (TRUE);
@@ -79,7 +79,7 @@ t_redir	*_redir_make_new(t_token *begining, t_token *last)
 	return (node);
 }
 
-t_redir	*redir_make_list(t_token *tkn_ptr)
+t_redir	*redir_make_lst(t_token *tkn_ptr)
 {
 	t_redir	*head;
 	t_redir *new;
