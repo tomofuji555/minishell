@@ -28,25 +28,28 @@ int fork_exec(char *path, char *arg[], char **envp)
 int main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
-	char	*path = "/bin/qq";
-	char	*arg[] = {"ls", "-a", NULL};
+	//char	*path = "../../../../../../bin/ls";
+	char	*path = "./a.out";
+	//char	*arg[] = {"ls", "-a", NULL};
+	char	*arg[] = {"a.out", NULL};
 	int		status;
 	int val;
 
 	pid = fork();
 	if (!pid)
 	{
-		// // execve(path, arg, NULL);
+		printf("\n");
+		execve(path, arg, NULL);
 		// // exit(199);
 		// while(1);
-		val = fork_exec(path, arg, NULL);
+		//val = fork_exec(path, arg, NULL);
 		
-		printf("--子プロセスは終了ステータス%dで終了しました\n", val);
+		//printf("--子プロセスは終了ステータス%dで終了しました\n", val);
 	}
 	else
 	{
 		wait(&status);
-		// printf("子プロセスは終了ステータス%dで終了しました\n", WEXITSTATUS(status));
+		//printf("子プロセスは終了ステータス%dで終了しました\n", WEXITSTATUS(status));
 		// printf("子プロセスはシグナル番号%dで終了しました\n", WTERMSIG(status));
 	}
 }

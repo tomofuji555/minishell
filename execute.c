@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/02 21:16:50 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/04 14:07:31 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int change_outstream(t_redir *redir_head, int pipe_out_fd)
 }
 
 
-int exec_external_cmd(t_tree_node *tree_node)
+int exec_external_cmd(t_tree_node *ptr, t_manager manager)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
@@ -69,32 +69,40 @@ int exec_external_cmd(t_tree_node *tree_node)
 	}
 }
 
-void	do_exec()
+void	do_exec(t_tree_node *ptr, t_manager manager)
 {
-	if (0) //ビルトインコマンドなら
-		exec_builtin_cmd()
+	if (is_builtin(ptr->exec_data.cmd_args[0]))
+		exec_builtin_cmd(ptr, manager);
 	else
-		exec_external_cmd()
+		exec_external_cmd(ptr, manager);
 }
 
+void	exec_tmp(t_tree_node *ptr, t_manager manager)
+{
+	while (ptr != NULL)
+	{
+		do_exec(ptr, manager);
+		ptr = ptr->right;
+	}
+}
 
-// exec_in_while(t_tree_node *root_node)
-// {
-// 	t_tree_node *cur_node;
+//exec_in_while(t_tree_node *root_node)
+//{
+//	t_tree_node *cur_node;
 
-// 	cur_node = root_node;
-// 	while (cur_node->left != NULL)
-// 		cur_node = cur_node->left;
-// 	do_exec(cur_node); //forkし、ストリームを変え、実行、prev_fd＆last_pidを更新
-// 	while (cur_node != NULL)
-// 	{
-// 		if (cur_node->right != NULL)
-// 			de_exec(cur_node->right->exec_arg_data); //forkし、ストリームを変え、実行、prev_fd＆last_pidを更新
-// 		cur_node = cur_node->prev;
-// 	}
-// 	while(0) //forkしたカウント
-// 	{
-// 		if (pid == wait(&status)) //last_pidとwaitの返り値が同じなら
-// 			printf("最終終了ステータス%d\n", WEXITSTATUS(status));
-// 	}
-// }
+//	cur_node = root_node;
+//	while (cur_node->left != NULL)
+//		cur_node = cur_node->left;
+//	do_exec(cur_node); //forkし、ストリームを変え、実行、prev_fd＆last_pidを更新
+//	while (cur_node != NULL)
+//	{
+//		if (cur_node->right != NULL)
+//			de_exec(cur_node->right->exec_arg_data); //forkし、ストリームを変え、実行、prev_fd＆last_pidを更新
+//		cur_node = cur_node->prev;
+//	}
+//	while(0) //forkしたカウント
+//	{
+//		if (pid == wait(&status)) //last_pidとwaitの返り値が同じなら
+//			printf("最終終了ステータス%d\n", WEXITSTATUS(status));
+//	}
+//}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/02 21:06:15 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/04 15:09:21 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ typedef struct s_tree_node
 	struct s_tree_node	*right;
 }	t_tree_node;
 
-typedef struct s_exec_handler
+typedef struct s_manager
 {
-	t_tree_node		*cur_node;
 	int				prev_pipe_in_fd;
-}	t_exec_handler;
+	
+}	t_manager;
 
 
 //~~~~utils start~~~~
