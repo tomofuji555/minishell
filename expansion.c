@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 09:55:48 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/08 10:43:34 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void	expansion_tkn_lst(t_token **tkn_head)
 	}
 }
 
-static size_t count_strs(t_token *tkn_ptr)
+static size_t count_strs(t_token *tkn_ptr) //名前修正が必要
 {
 	size_t i;
 

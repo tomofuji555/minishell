@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 07:39:11 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/08 19:46:58 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,22 +159,68 @@ int exec_external_cmd(t_exec_data data, t_manager manager, t_bool last_cmd_flag)
 		update_prev_fd(&manager, pipe_fd, last_cmd_flag);
 }
 
-void	do_exec(t_exec_data data, t_manager manager)
+void	do_exec(t_exec_data data, t_manager *manager)
 {
 	//if (is_builtin(ptr->exec_data.cmd_args[0]))
 	//	exec_builtin_cmd(ptr, manager);
 	//else
-		exec_external_cmd(data, manager);
+		exec_external_cmd(data, &manager);
 }
 
-void	exec_tmp(t_tree_node *ptr, t_manager manager)
+void	epxec_tmp(t_tree_node *ptr, t_manager manager)
 {
-	while (ptr != NULL)
+	while(--count)
 	{
-		do_exec(ptr->exec_data, manager);
+		if (!builtin)
+			fork_count++;
+		fork();
+		if (child)
+		{
+			exec_cmd();
+		}
+		last_pid = pid;
+		prev_output_fd = pipe_fd[0];
+	}
+	while(--fork_count)
+	{
+		if (wait() == last_pid)
+			exit_status = status;
+	}
+}
+
+void	_exec(t_tree_node *ptr, t_manager manager)
+{
+	int		pipe_fd[2];
+	pid_t	pid;
+	int		tmp_in;
+	int		tmp_out;
+
+	while(ptr != NULL)
+	{
+		stock_stream();
+
+		ft_xpipe(pipe_fd);
+		change_instream();
+		change_outstream();
+		if (!builtin)
+		{
+			manager.fork_count++;
+			pid = ft_xfork();
+			if (pid == CHILD)
+				exec_cmd();
+			else
+				manager.prev_output_fd = update_output_fd();
+		}
+		else
+			exec_builtin();
+		
+		
+		reset_stream();
 		ptr = ptr->right;
 	}
 }
+
+
 
 //exec_in_while(t_tree_node *root_node)
 //{

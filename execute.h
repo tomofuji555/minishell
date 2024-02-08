@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/08 09:58:39 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/08 13:24:11 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include "libft/libft.h"
+#include "stdbool.h"
 // #include "utils/utils.h"
 
 #define	SYS_FAILURE	-1
@@ -106,21 +107,21 @@ typedef struct s_manager
 	int		prev_output_fd;
 	size_t	fork_count;
 	pid_t	last_pid;
-	t_bool	last_cmd_flag;
-	t_bool	first_cmd_flag;
+	bool	last_cmd_flag;
+	bool	first_cmd_flag;
 }	t_manager;
 
 //~~~~utils start~~~~
 //bool_utils.c
-t_bool				is_delim(char c);
-t_bool				is_ifs(char c);
-t_bool				is_quote(char c);
-t_bool				is_valuable_tkn(enum e_token_kind kind);
-t_bool				is_redir_tkn(enum e_token_kind kind);
-t_bool				is_in_redir_tkn(enum e_token_kind kind);
-t_bool				is_out_redir_tkn(enum e_token_kind kind);
-t_bool				is_last_cmd(t_tree_node *ptr);
-t_bool				is_first_cmd(t_tree_node *ptr);
+bool				is_delim(char c);
+bool				is_ifs(char c);
+bool				is_quote(char c);
+bool				is_valuable_tkn(enum e_token_kind kind);
+bool				is_redir_tkn(enum e_token_kind kind);
+bool				is_in_redir_tkn(enum e_token_kind kind);
+bool				is_out_redir_tkn(enum e_token_kind kind);
+bool				is_last_cmd(t_tree_node *ptr);
+bool				is_first_cmd(t_tree_node *ptr);
 //env_utils.c
 size_t				count_envname(char *dollar_ptr);
 char				*ft_getenv(const char *target_str);
