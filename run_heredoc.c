@@ -1,24 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_heredoc.c                                      :+:      :+:    :+:   */
+/*   __run_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/14 22:42:06 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/08 06:31:42 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "execute.h"
-
-// __attribute__((destructor))
-// static void destructor() {
-//    system("leaks -q a.out");
-// }
-
-
 //ULLMAX通り以上のファイルを作成されるとエラー
 char	*create_tmpfile_path(void)
 {
@@ -28,22 +21,20 @@ char	*create_tmpfile_path(void)
 	num = 0;
 	while (num < ULLONG_MAX)
 	{
-		path = ft_strjoin("/tmp/", ulltonbase(num++, 16));
-		if (path == NULL)
-			perror_and_exit("malloc", 1);
-		if (access(path, F_OK) == SYS_FAILURE)
+		path = ft_xstrjoin("/tmp/", ulltonbase(num++, 16));
+		if (access(path, F_OK) == NOT_EXIST)
 			return (path);
 		free (path);
 	}
-	ft_putendl_fd("file_error: unexpected number of files", STDERR_FILENO);
+	ft_putendl_fd("file_error: unexpected number of files", STDERR_FILENO); //perror_and_exitに置き換え
 	exit(1);
 }
 
 //kindがREDIR_HEREDOC_NO_EXPANDでなければEXPAND
 //putし、そのlineをfree
-void put_fd_and_free_line(int fd, char *line, enum e_redir_kind kind)
+void output_fd_and_free_line(int fd, char *line, enum e_redir_kind heredoc_kind)
 {
-	if (kind == REDIR_HEREDOC)
+	if (heredoc_kind == REDIR_HEREDOC)
 		line = expand_env_in_dquote(line);
 	ft_putendl_fd(line, fd);
 	free(line);
@@ -51,13 +42,13 @@ void put_fd_and_free_line(int fd, char *line, enum e_redir_kind kind)
 
 //heredocで書き込んだファイルのpathを返す
 //delimのfreeは無し
-char	*run_heredoc(char *delim, enum e_redir_kind kind)
+char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind)
 {
 	char	*line;
 	char	*path;
 	int		fd;
 
-	path = ft_strdup("aaa");
+	path = create_tmpfile_path();
 	fd = open(path, O_WRONLY | O_CREAT, S_IRWXU);
 	if (fd == SYS_FAILURE)
 		;//検討
@@ -69,10 +60,10 @@ char	*run_heredoc(char *delim, enum e_redir_kind kind)
 		if (ft_strcmp(line, delim) == 0)
 			break;
 		else
-			put_and_free_line(fd, line, kind);
+			output_fd_and_free_line(fd, line, heredoc_kind);
 	}
 	free(line);
-	close(fd);
+	ft_xclose(fd);
 	return (path);
 }
 

@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   _free_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:12:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/02 20:47:40 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/08 08:30:01 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void	free_multi_strs(char **strs)
+{
+	size_t	i;
+
+	i = 0;
+	while (strs[i] != NULL)
+	{
+		free (strs[i]);
+		i++;
+	}
+	free (strs);
+}
 
 void	free_tkn(t_token *tkn)
 {

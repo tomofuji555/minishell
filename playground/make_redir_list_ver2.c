@@ -15,7 +15,7 @@ t_redir	*make_redir_list_ver2(t_token *tkn_ptr)
 	redir_ptr = redir_head;
 	while (tkn_ptr != NULL)
 	{
-		if (tkn_ptr->next == NULL || is_redir_token(tkn_ptr->next->kind))
+		if (tkn_ptr->next == NULL || is_redir_tkn(tkn_ptr->next->kind))
 		{
 			redir_ptr->next = make_redir_node(tkn_first, tkn_ptr);
 			if (redir_ptr->next == NULL)

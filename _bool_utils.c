@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _bool_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/21 20:04:19 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/08 08:47:24 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,15 @@ t_bool is_delim(char c)
 		|| c == '$' || c == '|' || c == '\0');
 }
 
-t_bool is_valuable_token(enum e_token_kind kind)
+t_bool is_valuable_tkn(enum e_token_kind kind)
 {
 	return (kind == TKN_TEXT || kind == TKN_S_QUOTE \
 		|| kind == TKN_D_QUOTE || kind == TKN_ENV);
+}
+
+t_bool	is_redir_tkn(enum e_token_kind kind)
+{
+	return (is_in_redir_tkn(kind) || is_out_redir_tkn(kind));
 }
 
 t_bool	is_in_redir_tkn(enum e_token_kind kind)
@@ -44,12 +49,12 @@ t_bool	is_out_redir_tkn(enum e_token_kind kind)
 	return (kind == TKN_OUT_FILE || kind == TKN_APPEND_FILE);
 }
 
-t_bool	is_redir_token(enum e_token_kind kind)
+t_bool is_last_cmd(t_tree_node *ptr)
 {
-	return (is_in_redir_tkn(kind) || is_out_redir_tkn(kind));
+	return (ptr->prev == NULL || ptr->prev->prev == NULL);
 }
 
-t_bool is_last_cmd(t_tree_node *cur_node)
+t_bool is_first_cmd(t_tree_node *ptr)
 {
-	return (cur_node->prev == NULL || cur_node->prev->prev == NULL);
+	return (ptr->left == NULL && (ptr->prev == NULL || ptr->prev->right != ptr));
 }

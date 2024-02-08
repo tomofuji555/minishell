@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _env_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/17 23:34:43 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/08 06:58:09 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ char	*ft_getenv(const char *target_str)
 	char		*env_name;
 	size_t		i;
 
+	if  (ft_strcmp(target_str, "?") == 0)
+		;//終了ステータスを返す
 	i = 0;
 	while (environ[i] != NULL)
 	{
 		env_name = ft_substr(environ[i], 0, (size_t)(ft_strchr(environ[i], '=') - environ[i]));
-		if (ft_strcmp(env_name, target_str) == 0)
+		if (ft_strcmp(target_str, env_name) == 0)
 		{
 			free(env_name);
 			return (ft_strchr(environ[i], '=') + sizeof(char));

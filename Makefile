@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
+#    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/02/02 21:06:01 by toshi            ###   ########.fr        #
+#    Updated: 2024/02/08 08:28:56 by tozeki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,25 +15,17 @@ CC			=	cc
 # CFLAGS		=	-Wall -Wextra -Werror 
 # RL_FLAGS	=	-lreadline -L $(brew --prefix readline)/lib -I $(brew --prefix readline)/include
 RL_FLAGS	=	-lreadline
-SRCS		=	_alloc_utils.c \
-				_bool_utils.c \
-				_check_print_utils.c \
+SRCS		=	_bool_utils.c \
 				_env_utils.c \
 				_free_utils.c \
-				_fujiwa_utils.c \
-				_redir_utils.c \
+				_libftwrap_utils.c \
+				_print_utils.c \
+				_syswrap_utils.c \
 				_tkn_utils.c \
-				_utils_1.c \
+				_utils.c \
 				tokenize.c \
-				tokenize_utils1.c \
-				tokenize_utils2.c \
 				parse.c \
-				parse_utils1.c \
-				expand_env_of_tkn.c\
-				expand_env_in_dquote.c\
 				expansion.c\
-				make_cmd_args.c\
-				make_redir_lst.c\
 				main.c
 OBJS		=	$(SRCS:.c=.o)
 LIBFTPATH	=	libft/

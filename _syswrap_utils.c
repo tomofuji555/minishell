@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _alloc_utils.c                                     :+:      :+:    :+:   */
+/*   _syswrap_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/31 00:12:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/16 20:34:20 by toshi            ###   ########.fr       */
+/*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
+/*   Updated: 2024/02/08 08:31:03 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void perror_and_exit(char *err_title, int exit_status)
+{
+	perror(err_title);
+	exit(exit_status);
+}
 
 void *ft_xmalloc(size_t size)
 {
@@ -44,4 +50,40 @@ void *ft_xcalloc(size_t count, size_t size)
 		perror_and_exit("malloc", 1);
 	ft_memset(ret, '\0', count * size);
 	return (ret);
+}
+
+int ft_xdup2(int copied_fd, int dest_fd)
+{
+	dest_fd = dup2(copied_fd, dest_fd);
+	if (dest_fd == SYS_FAILURE)
+		perror_and_exit(NULL, 1);
+	return (dest_fd);
+}
+
+void ft_xclose(int fd)
+{
+	if (close(fd) == SYS_FAILURE)
+		perror_and_exit(NULL, 1);
+}
+
+void ft_xpipe(int *pipe_fd)
+{
+	if(pipe(pipe_fd) == SYS_FAILURE)
+		perror_and_exit(NULL, 1);
+}
+
+pid_t ft_xfork(void)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == SYS_FAILURE)
+		perror_and_exit(NULL, 1);
+	return (pid);
+}
+
+void ft_xexecve(char *cmd_path, char **cmd_args, char **envp)
+{
+	if (execve(cmd_path, cmd_args, envp) == SYS_FAILURE)
+		perror_and_exit(NULL, 1);
 }

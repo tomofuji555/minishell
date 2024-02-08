@@ -29,9 +29,9 @@ int main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
 	//char	*path = "../../../../../../bin/ls";
-	char	*path = "./a.out";
+	char	*path = "ls";
 	//char	*arg[] = {"ls", "-a", NULL};
-	char	*arg[] = {"a.out", NULL};
+	char	*arg[] = {"ls", NULL};
 	int		status;
 	int val;
 

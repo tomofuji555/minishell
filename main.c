@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/02 21:08:18 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/08 09:45:43 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int main()
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);
-	// tnode_print_lst(tnode_head);
+	print_init_of_tnode_lst(tnode_head);
 	printf("---------------------------------------------------------------------------------\n");
 	expansion(tnode_head);
-	tnode_print_lst(tnode_head);
+	print_exec_of_tnode_lst(tnode_head);
 	// tnode_free_lst(tnode_head);
 }
 

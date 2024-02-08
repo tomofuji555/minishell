@@ -1,53 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _utils_1.c                                         :+:      :+:    :+:   */
+/*   _libft_wrap_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/25 23:13:00 by tozeki           ###   ########.fr       */
+/*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
+/*   Updated: 2024/02/08 06:29:40 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-
-void perror_and_exit(char *err_title, int exit_status)
-{
-	perror(err_title);
-	exit(exit_status);
-}
-
-//帰りがコピーしたカウントを返すft_strlcat
-size_t	ft2_strlcat(char *dest, const char *src, size_t size)
-{
-	size_t	dest_len;
-	size_t	i;
-	
-	dest_len = ft_strlen(dest);
-	if (size == 0 || size < dest_len)
-		return (0);
-	i = 0;
-	while(src[i] != '\0' && i + 1 < size)
-	{
-		dest[dest_len + i] = src[i];
-		i++;
-	}
-	return (i);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		i++;
-	if (s1[i] == '\0' && s2[i] == '\0')
-		return (0);
-	else
-		return ((int)((unsigned char)s1[i] - (unsigned char)s2[i]));
-}
 
 //malloc失敗したら、exitするだけのft_strtrim
 char	*ft_xstrdup(const char *s1)
@@ -102,40 +65,6 @@ char	*ft_xstrtrim(const char *s1, const char *set)
 	return (trimed_str);
 }
 
-
-static size_t	get_dig_nbase(unsigned long long num, unsigned int base)
-{
-	size_t	dig;
-
-	dig = 1;
-	while (num >= base)
-	{
-		num /= base;
-		dig++;
-	}
-	return (dig);
-}
-
-char	*ulltonbase(unsigned long long num, unsigned int base)
-{
-	const char	*string_base = "0123456789ABCDEF";
-	char		*str;
-	size_t		dig;
-
-	if (base > 16)
-		return (NULL);
-	dig = get_dig_nbase(num, base);
-	str = (char *)ft_calloc((dig + 1), sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	while (dig > 0)
-	{
-		str[--dig] = string_base[num % base];
-		num /= base;
-	}
-	return (str);
-}
-
 //malloc失敗したら、exitするだけのft_substr
 char	*ft_xsubstr(const char *s, unsigned int start, size_t len)
 {
@@ -154,3 +83,69 @@ char	*ft_xsubstr(const char *s, unsigned int start, size_t len)
 	return (str);
 }
 
+char	*ft_xstrjoin(const char *s1, const char *s2)
+{
+	size_t	len;
+	char	*str;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	str = (char *)ft_xcalloc(len, sizeof(char));
+	ft_strlcpy(str, s1, len);
+	ft_strlcat(str, s2, len);
+	return (str);
+}
+
+static size_t	get_len_i(const char *s, char c)
+{
+	size_t	len_i;
+	size_t	i;
+
+	len_i = 0;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+			len_i++;
+		i++;
+	}
+	return (len_i);
+}
+
+static char	**insert_strs(const char *s, char c, char **strs)
+{
+	size_t	i;
+	size_t	i_strs;
+	size_t	len_j;
+
+	i = 0;
+	i_strs = 0;
+	len_j = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+		{
+			strs[i_strs] = ft_xsubstr(&s[i - len_j], 0, len_j + 1);
+			i_strs++;
+			len_j = 0;
+		}
+		else if (s[i] != c)
+			len_j++;
+		i++;
+	}
+	strs[i_strs] = NULL;
+	return (strs);
+}
+
+char	**ft_xsplit(const char *s, char c)
+{
+	size_t	len_i;
+	char	**strs;
+
+	if (s == NULL)
+		return (NULL);
+	len_i = get_len_i(s, c);
+	strs = (char **)ft_xcalloc(len_i + 1, sizeof(char *));
+	return (insert_strs(s, c, strs));
+}
