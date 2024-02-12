@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/08 13:24:11 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/12 17:14:21 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,15 @@ typedef struct s_manager
 
 //~~~~utils start~~~~
 //bool_utils.c
-bool				is_delim(char c);
-bool				is_ifs(char c);
-bool				is_quote(char c);
-bool				is_valuable_tkn(enum e_token_kind kind);
-bool				is_redir_tkn(enum e_token_kind kind);
-bool				is_in_redir_tkn(enum e_token_kind kind);
-bool				is_out_redir_tkn(enum e_token_kind kind);
-bool				is_last_cmd(t_tree_node *ptr);
-bool				is_first_cmd(t_tree_node *ptr);
+t_bool	 			is_delim(char c);
+t_bool				is_ifs(char c);
+t_bool				is_quote(char c);
+t_bool				is_valuable_tkn(enum e_token_kind kind);
+t_bool				is_redir_tkn(enum e_token_kind kind);
+t_bool				is_in_redir_tkn(enum e_token_kind kind);
+t_bool				is_out_redir_tkn(enum e_token_kind kind);
+t_bool				is_last_cmd(t_tree_node *ptr);
+t_bool				is_first_cmd(t_tree_node *ptr);
 //env_utils.c
 size_t				count_envname(char *dollar_ptr);
 char				*ft_getenv(const char *target_str);
@@ -168,6 +168,9 @@ size_t				ft2_strlcat(char *dest, const char *src, size_t size);
 int					ft_strcmp(const char *s1, const char *s2);
 //~~~~utils end~~~~
 
+//~~~~ initi start~~~~
+t_manager init(void);
+//~~~~~~~~
 
 //~~~~ tokenize start~~~~
 t_token *tokenize(char *line_ptr);
@@ -225,17 +228,18 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len);
 //~~~~~~~~
 
 //~~~~execute start~~~~
-void	exec_tmp(t_tree_node *ptr, t_manager manager);
-void	do_exec(t_exec_data data, t_manager manager);
-int exec_external_cmd(t_exec_data data, t_manager manager, t_bool last_cmd_flag);
-void change_instream(t_redir *redir_head, int prev_output_fd);
-void change_outstream(t_redir *redir_head, int pipe_out_fd, t_bool last_cmd_flag);
-void update_prev_fd(t_manager *manager, int *pipefd, t_bool last_cmd_flag);
+void	_exec(t_tree_node *ptr, t_manager *manager);
+//void	exec_tmp(t_tree_node *ptr, t_manager manager);
+//void	do_exec(t_exec_data data, t_manager manager);
+//int exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_flag);
+//void change_instream(t_redir *redir_head, int prev_output_fd);
+//void change_outstream(t_redir *redir_head, int pipe_out_fd, t_bool last_cmd_flag);
+//void update_prev_fd(t_manager *manager, int *pipefd, t_bool last_cmd_flag);
 
-void	exec_cmd(char **cmd_args, char **envp);
-static char	*search_and_make_path(char *cmd_name, char **envp);
+//void	exec_cmd(char **cmd_args, char **envp);
+//static char	*search_and_make_path(char *cmd_name, char **envp);
 
-void	change_stream_to_redir(t_redir *redir_head, int dest_fd);
-static int fd_find_last(t_redir *redir_ptr);
-static int open_redir_path(t_redir *node);
+//void	change_stream_to_redir(t_redir *redir_head, int dest_fd);
+//static int fd_find_last(t_redir *redir_ptr);
+//static int open_redir_path(t_redir *node);
 #endif 

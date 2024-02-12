@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 19:46:58 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/12 20:35:27 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int fd_find_last(t_redir *redir_ptr)
 	{
 		if (fd > -1)
 			close(fd);
-		fd = _open_redir_path(redir_ptr);
+		fd = open_redir_path(redir_ptr);
 		if (fd == SYS_FAILURE)
 			return (fd);//error文吐く、exitするのは外
 		redir_ptr = redir_ptr->next;
@@ -47,7 +47,7 @@ void	change_stream_to_redir(t_redir *redir_head, int dest_fd)
 {
 	int redir_fd;
 
-	redir_fd = _fd_find_last(redir_head);
+	redir_fd = fd_find_last(redir_head);
 	if (redir_fd == SYS_FAILURE)
 		;//FALSEを返す
 	ft_xdup2 (redir_fd, dest_fd);
@@ -60,7 +60,7 @@ static char	*search_and_make_path(char *cmd_name, char **envp)
 	char	*cmd_path;
 	size_t	i;
 
-	path_lst = ft_xsplit(ft_getenv("PATH"), ':'); //xsplitに
+	path_lst = ft_split(ft_getenv("PATH"), ':'); //xsplitに
 	i = 0;
 	while (path_lst[i] != NULL)
 	{
@@ -87,7 +87,7 @@ void	exec_cmd(char **cmd_args, char **envp)
 	{
 		if (access(cmd_args[0], X_OK) == -1)
 			perror_and_exit(NULL, 1);	
-		ft_xececve(cmd_args[0], cmd_args, envp);
+		ft_xexecve(cmd_args[0], cmd_args, envp);
 		return ;
 	}
 	cmd_path = search_and_make_path(cmd_args[0], envp);
@@ -104,119 +104,119 @@ void	exec_cmd(char **cmd_args, char **envp)
 
 void change_instream(t_redir *redir_head, int prev_output_fd)
 {
-	//if (redir_head)
-	//	change_stream_to_redir(redir_head, STDIN_FILENO);
-	//else
-	//{
+	if (redir_head)
+		change_stream_to_redir(redir_head, STDIN_FILENO);
+	else
+	{
 		if (prev_output_fd != STDIN_FILENO)
 			ft_xdup2(prev_output_fd, STDIN_FILENO);
-	//}
+	}
 	ft_xclose(prev_output_fd);
 }
 
 void change_outstream(t_redir *redir_head, int pipe_out_fd, t_bool last_cmd_flag)
 {
-	//if (redir_head)
-	//	change_stream_to_redir(redir_head, STDOUT_FILENO);
-	//else
-	//{
-		if (last_cmd_flag == TRUE)
+	if (redir_head)
+		change_stream_to_redir(redir_head, STDOUT_FILENO);
+	else
+	{
+		if (last_cmd_flag != TRUE)
 			ft_xdup2(pipe_out_fd, STDOUT_FILENO);
-	//}
+	}
 	ft_xclose(pipe_out_fd);
 }
 
 void update_prev_fd(t_manager *manager, int *pipefd, t_bool last_cmd_flag)
 {
 	ft_xclose(pipefd[W]);
-	if (last_cmd_flag)
-	{
-		if (!manager->first_cmd_flag)
-			ft_xclose(manager->prev_output_fd);
-		ft_xclose(pipefd[R]);
-		return ;
-	}
-	if (!manager->first_cmd_flag)
+	//if (!manager->first_cmd_flag)
+	if (manager->prev_output_fd != STDIN_FILENO)
 		ft_xclose(manager->prev_output_fd);
-	manager->prev_output_fd = pipefd[W];
+	if (last_cmd_flag)
+		ft_xclose(pipefd[R]);
+	else
+		manager->prev_output_fd = pipefd[R];
 }
 
-
-int exec_external_cmd(t_exec_data data, t_manager manager, t_bool last_cmd_flag)
+pid_t exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_flag)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
+	extern	char **environ;
 
 	ft_xpipe(pipe_fd);
 	pid = ft_xfork();
 	if (pid == CHILD)
 	{
-		change_instream(data.infile_paths, manager.prev_output_fd);
+		change_instream(data.infile_paths, manager->prev_output_fd);
 		change_outstream(data.outfile_paths, pipe_fd[W], last_cmd_flag);
-		exec_cmd(data.cmd_args, manager.envp);
+		exec_cmd(data.cmd_args, environ);
+		exit(1);
 	}
-	else
-		update_prev_fd(&manager, pipe_fd, last_cmd_flag);
+	update_prev_fd(manager, pipe_fd, last_cmd_flag);
+	return (pid);
 }
 
-void	do_exec(t_exec_data data, t_manager *manager)
-{
-	//if (is_builtin(ptr->exec_data.cmd_args[0]))
-	//	exec_builtin_cmd(ptr, manager);
-	//else
-		exec_external_cmd(data, &manager);
-}
+//void	do_exec(t_exec_data data, t_manager *manager)
+//{
+//	//if (is_builtin(ptr->exec_data.cmd_args[0]))
+//	//	exec_builtin_cmd(ptr, manager);
+//	//else
+//		exec_external_cmd(data, &manager);
+//}
 
-void	epxec_tmp(t_tree_node *ptr, t_manager manager)
-{
-	while(--count)
-	{
-		if (!builtin)
-			fork_count++;
-		fork();
-		if (child)
-		{
-			exec_cmd();
-		}
-		last_pid = pid;
-		prev_output_fd = pipe_fd[0];
-	}
-	while(--fork_count)
-	{
-		if (wait() == last_pid)
-			exit_status = status;
-	}
-}
+//void	epxec_tmp(t_tree_node *ptr, t_manager manager)
+//{
+//	while(--count)
+//	{
+//		if (!builtin)
+//		{
+//			fork_count++;
+//			fork();
+//			if (child)
+//			{
+//				exec_cmd();
+//			}
+//			last_pid = pid;
+//			prev_output_fd = pipe_fd[0];
+//		}
+//		else
+//		{
+//			exec_cmd();
+//			last_pid = pid;
+//			prev_output_fd = pipe_fd[0];
+//		}
+//	}
+//	while(--fork_count)
+//	{
+//		if (wait() == last_pid)
+//			exit_status = status;
+//	}
+//}
 
-void	_exec(t_tree_node *ptr, t_manager manager)
+void	_exec(t_tree_node *ptr, t_manager *manager)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
-	int		tmp_in;
-	int		tmp_out;
+	pid_t	last_pid;
+	size_t	fork_count;
+	int		status;
 
+	fork_count = 0;
 	while(ptr != NULL)
 	{
-		stock_stream();
-
-		ft_xpipe(pipe_fd);
-		change_instream();
-		change_outstream();
-		if (!builtin)
+		if (ft_strcmp(ptr->exec_data.cmd_args[0], "|") != 0)
 		{
-			manager.fork_count++;
-			pid = ft_xfork();
-			if (pid == CHILD)
-				exec_cmd();
-			else
-				manager.prev_output_fd = update_output_fd();
+			last_pid = exec_external_cmd(ptr->exec_data, manager, is_last_cmd(ptr));
+			fork_count++;
 		}
-		else
-			exec_builtin();
-		
-		
-		reset_stream();
 		ptr = ptr->right;
+	}
+	while(fork_count > 0)
+	{
+		if (wait(&status) == last_pid)
+			manager->exit_status = WEXITSTATUS(status);
+		fork_count--;
 	}
 }
 

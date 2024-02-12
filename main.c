@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 09:45:43 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/12 20:34:41 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,22 @@
 // 	tnode_free_lst(tnode_head);
 // }
 
-// expand全体の確認
-int main()
-{
-	char *str1 = "  $AA aaaa";
-	char *str2 = "cat >  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
-	char *str3 = "$LS$";
-	t_token *tkn_head = tokenize(str2);
-	if (tkn_head == NULL)
-		return (1);
-	t_tree_node *tnode_head = parse(tkn_head);
-	print_init_of_tnode_lst(tnode_head);
-	printf("---------------------------------------------------------------------------------\n");
-	expansion(tnode_head);
-	print_exec_of_tnode_lst(tnode_head);
-	// tnode_free_lst(tnode_head);
-}
+//// expansion_env_of_tknの確認
+//int main()
+//{
+//	char *str1 = "  $AA aaaa";
+//	char *str2 = "cat >  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
+//	char *str3 = "$LS$";
+//	t_token *tkn_head = tokenize(str2);
+//	if (tkn_head == NULL)
+//		return (1);
+//	t_tree_node *tnode_head = parse(tkn_head);
+//	print_init_of_tnode_lst(tnode_head);
+//	printf("---------------------------------------------------------------------------------\n");
+//	expansion(tnode_head);
+//	print_exec_of_tnode_lst(tnode_head);
+//	// tnode_free_lst(tnode_head);
+//}
 
 // // expansion_env_in_dquote単体の確認
 // int main()
@@ -89,16 +89,18 @@ int main()
 // 	tnode_free_lst(tnode_head);
 // }
 
-// int main()
-// {
-// 	char *str = "cat< a.txt$PWD\"nalfa\" -e |  ls $PWD\"agnalnga\"  >    lll ";
-// 	t_token *tkn_head = tokenize(str);
-// 	if (tkn_head == NULL)
-// 		return (1);
-// 	t_tree_node *tnode_head = parse(tkn_head);
-// 	// tnode_print_lst(tnode_head);
-// 	printf("---------------------------------------------------------------------------------\n");
-// 	expansion(tnode_head);
-// 	tnode_print_lst(tnode_head);
-// 	tnode_free_lst(tnode_head);
-// }
+int main()
+{
+	t_manager manager;
+	
+	char *str = "ls | cat -e | rev | cat -e | rev | cat";
+	manager = init();
+	t_token *tkn_head = tokenize(str);
+	if (tkn_head == NULL)
+		return (1);
+	t_tree_node *tnode_head = parse(tkn_head);
+	expansion(tnode_head);
+	//print_exec_of_tnode_lst(tnode_head);
+	_exec(tnode_head, &manager);
+	printf("終了ステータスは%d\n", manager.exit_status);
+}

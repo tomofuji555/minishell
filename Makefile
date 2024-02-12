@@ -6,7 +6,7 @@
 #    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/02/08 08:28:56 by tozeki           ###   ########.fr        #
+#    Updated: 2024/02/12 17:11:35 by tozeki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,11 @@ SRCS		=	_bool_utils.c \
 				_syswrap_utils.c \
 				_tkn_utils.c \
 				_utils.c \
+				init.c \
 				tokenize.c \
 				parse.c \
 				expansion.c\
+				execute.c \
 				main.c
 OBJS		=	$(SRCS:.c=.o)
 LIBFTPATH	=	libft/

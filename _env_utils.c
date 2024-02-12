@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 06:58:09 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:29:04 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ char	*ft_getenv(const char *target_str)
 	char		*env_name;
 	size_t		i;
 
-	if  (ft_strcmp(target_str, "?") == 0)
+	if (ft_strcmp(target_str, "?") == 0)
 		;//終了ステータスを返す
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		env_name = ft_substr(environ[i], 0, (size_t)(ft_strchr(environ[i], '=') - environ[i]));
+		env_name = ft_xsubstr(environ[i], 0, (size_t)(ft_strchr(environ[i], '=') - environ[i]));
 		if (ft_strcmp(target_str, env_name) == 0)
 		{
 			free(env_name);
@@ -55,9 +55,7 @@ char *search_env_val(char *dollar_ptr, size_t env_name_len)
 	char *env_name;
 	char *env_val;
 
-	env_name = ft_substr(++dollar_ptr, 0, env_name_len);
-	if (env_name == NULL)
-		perror_and_exit("malloc", 1);
+	env_name = ft_xsubstr(++dollar_ptr, 0, env_name_len);
 	env_val = ft_getenv(env_name);
 	free(env_name);
 	return (env_val);

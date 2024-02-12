@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 08:47:24 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/12 15:46:52 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ t_bool	is_out_redir_tkn(enum e_token_kind kind)
 
 t_bool is_last_cmd(t_tree_node *ptr)
 {
-	return (ptr->prev == NULL || ptr->prev->prev == NULL);
+	return (ptr->right == NULL);
+	//return (ptr->prev == NULL || ptr->prev->prev == NULL);
 }
 
 t_bool is_first_cmd(t_tree_node *ptr)
