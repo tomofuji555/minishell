@@ -6,16 +6,71 @@
 ;;   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        ;;
 ;;                                                +#+#+#+#+#+   +#+           ;;
 ;;   Created: 2024/02/12 22:25:41 by tozeki            #+#    #+#             ;;
-;;   Updated: 2024/02/12 22:25:42 by tozeki           ###   ########.fr       ;;
+;;   Updated: 2024/02/12 22:51:17 by tozeki           ###   ########.fr       ;;
 ;;                                                                            ;;
 ;; ************************************************************************** ;;
+
+;{
+;	if (lst == NULL)
+;		*head = tkn->next;
+;	else
+;	{
+;		*head = lst;
+;		lstlast->next = tkn->next;
+;	}
+;}
+;else
+;{
+;	if (lst == NULL)
+;		tkn->prev = tkn->next;
+;	else
+;	{
+;		tkn->prev = lst;
+;		lstlast->next = tkn->next;
+;	}
+;}
 
 
 Expansion
 Envを展開し、tknのリストを作る
 リストを挿入するが、そのenvがheadの場合、headを更新する
 
+if (lst == NULL)
+{
+	if (tkn == head)
+		*head = tkn->next;
+	else
+		tkn->prev = tkn->next;
+}
+else
+{
+	if (tkn == head)
+	{
+		*head = lst;
+		lstlast->next = tkn->next;
+	}
+	else
+	{
+		tkn->prev = lst;
+		lstlast->next = tkn->next;
+	}
+}
+
 
 redir_list
 Redirに送るトークンのhead,lastを設定(tknのリストを作るのに似ている)
 リストを挿入するが、そのtkn_headがheadだった場合、更新する
+
+{
+	if (tkn == head)
+	{
+ gi		*head = lst;
+		lstlast->next = tkn->next;
+	}
+	else
+	{
+		tkn->prev = lst;
+		lstlast->next = tkn->next;
+	}
+}
+
