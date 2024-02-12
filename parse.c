@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 09:55:02 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/12 22:17:47 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static t_token *separate_and_make_redir_tkns_lst\
 	t_token *redir_tkns_head;
 	t_token *last;
 
+
 	redir_tkns_head = NULL;
 	while(ptr != NULL)
 	{
@@ -43,8 +44,11 @@ static t_token *separate_and_make_redir_tkns_lst\
 	return (redir_tkns_head);
 }
 
-static void	push_to_redir_tkns(t_tree_node *tnode_ptr)
+static void	push_to_redir_tkns(t_tree_node **tnode_head)
 {
+	t_tree_node *tnode_ptr;
+	
+	tnode_ptr = *tnode_head;
 	while(tnode_ptr != NULL)
 	{
 		tnode_ptr->init_data.infile_tokens = separate_and_make_redir_tkns_lst\

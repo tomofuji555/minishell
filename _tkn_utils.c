@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 09:55:36 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/12 21:36:27 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 //save_last~系は必ずptr->next!=NULLで止める
 t_token *find_last_valuable_tkn(t_token *tkn_ptr)
 {
-	tkn_ptr = tkn_ptr->next;
 	while(tkn_ptr->next != NULL && tkn_ptr->kind == TKN_SPACE)
 		tkn_ptr = tkn_ptr->next;
 	while(tkn_ptr->next != NULL && is_valuable_tkn(tkn_ptr->next->kind))
