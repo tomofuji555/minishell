@@ -3,58 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/12 22:17:47 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/13 19:02:44 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-
-static void	add_redir_tkns_last(t_token **head, t_token *prev_of_first, t_token *last)
+static void	add_redir_tkns_last(t_token **to_head, t_token *prev_of_first, t_token **from_head)
 {
-	if (*head == NULL)
-		*head = prev_of_first->next;
+	t_token *first;
+	
+	if (prev_of_first == NULL)
+	{
+		first = *from_head;
+		*from_head = find_last_valuable_tkn(first->next)->next;
+	}
 	else
-		find_last_tkn(*head)->next = prev_of_first->next;
-	prev_of_first->next = last->next;
-	last->next = NULL;
+	{
+		first = prev_of_first->next;
+		prev_of_first->next = find_last_valuable_tkn(first->next)->next;
+	}
+	if (*to_head == NULL)
+		*to_head = first;
+	else
+		find_last_tkn(*to_head)->next = first;
+	find_last_valuable_tkn(first->next)->next = NULL;
 }
 
 //init_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする
 static t_token *separate_and_make_redir_tkns_lst\
-	(t_token *ptr, t_bool (*is_func)(enum e_token_kind))
+	(t_token **head, t_bool (*is_func)(enum e_token_kind))
 {
 	t_token *redir_tkns_head;
-	t_token *last;
-
+	t_token *prev;
+	t_token *ptr;
+	t_token *next;
 
 	redir_tkns_head = NULL;
+	ptr = *head;
+	prev = NULL;
 	while(ptr != NULL)
 	{
-		if (ptr->next != NULL && is_func(ptr->next->kind))
+		if (is_func(ptr->kind))
 		{
-			last = find_last_valuable_tkn(ptr->next);
-			add_redir_tkns_last(&redir_tkns_head, ptr, last);
+			next = find_last_valuable_tkn(ptr->next)->next;
+			add_redir_tkns_last(&redir_tkns_head, prev, head);
+			prev = save_prev_tkn(*head, next);
+			ptr = next;
 		}
-		ptr = ptr->next;
+		else
+		{
+			prev = ptr;
+			ptr = ptr->next;
+		}
 	}
 	return (redir_tkns_head);
 }
 
-static void	push_to_redir_tkns(t_tree_node **tnode_head)
+static void	push_to_redir_tkns(t_tree_node *tnode_head)
 {
 	t_tree_node *tnode_ptr;
 	
-	tnode_ptr = *tnode_head;
+	tnode_ptr = tnode_head;
 	while(tnode_ptr != NULL)
 	{
 		tnode_ptr->init_data.infile_tokens = separate_and_make_redir_tkns_lst\
-			(tnode_ptr->init_data.cmd_tokens, is_in_redir_tkn);
+			(&tnode_ptr->init_data.cmd_tokens, is_in_redir_tkn);
 		tnode_ptr->init_data.outfile_tokens = separate_and_make_redir_tkns_lst\
-			(tnode_ptr->init_data.cmd_tokens, is_out_redir_tkn);
+			(&tnode_ptr->init_data.cmd_tokens, is_out_redir_tkn);
 		tnode_ptr = tnode_ptr->right;
 	}
 }

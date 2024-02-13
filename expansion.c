@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/12 22:18:47 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/13 18:57:04 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static size_t count_untill_last_and_set_kind(char *begining, enum e_token_kind *
 	}
 	else
 	{
-		*kind = TKN_TEXT;	
+		*kind = TKN_TEXT;
 		i = 1;
 		while(begining[i] && !is_ifs(begining[i]))
 			i++;
@@ -153,7 +153,7 @@ void	expansion_tkn_lst(t_token **tkn_head)
 	while(tkn_ptr != NULL)
 	{
 		if (tkn_ptr->kind == TKN_HEREDOC)
-			tkn_ptr = find_last_valuable_tkn(tkn_ptr)->next;
+			tkn_ptr = find_last_valuable_tkn(tkn_ptr->next)->next;
 		else if (tkn_ptr->kind == TKN_D_QUOTE)
 		{
 			tkn_ptr->val = expand_env_in_dquote(tkn_ptr->val);

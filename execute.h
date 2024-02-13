@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/12 17:14:21 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/13 18:38:06 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,15 +192,15 @@ ssize_t				count_untill_dollar_last(char *begining);
 //~~~~ parse start~~~~
 t_tree_node *parse(t_token *tkn_ptr);
 
-static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr);
-static void	add_tnode_last(t_tree_node **head, t_tree_node *new);
-static t_tree_node	*find_last_tnode(t_tree_node *head);
+// static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr);
+// static void	add_tnode_last(t_tree_node **head, t_tree_node *new);
+// static t_tree_node	*find_last_tnode(t_tree_node *head);
 
-static void	fill_null_last_tkn_of_tnode(t_tree_node *tnode_ptr);
+// static void	fill_null_last_tkn_of_tnode(t_tree_node *tnode_ptr);
 
-static void	push_to_redir_tkns(t_tree_node *tnode_ptr);
-static t_token *separate_and_make_redir_tkns_lst(t_token *ptr, t_bool (*is_func)(enum e_token_kind));
-static void	add_redir_tkns_last(t_token **head, t_token *prev_of_first, t_token *last);
+// static void	push_to_redir_tkns(t_tree_node *tnode_ptr);
+// static t_token *separate_and_make_redir_tkns_lst(t_token *ptr, t_bool (*is_func)(enum e_token_kind));
+// static void	add_redir_tkns_last(t_token **head, t_token *prev_of_first, t_token *last);
 //~~~~~~~~
 
 //~~~~expansion start~~~~

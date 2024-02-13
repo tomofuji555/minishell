@@ -3,10 +3,10 @@
 ;;                                                        :::      ::::::::   ;;
 ;;   memo                                               :+:      :+:    :+:   ;;
 ;;                                                    +:+ +:+         +:+     ;;
-;;   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        ;;
+;;   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        ;;
 ;;                                                +#+#+#+#+#+   +#+           ;;
 ;;   Created: 2024/02/12 22:25:41 by tozeki            #+#    #+#             ;;
-;;   Updated: 2024/02/12 22:51:17 by tozeki           ###   ########.fr       ;;
+;;   Updated: 2024/02/13 17:39:11 by toshi            ###   ########.fr       ;;
 ;;                                                                            ;;
 ;; ************************************************************************** ;;
 
@@ -35,42 +35,69 @@ Expansion
 Envを展開し、tknのリストを作る
 リストを挿入するが、そのenvがheadの場合、headを更新する
 
-if (lst == NULL)
+
+void bbb(node *head, node *lst, node *tkn) //tknではなくtkn_equol_head_flagでもいい
 {
-	if (tkn == head)
-		*head = tkn->next;
-	else
-		tkn->prev = tkn->next;
-}
-else
-{
-	if (tkn == head)
+	if (lst == NULL)
 	{
-		*head = lst;
-		lstlast->next = tkn->next;
+		if (tkn == head)
+			*head = tkn->next;
+		else
+			tkn->prev = tkn->next;
 	}
 	else
 	{
-		tkn->prev = lst;
-		lstlast->next = tkn->next;
+		if (tkn == head)
+		{
+			*head = lst;
+			lstlast->next = tkn->next;
+		}
+		else
+		{
+			tkn->prev = lst;
+			lstlast->next = tkn->next;
+		}
 	}
 }
 
 
 redir_list
-Redirに送るトークンのhead,lastを設定(tknのリストを作るのに似ている)
+Redirに送るトークンのfirst,lastを設定(tknのリストを作るのに似ている)
 リストを挿入するが、そのtkn_headがheadだった場合、更新する
 
+vodi aaa(node *prev_of_first, node **from_head, node **to_head)
 {
-	if (tkn == head)
+	node *first;
+	node *last;
+	
+	if (prev_of_first == NULL)
 	{
- gi		*head = lst;
-		lstlast->next = tkn->next;
+		first = *from_head;
+		last = find_last_valuable_tkn(first);
+		*from_head = last->next;
 	}
 	else
 	{
-		tkn->prev = lst;
-		lstlast->next = tkn->next;
+		first = prev_of_first->next;
+		last = find_last_valuable_tkn(first);
+		prev_of_first->next = last->next;
 	}
+	if (*to_head == NULL)
+		*to_head = first;
+	else
+		find_last_tkn(*to_head)->next = first;
+	last->next = NULL;
 }
 
+	; if (first == from_head)
+	; {
+	; 	to_head = first;
+	; 	from_head = find_last_valuable_tkn(first)->next;
+	; 	last->next = NULL;
+	; }
+	; else
+	; {
+	; 	find_last_tkn(to_head)->next = first;
+	; 	prev_first->next = find_last_valuable_tkn(first)->next;
+	; 	last->next = NULL;
+	; }

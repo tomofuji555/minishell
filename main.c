@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/12 21:20:35 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/13 19:03:59 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int main()
 {
 	t_manager manager;
 	
-	char *str = "< a cat |<b  > g cat -e |<a cat";
+	char *str = ">k< a cat |> g<b cat -e |<a cat";
 	manager = init();
 	t_token *tkn_head = tokenize(str);
 	if (tkn_head == NULL)
@@ -101,7 +101,7 @@ int main()
 	t_tree_node *tnode_head = parse(tkn_head);
 	print_init_of_tnode_lst(tnode_head);
 	//expansion(tnode_head);
-	//print_exec_of_tnode_lst(tnode_head);
-	//_exec(tnode_head, &manager);
+	// print_exec_of_tnode_lst(tnode_head);
+	// _exec(tnode_head, &manager);
 	printf("終了ステータスは%d\n", manager.exit_status);
 }
