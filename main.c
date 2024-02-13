@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/13 19:03:59 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/13 22:14:53 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@
 // 	t_token *head = tokenize(str5);
 // 	tkn_print_lst(head);
 // 	tkn_free_lst(head);
+// }
+
+// // push_redirの確認
+// int main()
+// {
+// 	t_manager manager;
+	
+// 	char *str = ">k< a cat |> g<b cat -e |<a cat";
+// 	manager = init();
+// 	t_token *tkn_head = tokenize(str);
+// 	if (tkn_head == NULL)
+// 		return (1);
+// 	t_tree_node *tnode_head = parse(tkn_head);
+// 	print_init_of_tnode_lst(tnode_head);
 // }
 
 // // parserの確認 syntax_errorなし
@@ -93,15 +107,15 @@ int main()
 {
 	t_manager manager;
 	
-	char *str = ">k< a cat |> g<b cat -e |<a cat";
+	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev | head -n 5";
+	char *str2 = "cat | cat |  ls ";
 	manager = init();
-	t_token *tkn_head = tokenize(str);
+	t_token *tkn_head = tokenize(str2);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);
-	print_init_of_tnode_lst(tnode_head);
-	//expansion(tnode_head);
+	expansion(tnode_head);
 	// print_exec_of_tnode_lst(tnode_head);
-	// _exec(tnode_head, &manager);
+	_exec(tnode_head, &manager);
 	printf("終了ステータスは%d\n", manager.exit_status);
 }

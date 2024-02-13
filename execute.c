@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/12 20:35:27 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/13 22:14:39 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,18 @@ void	exec_cmd(char **cmd_args, char **envp)
 void change_instream(t_redir *redir_head, int prev_output_fd)
 {
 	if (redir_head)
+	{
 		change_stream_to_redir(redir_head, STDIN_FILENO);
+		ft_xclose(prev_output_fd);
+	}
 	else
 	{
 		if (prev_output_fd != STDIN_FILENO)
+		{
 			ft_xdup2(prev_output_fd, STDIN_FILENO);
+			ft_xclose(prev_output_fd);
+		}
 	}
-	ft_xclose(prev_output_fd);
 }
 
 void change_outstream(t_redir *redir_head, int pipe_out_fd, t_bool last_cmd_flag)
@@ -148,6 +153,7 @@ pid_t exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_fl
 	pid = ft_xfork();
 	if (pid == CHILD)
 	{
+		ft_xclose(pipe_fd[R]);
 		change_instream(data.infile_paths, manager->prev_output_fd);
 		change_outstream(data.outfile_paths, pipe_fd[W], last_cmd_flag);
 		exec_cmd(data.cmd_args, environ);
