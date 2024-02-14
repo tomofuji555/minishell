@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/13 18:38:06 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/15 02:28:12 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 #define	CHILD		0
 #define EXIST		0
 #define NOT_EXIST	-1
+#define DEFAULT		0
+#define AMBIGUOUS	NULL
 
 enum	e_pipefd_direct
 {
@@ -133,12 +135,16 @@ void				free_tkn_lst(t_token *head);
 void				free_tnode(t_tree_node 	*tnode);
 void				free_tnode_lst(t_tree_node *head);
 //libftwrap_utils.c
+void	ft_perror(char *errtarget, char *errstr);
+void ft_perror_and_exit(char *errtarget, char *errstr, int exit_status);
+void	perror_and_exit(char *err_title, int exit_status);
 char	*ft_xstrdup(const char *s1);
 char	*ft_xstrtrim(const char *s1, const char *set);
 char	*ft_xsubstr(const char *s, unsigned int start, size_t len);
 char	*ft_xstrjoin(const char *s1, const char *s2);
 char	**ft_xsplit(const char *s, char c);
 //print_utils.c
+void				cw(void);
 void				print_to_last(char *begining, char *last);
 void				print_tkn_lst(t_token *head);
 void				print_init_of_tnode_lst(t_tree_node *tnode_ptr);
@@ -146,7 +152,6 @@ void				print_exec_of_tnode_lst(t_tree_node *tnode_ptr);
 void				print_cmd_args(char **strs);
 void				print_redir_lst(t_redir *head);
 //syswrap_utils.c
-void	perror_and_exit(char *err_title, int exit_status);
 void	*ft_xmalloc(size_t size);
 void	*ft_xrealloc(void *ptr, size_t size);
 void	*ft_xcalloc(size_t count, size_t size);

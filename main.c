@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/14 18:47:47 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 03:21:01 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int main()
 	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev | head -n 5";
 	char *str2 = "cat | cat |  ls ";
 	char *str3 = "<./a cat <.b|>./c cat ";
-	char *str4 = "<./a cat";
+	char *str4 = "<a>c cat <b";
 	manager = init();
 	t_token *tkn_head = tokenize(str4);
 	if (tkn_head == NULL)

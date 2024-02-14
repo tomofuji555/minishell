@@ -1,17 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _libft_wrap_utils.c                                :+:      :+:    :+:   */
+/*   _libftwrap_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/08 06:29:40 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 02:27:22 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
+
+void	ft_perror(char *errtarget, char *errstr)
+{
+	ft_putstr_fd(errtarget, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(errstr, STDERR_FILENO);
+}
+
+void ft_perror_and_exit(char *errtarget, char *errstr, int exit_status)
+{
+	ft_perror(errtarget, errstr);
+	exit(exit_status);
+}
+
+void perror_and_exit(char *err_title, int exit_status)
+{
+	perror(err_title);
+	exit(exit_status);
+}
 //malloc失敗したら、exitするだけのft_strtrim
 char	*ft_xstrdup(const char *s1)
 {

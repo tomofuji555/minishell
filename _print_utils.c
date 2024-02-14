@@ -6,11 +6,16 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 09:06:21 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/14 22:45:56 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void	cw(void)
+{
+	write(STDERR_FILENO, "test\n", 5);
+}
 
 //tokenizeの際、beginingとlastの範囲がとれているか
 void print_to_last(char *begining, char *last)

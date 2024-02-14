@@ -38,7 +38,7 @@ int main(int argc, char **argv, char **envp)
 	pid = fork();
 	if (!pid)
 	{
-		printf("\n");
+		printf("child!!!\n");
 		execve(path, arg, NULL);
 		// // exit(199);
 		// while(1);

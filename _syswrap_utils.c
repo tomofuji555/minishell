@@ -6,17 +6,11 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/08 08:31:03 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 02:06:04 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-
-void perror_and_exit(char *err_title, int exit_status)
-{
-	perror(err_title);
-	exit(exit_status);
-}
 
 void *ft_xmalloc(size_t size)
 {
