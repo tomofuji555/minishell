@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/13 22:14:39 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/14 19:03:43 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int open_redir_path(t_redir *node)
 {
 	int fd;
+
 	
 	if (node->kind == REDIR_OUT_FILE)
 		fd = open(node->val, O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
@@ -47,10 +48,13 @@ void	change_stream_to_redir(t_redir *redir_head, int dest_fd)
 {
 	int redir_fd;
 
-	redir_fd = fd_find_last(redir_head);
-	if (redir_fd == SYS_FAILURE)
-		;//FALSEを返す
+	//redir_fd = fd_find_last(redir_head);
+	//if (redir_fd == SYS_FAILURE)
+	//	;//FALSEを返す
+	redir_fd = open(redir_head->val, O_RDONLY);
+	printf("fd=%d redir=%s\n", redir_fd, redir_head->val);
 	ft_xdup2 (redir_fd, dest_fd);
+	
 	ft_xclose(redir_fd);
 }
 
@@ -107,7 +111,6 @@ void change_instream(t_redir *redir_head, int prev_output_fd)
 	if (redir_head)
 	{
 		change_stream_to_redir(redir_head, STDIN_FILENO);
-		ft_xclose(prev_output_fd);
 	}
 	else
 	{
