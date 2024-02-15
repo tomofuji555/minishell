@@ -6,13 +6,13 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/14 22:45:56 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 09:15:33 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	cw(void)
+void	wc(void)
 {
 	write(STDERR_FILENO, "test\n", 5);
 }

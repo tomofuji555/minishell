@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/15 02:27:22 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 09:41:22 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ char	*ft_xsubstr(const char *s, unsigned int start, size_t len)
 	if (s == NULL)
 		return (NULL);
 	len_s = ft_strlen(s);
-	if (start > len_s)
+	if (len_s < start)
 		return (ft_xstrdup(""));
-	if (len > len_s)
+	if (len_s < len)
 		len = len_s - start;
 	str = (char *)ft_xmalloc(sizeof(char) * (len + 1));
 	ft_strlcpy(str, &s[start], len + 1);
@@ -116,20 +116,20 @@ char	*ft_xstrjoin(const char *s1, const char *s2)
 	return (str);
 }
 
-static size_t	get_len_i(const char *s, char c)
+static size_t	get_split_len(const char *s, char c)
 {
-	size_t	len_i;
+	size_t	len;
 	size_t	i;
 
-	len_i = 0;
+	len = 0;
 	i = 0;
 	while (s[i] != '\0')
 	{
 		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
-			len_i++;
+			len++;
 		i++;
 	}
-	return (len_i);
+	return (len);
 }
 
 static char	**insert_strs(const char *s, char c, char **strs)
@@ -164,7 +164,8 @@ char	**ft_xsplit(const char *s, char c)
 
 	if (s == NULL)
 		return (NULL);
-	len_i = get_len_i(s, c);
-	strs = (char **)ft_xcalloc(len_i + 1, sizeof(char *));
+	len_i = get_split_len(s, c) + 1;
+	//strs = (char **)ft_xcalloc(sizeof(char *) * (get_split_len(s, c) + 1));
+	strs = (char **)ft_xmalloc(sizeof(char *) * len_i); //ft_xcallocが原因　xmalloc/callocならいける
 	return (insert_strs(s, c, strs));
 }

@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 03:19:32 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 09:43:22 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*search_and_make_path(char *cmd_name, char **envp)
 	char	*cmd_path;
 	size_t	i;
 
-	path_lst = ft_split(ft_getenv("PATH"), ':'); //xsplitにするとぶっ壊れる getevnでもぶっ壊れるため、xsplit側に問題あり
+	path_lst = ft_xsplit(ft_getenv("PATH"), ':'); //xsplitにするとぶっ壊れる getevnでもぶっ壊れるため、xsplit側に問題あり->xcallocに原因
 	i = 0;
 	while (path_lst[i] != NULL)
 	{

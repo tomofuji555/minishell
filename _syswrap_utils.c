@@ -6,11 +6,17 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/15 02:06:04 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 09:21:34 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void ft_free(void **ptr)
+{
+	free(*ptr);
+	*ptr = NULL;
+}
 
 void *ft_xmalloc(size_t size)
 {

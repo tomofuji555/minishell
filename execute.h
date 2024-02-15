@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/15 02:28:12 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 09:15:33 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ char	*ft_xsubstr(const char *s, unsigned int start, size_t len);
 char	*ft_xstrjoin(const char *s1, const char *s2);
 char	**ft_xsplit(const char *s, char c);
 //print_utils.c
-void				cw(void);
+void				wc(void);
 void				print_to_last(char *begining, char *last);
 void				print_tkn_lst(t_token *head);
 void				print_init_of_tnode_lst(t_tree_node *tnode_ptr);
@@ -152,6 +152,7 @@ void				print_exec_of_tnode_lst(t_tree_node *tnode_ptr);
 void				print_cmd_args(char **strs);
 void				print_redir_lst(t_redir *head);
 //syswrap_utils.c
+void ft_free(void **ptr);
 void	*ft_xmalloc(size_t size);
 void	*ft_xrealloc(void *ptr, size_t size);
 void	*ft_xcalloc(size_t count, size_t size);
