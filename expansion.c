@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 16:45:44 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 21:03:01 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len)
 }
 
 //文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
-char *expand_env_in_dquote(char *str)
+char	*expand_env_in_dquote(char *str)
 {
 	size_t expanded_len;
 	char *expanded_str;
@@ -114,31 +114,55 @@ static t_token *tokenize_space_or_text(char *env_val)
 }
 
 //引数を**型にしないと反映されない
-static void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of_env_tkn)
-{
-	t_token *expanded_head;
+//static void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of_env_tkn)
+//{
+//	t_token *expanded_head;
 	
-	expanded_head = tokenize_space_or_text \
-		(search_env_val(env_tkn->val, count_envname(env_tkn->val)));
-	if (*head == env_tkn) //headをexpansionした場合
+//	expanded_head = tokenize_space_or_text \
+//		(search_env_val(env_tkn->val, count_envname(env_tkn->val)));
+//	if (*head == env_tkn) //headをexpansionした場合
+//	{
+//		if (expanded_head == NULL) //env_tknのvalがなかった
+//			*head = env_tkn->next;
+//		else
+//		{
+//			*head = expanded_head;
+//			find_last_tkn(expanded_head)->next = env_tkn->next;
+//		}
+//	}
+//	else //head以外をexpansionした場合
+//	{
+//		if (expanded_head == NULL) //env_tknのvalがなかった
+//			prev_of_env_tkn->next = env_tkn->next;
+//		else
+//		{
+//			prev_of_env_tkn->next = expanded_head;
+//			find_last_tkn(expanded_head)->next = env_tkn->next;
+//		}
+//	}
+//	free_tkn(env_tkn);
+//}
+
+static void	connect_expanded_env_tkn(t_token **head, t_token *expanded_head, t_token *env_tkn, t_token *prev_env_tkn)
+{
+	if (expanded_head == NULL)
 	{
-		if (expanded_head == NULL) //env_tknのvalがなかった
+		if (*head == env_tkn)
 			*head = env_tkn->next;
 		else
-		{
-			*head = expanded_head;
-			find_last_tkn(expanded_head)->next = env_tkn->next;
-		}
+			prev_env_tkn->next = env_tkn->next;
+		//繋げる
+		*ptr = prev_env_tkn;
 	}
-	else //head以外をexpansionした場合
+	else
 	{
-		if (expanded_head == NULL) //env_tknのvalがなかった
-			prev_of_env_tkn->next = env_tkn->next;
+		if (*head == env_tkn)
+			*head = expanded_head;
 		else
-		{
-			prev_of_env_tkn->next = expanded_head;
-			find_last_tkn(expanded_head)->next = env_tkn->next;
-		}
+			prev_env_tkn->next = expanded_head;
+		//繋げる
+		*ptr = find_last_tkn(expanded_head)
+		find_last_tkn(expanded_head)->next = env_tkn->next;
 	}
 	free_tkn(env_tkn);
 }
@@ -147,57 +171,55 @@ static void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of
 void	expansion_tkn_lst(t_token **tkn_head)
 {
 	t_token *tkn_ptr;
-	t_token *next_tkn;
 
 	tkn_ptr = *tkn_head;
 	while(tkn_ptr != NULL)
 	{
 		if (tkn_ptr->kind == TKN_HEREDOC)
-			tkn_ptr = find_last_valuable_tkn(tkn_ptr->next)->next;
+			tkn_ptr = find_last_valuable_tkn(tkn_ptr->next);
 		else if (tkn_ptr->kind == TKN_D_QUOTE)
-		{
 			tkn_ptr->val = expand_env_in_dquote(tkn_ptr->val);
-			tkn_ptr = tkn_ptr->next;
-		}
 		else if (tkn_ptr->kind == TKN_ENV)
-		{
-			next_tkn = tkn_ptr->next;
-			expand_env_of_tkn(tkn_head, tkn_ptr, save_prev_tkn(*tkn_head, tkn_ptr));
-			tkn_ptr = next_tkn;
-		}
-		else
-			tkn_ptr = tkn_ptr->next;
+			tkn_ptr = connect_expanded_env_tkn(tkn_head, 
+				tokenize_space_or_text(search_env_val(tkn_ptr->val, 
+				count_envname(tkn_ptr->val))), save_prev_tkn(tkn_head, tkn_ptr));
+		tkn_ptr = tkn_ptr->next;
 	}
 }
+			//expand_env_of_tkn(tkn_head, tkn_ptr, save_prev_tkn(*tkn_head, tkn_ptr));
 
-static size_t count_strs(t_token *tkn_ptr) //名前修正が必要
+static size_t count_arg_strs(t_token *tkn_ptr) //名前修正が必要
 {
 	size_t i;
 
 	i = 1;
 	while (tkn_ptr != NULL)
 	{
-		if (tkn_ptr->kind != TKN_SPACE) //is_valuable_tknでもアリ
+		if (is_valuable_tkn(tkn_ptr->kind)) //is_valuable_tknでもアリ
 		{
 			i++;
-			tkn_ptr = find_last_valuable_tkn_var2(tkn_ptr); //多分この関数
+			tkn_ptr = find_last_valuable_tkn(tkn_ptr); //多分この関数
 		}
 		tkn_ptr = tkn_ptr->next;
 	}
 	return (i);
 }
 
-static char **insert_strs_from_tkns(t_token *tkn_ptr, char **cmd_args)
+char **make_cmd_args(t_token *tkn_head)
 {
+	char **cmd_args;
 	size_t i;
+	t_token *tkn_ptr;
 	t_token *last;
 
+	cmd_args = (char **)ft_xmalloc(sizeof(char *) * count_arg_strs(tkn_head));
 	i = 0;
+	tkn_ptr = tkn_head;
 	while(tkn_ptr != NULL)
 	{
-		if (tkn_ptr->kind != TKN_SPACE) //is_valuable_tknでもアリ
+		if (is_valuable_tkn(tkn_ptr->kind)) //is_valuable_tknでもアリ
 		{
-			last = find_last_valuable_tkn_var2(tkn_ptr);
+			last = find_last_valuable_tkn(tkn_ptr);
 			cmd_args[i++] = substr_from_tkn(tkn_ptr, last);
 			tkn_ptr = last;
 		}
@@ -205,14 +227,6 @@ static char **insert_strs_from_tkns(t_token *tkn_ptr, char **cmd_args)
 	}
 	cmd_args[i] = NULL;
 	return (cmd_args);
-}
-
-char **make_cmd_args(t_token *tkn_head)
-{
-	char **cmd_args;
-
-	cmd_args = (char **)ft_xmalloc(sizeof(char *) * count_strs(tkn_head));
-	return (insert_strs_from_tkns(tkn_head, cmd_args));
 }
 
 static t_redir	*find_last_redir(t_redir *head)

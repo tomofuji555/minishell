@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/15 16:10:05 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 19:45:10 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,14 +226,13 @@ static t_redir	*find_last_redir(t_redir *head);
 
 char **make_cmd_args(t_token *tkn_head);
 static size_t count_strs(t_token *tkn_ptr);
-static char **insert_strs_from_tkns(t_token *tkn_ptr, char **cmd_args);
 
 void	expansion_tkn_lst(t_token **tkn_head);
 static void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of_env_tkn);
 static t_token *tokenize_space_or_text(char *env_val);
 static size_t count_untill_last_and_set_kind(char *begining, enum e_token_kind *kind);
 
-char *expand_env_in_dquote(char *str);
+char	*expand_env_in_dquote(char *str);
 static size_t _strlen_env_expanded(char *str);
 static size_t _strlcat_env_expanded(char *dest, char *str, size_t len);
 //~~~~~~~~

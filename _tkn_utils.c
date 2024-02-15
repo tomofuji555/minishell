@@ -6,33 +6,25 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 17:52:18 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 19:04:07 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	remove_tkn(t_token **head, t_token *ptr, t_token *prev)
-{
-	if (prev == NULL)
-		*head = ptr->next;
-	else
-		prev->next = ptr->next;
-	free_tkn(ptr);
-}
+//// //save_last~系は必ずptr->next!=NULLで止める
+//t_token *first_space_skip_and_find_last_valuable_tkn(t_token *tkn_ptr)
+//{
+//	while(tkn_ptr != NULL && tkn_ptr->kind == TKN_SPACE)
+//		tkn_ptr = tkn_ptr->next;
+//	if (tkn_ptr != NULL)
+//	{
+//		while(tkn_ptr->next != NULL && is_valuable_tkn(tkn_ptr->next->kind))
+//			tkn_ptr = tkn_ptr->next;
+//	}
+//	return (tkn_ptr);
+//}
 
-// //save_last~系は必ずptr->next!=NULLで止める
-t_token *find_last_valuable_tkn(t_token *tkn_ptr)
-{
-	while(tkn_ptr != NULL && tkn_ptr->kind == TKN_SPACE)
-		tkn_ptr = tkn_ptr->next;
-	if (tkn_ptr != NULL)
-	{
-		while(tkn_ptr->next != NULL && is_valuable_tkn(tkn_ptr->next->kind))
-			tkn_ptr = tkn_ptr->next;
-	}
-	return (tkn_ptr);
-}
 // //save_last~系は必ずptr->next!=NULLで止める
 // t_token *find_last_valuable_tkn(t_token *tkn_ptr)
 // {
@@ -43,17 +35,9 @@ t_token *find_last_valuable_tkn(t_token *tkn_ptr)
 // 	return (tkn_ptr);
 // }
 
-t_token *find_last_valuable_tkn_var2(t_token *head)
-{
-	t_token *ptr;
-
-	ptr = head;
-	while(ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
-		ptr = ptr->next;
-	return (ptr);
-}
 
 // targetにheadが来ていたら、NULLが帰ってくる
+// targetはlst内にある前提で終わらす
 t_token *save_prev_tkn(t_token *head, t_token *target)
 {
 	t_token *ptr;
@@ -76,6 +60,16 @@ t_token	*find_last_tkn(t_token *head)
 	return (ptr);
 }
 
+t_token *find_last_valuable_tkn(t_token *head)
+{
+	t_token *ptr;
+
+	ptr = head;
+	while(ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
+		ptr = ptr->next;
+	return (ptr);
+}
+
 void add_tkn_last(t_token **head, t_token *new)
 {
 	if (*head == NULL)
@@ -84,6 +78,15 @@ void add_tkn_last(t_token **head, t_token *new)
 		return ;
 	}
 	find_last_tkn(*head)->next = new;
+}
+
+void	remove_tkn(t_token **head, t_token *target, t_token *prev)
+{
+	if (prev == NULL)
+		*head = target->next;
+	else
+		prev->next = target->next;
+	free_tkn(target);
 }
 
 static size_t	_strlen_from_tkn(t_token *begining, t_token *last)

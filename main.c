@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 17:14:54 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 19:35:44 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,23 @@
 // 	tnode_free_lst(tnode_head);
 // }
 
-//// expansion_env_of_tknの確認
-//int main()
-//{
-//	char *str1 = "  $AA aaaa";
-//	char *str2 = "cat >  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
-//	char *str3 = "$LS$";
-//	t_token *tkn_head = tokenize(str2);
-//	if (tkn_head == NULL)
-//		return (1);
-//	t_tree_node *tnode_head = parse(tkn_head);
-//	print_init_of_tnode_lst(tnode_head);
-//	printf("---------------------------------------------------------------------------------\n");
-//	expansion(tnode_head);
-//	print_exec_of_tnode_lst(tnode_head);
-//	// tnode_free_lst(tnode_head);
-//}
+// expansion_env_of_tknの確認
+int main()
+{
+	char *str1 = "  $AA aaaa";
+	char *str2 = "cat >  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
+	char *str3 = "$LS$";
+	char *str4 = ">\"$PWD\"$ECHO<<kkk cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
+	t_token *tkn_head = tokenize(str2);
+	if (tkn_head == NULL)
+		return (1);
+	t_tree_node *tnode_head = parse(tkn_head);
+	print_init_of_tnode_lst(tnode_head);
+	printf("---------------------------------------------------------------------------------\n");
+	expansion(tnode_head);
+	print_exec_of_tnode_lst(tnode_head);
+	// tnode_free_lst(tnode_head);
+}
 
 // // expansion_env_in_dquote単体の確認
 // int main()
@@ -105,22 +106,22 @@
 // 	tnode_free_lst(tnode_head);
 // }
 
-int main()
-{
-	t_manager manager;
+//int main()
+//{
+//	t_manager manager;
 	
-	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev | head -n 5";
-	char *str2 = "cat | cat |  ls ";
-	char *str3 = "<./a cat <./b|>./c cat ";
-	char *str4 = "<a>c cat <b";
-	char *str5 = "ls | rev | aaa";
-	manager = init();
-	t_token *tkn_head = tokenize(str5);
-	if (tkn_head == NULL)
-		return (1);
-	t_tree_node *tnode_head = parse(tkn_head);
-	expansion(tnode_head);
-	//print_exec_of_tnode_lst(tnode_head);
-	_exec(tnode_head, &manager);
-	printf("終了ステータスは%d\n", manager.exit_status);
-}
+//	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev | head -n 5";
+//	char *str2 = "cat | cat |  ls ";
+//	char *str3 = "<./a cat <./b|>./c cat ";
+//	char *str4 = "<a>c cat <b";
+//	char *str5 = "ls | rev | aaa";
+//	manager = init();
+//	t_token *tkn_head = tokenize(str5);
+//	if (tkn_head == NULL)
+//		return (1);
+//	t_tree_node *tnode_head = parse(tkn_head);
+//	expansion(tnode_head);
+//	//print_exec_of_tnode_lst(tnode_head);
+//	_exec(tnode_head, &manager);
+//	printf("終了ステータスは%d\n", manager.exit_status);
+//}
