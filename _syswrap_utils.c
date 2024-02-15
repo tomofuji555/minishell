@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/15 10:29:20 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 17:20:47 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ void *ft_xcalloc(size_t count, size_t size)
 {
 	void *ret;
 
-	if (count == 0 || size == 0)
+	if (count == 0 || size == 0 || size > SIZE_MAX / count)
 		return (NULL);
 	ret = (void *)malloc(size * count);
-	
 	if (ret == NULL)
 		perror_and_exit("malloc", 1);
 	ft_memset(ret, '\0', count * size);

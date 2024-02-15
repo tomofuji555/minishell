@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 09:43:38 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 18:01:14 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*ft_getenv(const char *target_str)
 		env_name = ft_xsubstr(environ[i], 0, (size_t)(ft_strchr(environ[i], '=') - environ[i]));
 		if (ft_strcmp(target_str, env_name) == 0)
 		{
-			//fprintf(stderr, "\nenv_name %p; ret %p\n", env_name, ft_strchr(environ[i], '=') + sizeof(char));
 			free(env_name);
 			return (ft_strchr(environ[i], '=') + sizeof(char));
 		}

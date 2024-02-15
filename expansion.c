@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/13 18:57:04 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/15 16:45:44 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,8 @@ static t_bool	contains_quote_tkn(t_token *begining)
 
 static enum e_redir_kind	convert_redir_kind(t_token *begining)
 {
+	//if (is_space_tkn_surrounded(begining))
+	//	return (AMBIGUOUS_REDIR);
 	if (begining->kind == TKN_IN_FILE)
 		return (REDIR_IN_FILE);
 	else if (begining->kind == TKN_HEREDOC)
@@ -274,10 +276,10 @@ static t_redir	*make_new_redir(t_token *begining, t_token *last)
 	char *tmp_val;
 
 	node = (t_redir *)ft_xmalloc(sizeof(t_redir));
+	node->kind = convert_redir_kind(begining);
 	tmp_val =  substr_from_tkn(begining->next, last);
 	node->val =  ft_xstrtrim(tmp_val, " \t\n");
 	free(tmp_val);
-	node->kind = convert_redir_kind(begining);
 	node->next = NULL;
 	return (node);
 }

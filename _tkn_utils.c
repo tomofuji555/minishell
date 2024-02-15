@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   _tkn_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/13 18:59:12 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/15 17:52:18 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void	remove_tkn(t_token **head, t_token *ptr, t_token *prev)
+{
+	if (prev == NULL)
+		*head = ptr->next;
+	else
+		prev->next = ptr->next;
+	free_tkn(ptr);
+}
 
 // //save_last~系は必ずptr->next!=NULLで止める
 t_token *find_last_valuable_tkn(t_token *tkn_ptr)
@@ -90,7 +99,6 @@ static size_t	_strlen_from_tkn(t_token *begining, t_token *last)
 		i = 0;
 		while(ptr->val[i] != '\0')
 			i++;
-		// printf("i == %zd\n", i);
 		len += i;
 		ptr = ptr->next;
 	}

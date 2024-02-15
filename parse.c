@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/13 19:02:44 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/15 16:37:44 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,23 @@ static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr)
 	return (new);
 }
 
+//redir_tknの次がNULLじゃない前提で実装している
+void	remove_space_afrer_redir(t_token **tkn_head)
+{
+	t_token *prev;
+	t_token *ptr;
+
+	prev = NULL;
+	ptr = *tkn_head;
+	while(ptr != NULL)
+	{
+		if (prev != NULL && is_redir_tkn(prev->kind) && ptr->kind == TKN_SPACE)
+			remove_tkn(tkn_head, ptr, prev);
+		prev = ptr;
+		ptr = ptr->next;
+	}
+}
+
 // 次のトークンがPIPEかNULLのとき、または今のトークンがPIPEのとき、ノードを作成
 t_tree_node *parse(t_token *tkn_ptr)
 {
@@ -133,6 +150,7 @@ t_tree_node *parse(t_token *tkn_ptr)
 	t_tree_node *head;
 	t_tree_node *new;
 	
+	remove_space_afrer_redir(&tkn_ptr);
 	head = NULL;
 	tkn_begining = tkn_ptr;
 	while(tkn_ptr != NULL)

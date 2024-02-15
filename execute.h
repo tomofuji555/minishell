@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/15 09:58:20 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 16:10:05 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ enum e_token_kind
 
 enum e_redir_kind
 {
+	AMBIGUOUS_REDIR,
 	REDIR_IN_FILE,
 	REDIR_HEREDOC,
 	REDIR_HEREDOC_NO_EXPAND,
@@ -163,6 +164,7 @@ void	ft_xpipe(int *pipe_fd);
 pid_t	ft_xfork(void);
 void	ft_xexecve(char *cmd_path, char **cmd_args, char **envp);
 //tkn_utils.c
+void	remove_tkn(t_token **head, t_token *ptr, t_token *prev);
 t_token		*find_last_valuable_tkn(t_token *head);
 t_token *find_last_valuable_tkn_var2(t_token *head);
 t_token		*save_prev_tkn(t_token *head, t_token *target);
@@ -198,6 +200,8 @@ ssize_t				count_untill_dollar_last(char *begining);
 
 //~~~~ parse start~~~~
 t_tree_node *parse(t_token *tkn_ptr);
+
+void	remove_space_afrer_redir(t_token **tkn_head);
 
 // static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr);
 // static void	add_tnode_last(t_tree_node **head, t_tree_node *new);

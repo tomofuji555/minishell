@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 09:46:23 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 17:14:54 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
 // 	char *str4 = "ggg\"gh\" hhhh";
 // 	char *str5 = "aaa$\"ABCD\" $\'ABCDEF\' \"abc\'defg\" ";
 // 	char *str6 = "$$$\"ABC\" $$$\"\" \"ABC\" \"\" ";
-// 	t_token *head = tokenize(str5);
+//	char *str7 = ">  a\"$PWD\" ls <	 ppp|pwd >>   ll<<   d>> l >d";
+// 	t_token *head = tokenize(str7);
+//	remove_space_afrer_redir(&head);
 // 	print_tkn_lst(head);
 // 	free_tkn_lst(head);
 // }
@@ -111,8 +113,9 @@ int main()
 	char *str2 = "cat | cat |  ls ";
 	char *str3 = "<./a cat <./b|>./c cat ";
 	char *str4 = "<a>c cat <b";
+	char *str5 = "ls | rev | aaa";
 	manager = init();
-	t_token *tkn_head = tokenize(str4);
+	t_token *tkn_head = tokenize(str5);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);
