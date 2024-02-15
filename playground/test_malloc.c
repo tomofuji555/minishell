@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 
 __attribute__((destructor))
 static void destructor() {
@@ -8,12 +10,13 @@ static void destructor() {
 
 int main()
 {
+	errno = 0;
 	// size_t i = 4294967295;
 	char *str = (char *)malloc(sizeof(char) * (999999999999999 + 1));
 	if (str == NULL)
 	{
-		perror("");
-		// printf("error\n");
+		//perror("");
+		strerror(errno);
 	}
 	else
 	{

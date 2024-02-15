@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/15 09:15:33 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/15 09:58:20 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_redir
 {
 	enum e_redir_kind	kind;
 	char				*val;
+	t_bool				ambiguout_flag;
 	struct s_redir		*next;
 }	t_redir;
 
