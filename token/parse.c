@@ -1,23 +1,23 @@
 #include "minishell.h"
 
-void	split_by_pipe(t_tree **tree, t_token **head, ssize_t count)
+void	split_by_pipe(t_tree_node **tree, t_token **head, ssize_t count)
 {
-	t_tree	*prev_tree;
-	int		is_root;
-	t_token	*last_pipe;
+	t_tree_node	*prev_tree;
+	t_bool		is_root;
+	t_token		*last_pipe;
 
-	is_root = 1;
+	is_root = TRUE;
 	prev_tree = NULL;
 	while (count)
 	{
 		last_pipe = find_last_pipe (*head, count);
 		(*tree)->right = rs_tree_node (head, last_pipe, is_root, prev_tree);
-		(*tree)->cmd_tokens = cmd_token (head, last_pipe, count);//last_pipeを入れる関数;
+		(*tree)->init_arg_data->cmd_tokens = cmd_token (head, last_pipe, count);//last_pipeを入れる関数;
 		(*tree)->left = ls_tree_node (head, prev_tree);
 		(*tree)->prev = prev_node (prev_tree);
 		//if (!check_tree (*tree))
 			//return ;
-		is_root = 0;
+		is_root = FALSE;
 		prev_tree = *tree;
 		*tree = (*tree)->left;
 		count = count_pipe (*head);

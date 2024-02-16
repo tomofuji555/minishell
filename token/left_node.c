@@ -17,32 +17,32 @@ t_token	*cmd_of_ls(t_token **head, t_token **last_pipe)
 	return (*last_pipe);
 }
 
-t_tree	*init_ls_node(t_token **head, t_token *last_pipe, t_tree *prev_node)
+t_tree_node	*init_ls_node(t_token **head, t_token *last_pipe, t_tree_node *prev_node)
 {
-	t_tree	*ls_node;
+	t_tree_node	*ls_node;
 
-	ls_node = (t_tree *)malloc(sizeof(t_tree));
+	ls_node = (t_tree_node *)malloc(sizeof(t_tree_node));
 	if (ls_node == NULL)
 		return (NULL);
-	ls_node->cmd_tokens = NULL;
+	ls_node->init_arg_data->cmd_tokens = NULL;
 	if (last_pipe == NULL)
 	{
-		ls_node->cmd_tokens = *head;
+		ls_node->init_arg_data->cmd_tokens = *head;
 		*head = NULL;
 	}
-	ls_node->outfile_tokens = NULL;
-	ls_node->infile_tokens = NULL;
+	ls_node->init_arg_data->outfile_tokens = NULL;
+	ls_node->init_arg_data->infile_tokens = NULL;
 	ls_node->prev = prev_node;
 	ls_node->left = NULL;
 	ls_node->right = NULL;
 	return (ls_node);
 }
 
-t_tree	*ls_tree_node(t_token **head, t_tree *prev_node)
+t_tree_node	*ls_tree_node(t_token **head, t_tree_node *prev_node)
 {
-	t_tree	*ls_node;
-	t_token	*last_pipe;
-	ssize_t	count;
+	t_tree_node	*ls_node;
+	t_token		*last_pipe;
+	ssize_t		count;
 
 	count = count_pipe (*head);
 	last_pipe = find_last_pipe (*head, count);
