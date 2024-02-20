@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _tkn_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 19:04:07 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:49:47 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,4 +140,21 @@ char *substr_from_tkn(t_token *begining, t_token *last)
 	_strlcpy_from_tkn(str, begining, len);
 	// printf("last->val == %s;  len == %zd\n", last->val, len);
 	return (str);
+}
+
+void	connect_tkn_lst(t_token **head, t_token *prev, t_token *add_lst)
+{
+	t_token *next;
+	
+	if (prev == NULL)
+	{
+		next = (*head)->next;
+		*head == add_lst;
+	}
+	else
+	{
+		next = prev->next->next;
+		prev->next = add_lst;
+	}
+	find_last_tkn(add_lst)->next = next;	
 }

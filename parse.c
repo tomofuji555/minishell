@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 16:37:44 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:32:22 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	add_redir_tkns_last(t_token **to_head, t_token *prev_of_first, t_tok
 {
 	t_token *first;
 	
+	//pushする元側の処理
 	if (prev_of_first == NULL)
 	{
 		first = *from_head;
@@ -26,11 +27,15 @@ static void	add_redir_tkns_last(t_token **to_head, t_token *prev_of_first, t_tok
 		first = prev_of_first->next;
 		prev_of_first->next = find_last_valuable_tkn(first->next)->next;
 	}
+	//ここまで
+	
+	//pushされる先の処理
 	if (*to_head == NULL)
 		*to_head = first;
 	else
 		find_last_tkn(*to_head)->next = first;
 	find_last_valuable_tkn(first->next)->next = NULL;
+	//ここまで
 }
 
 //init_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 21:03:01 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/20 15:15:05 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,34 +143,30 @@ static t_token *tokenize_space_or_text(char *env_val)
 //	free_tkn(env_tkn);
 //}
 
-static void	connect_expanded_env_tkn(t_token **head, t_token *expanded_head, t_token *env_tkn, t_token *prev_env_tkn)
+static void	connect_expanded_env_tkn(t_token **head, t_token *expanded_head, t_token *env_tkn)
 {
 	if (expanded_head == NULL)
 	{
 		if (*head == env_tkn)
 			*head = env_tkn->next;
 		else
-			prev_env_tkn->next = env_tkn->next;
-		//繋げる
-		*ptr = prev_env_tkn;
+			save_prev_tkn(head, env_tkn)->next = env_tkn->next;
 	}
 	else
 	{
 		if (*head == env_tkn)
 			*head = expanded_head;
 		else
-			prev_env_tkn->next = expanded_head;
-		//繋げる
-		*ptr = find_last_tkn(expanded_head)
+			save_prev_tkn(head, env_tkn)->next = expanded_head;
 		find_last_tkn(expanded_head)->next = env_tkn->next;
 	}
-	free_tkn(env_tkn);
 }
 
 //引数を**型にしないと反映されない
 void	expansion_tkn_lst(t_token **tkn_head)
 {
 	t_token *tkn_ptr;
+	t_token *expanded_head;
 
 	tkn_ptr = *tkn_head;
 	while(tkn_ptr != NULL)
@@ -180,9 +176,13 @@ void	expansion_tkn_lst(t_token **tkn_head)
 		else if (tkn_ptr->kind == TKN_D_QUOTE)
 			tkn_ptr->val = expand_env_in_dquote(tkn_ptr->val);
 		else if (tkn_ptr->kind == TKN_ENV)
-			tkn_ptr = connect_expanded_env_tkn(tkn_head, 
-				tokenize_space_or_text(search_env_val(tkn_ptr->val, 
-				count_envname(tkn_ptr->val))), save_prev_tkn(tkn_head, tkn_ptr));
+		{
+			expanded_head = tokenize_space_or_text(search_env_val(tkn_ptr->val, count_envname(tkn_ptr->val)));
+			connect_expanded_env_tkn(tkn_head, expanded_head, tkn_ptr);
+			if (expanded_head == NULL)
+				
+			free_tkn(tkn_ptr);
+		}
 		tkn_ptr = tkn_ptr->next;
 	}
 }
