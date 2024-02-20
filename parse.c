@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/20 15:32:22 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/20 21:05:49 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,15 @@ static t_token *separate_and_make_redir_tkns_lst\
 	{
 		if (is_func(ptr->kind))
 		{
-			next = find_last_valuable_tkn(ptr->next)->next;
-			add_redir_tkns_last(&redir_tkns_head, prev, head);
-			prev = save_prev_tkn(*head, next);
-			ptr = next;
+			//next = find_last_valuable_tkn(ptr->next)->next;
+			//add_redir_tkns_last(&redir_tkns_head, prev, head);
+			//prev = save_prev_tkn(*head, next);
+			//ptr = next;
+			find_last_valuable_tkn_tkn(ptr->next) = NULL;
+			connect_expanded_env_tkn(head, ptr, )
+
+			範囲を指定して
+			headを
 		}
 		else
 		{
