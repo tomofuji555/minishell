@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _tkn_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/20 16:12:04 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/21 18:49:51 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ char *substr_from_tkn(t_token *begining, t_token *last)
 	return (str);
 }
 
+//挿入先のリストのheadと挿入する直前のptr,挿入するリストのheadとlast,
 void	connect_tkn_lst(t_token **head, t_token *prev, t_token *add_lst)
 {
 	t_token *next;
