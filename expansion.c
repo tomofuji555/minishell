@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 12:20:09 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 20:39:34 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token
 /* --------------------------------------------------------- */
 
 //引数を**型にしないと反映されない
+//syntaxは保証されている前提で実装
 void	expansion_tkn_lst(t_token **tkn_head)
 {
 	t_token *tkn_ptr;
@@ -155,7 +156,7 @@ void	expansion_tkn_lst(t_token **tkn_head)
 	while(tkn_ptr != NULL)
 	{
 		if (tkn_ptr->kind == TKN_HEREDOC)
-			tkn_ptr = find_last_valuable_tkn(tkn_ptr->next)->next; //syntaxは保証されている前提
+			tkn_ptr = find_last_valuable_tkn(tkn_ptr->next)->next;
 		else if (tkn_ptr->kind == TKN_ENV)
 			tkn_ptr = expand_env_of_tkn(tkn_head, tkn_ptr, find_prev_tkn(*tkn_head, tkn_ptr));
 		else
@@ -187,6 +188,7 @@ static size_t count_arg_strs(t_token *tkn_ptr)
 	return (i);
 }
 
+//valuable_tknが一つもないtkn_lstはNULLに変換される
 char **make_cmd_args(t_token *tkn_head)
 {
 	char **cmd_args;
@@ -195,8 +197,6 @@ char **make_cmd_args(t_token *tkn_head)
 	t_token *last;
 
 	cmd_args = (char **)ft_xmalloc(sizeof(char *) * count_arg_strs(tkn_head));
-	if (cmd_args == NULL)
-		return (NULL);
 	i = 0;
 	tkn_ptr = tkn_head;
 	while(tkn_ptr != NULL)
@@ -236,8 +236,25 @@ static void	add_redir_last(t_redir **head_node, t_redir *new_node)
 	find_last_redir(*head_node)->next = new_node;
 }
 
+static t_bool	has_space_between(t_token *begining)
+{
+	t_token *ptr;
+	t_token *prev;
 
-static t_bool	contains_quote_tkn(t_token *begining)
+	ptr = begining->next;
+	prev = begining;
+	while (ptr && !is_redir_tkn(ptr->kind))
+	{
+		if (is_valuable_tkn(prev->kind) && ptr->kind == TKN_SPACE && \
+			ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
+			return (TRUE);
+		prev = ptr;
+		ptr = ptr->next;
+	}
+	return (FALSE);
+}
+
+static t_bool	contains_quote(t_token *begining)
 {
 	t_token *ptr;
 
@@ -253,13 +270,13 @@ static t_bool	contains_quote_tkn(t_token *begining)
 
 static enum e_redir_kind	convert_redir_kind(t_token *begining)
 {
-	//if (is_space_tkn_surrounded(begining))
-	//	return (AMBIGUOUS_REDIR);
+	if (has_space_between(begining))
+		return (AMBIGUOUS_REDIR);
 	if (begining->kind == TKN_IN_FILE)
 		return (REDIR_IN_FILE);
 	else if (begining->kind == TKN_HEREDOC)
 	{
-		if (contains_quote_tkn(begining))
+		if (contains_quote(begining))
 			return (REDIR_HEREDOC_NO_EXPAND);
 		else
 			return (REDIR_HEREDOC);
@@ -318,9 +335,9 @@ void	expansion(t_tree_node *ptr)
 		expansion_tkn_lst(&ptr->init_data.cmd_tokens);
 		expansion_tkn_lst(&ptr->init_data.infile_tokens);
 		expansion_tkn_lst(&ptr->init_data.outfile_tokens);
-		//ptr->exec_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
-		//ptr->exec_data.infile_paths = make_redir_lst(ptr->init_data.infile_tokens);
-		//ptr->exec_data.outfile_paths = make_redir_lst(ptr->init_data.outfile_tokens);
+		ptr->exec_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
+		ptr->exec_data.infile_paths = make_redir_lst(ptr->init_data.infile_tokens);
+		ptr->exec_data.outfile_paths = make_redir_lst(ptr->init_data.outfile_tokens);
 		ptr = ptr->right;
 	}
 }

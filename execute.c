@@ -6,11 +6,58 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 09:43:22 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 21:14:37 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+static char	*search_and_make_path(char *cmd_name, char **envp)
+{
+	char	**path_lst;
+	char	*cmd_path;
+	size_t	i;
+
+	path_lst = ft_xsplit(ft_getenv("PATH"), ':');
+	i = 0;
+	while (path_lst[i] != NULL)
+	{
+		cmd_path = ft_xstrjoin(path_lst[i], ft_xstrjoin("/", cmd_name));  //リークの関係上、作り直す必要あり
+		if (access(cmd_path, F_OK) == EXIST)
+		{
+			free_multi_strs(path_lst);
+			return (cmd_path);
+		}
+		else
+			free(cmd_path);
+		i++;
+	}
+	free_multi_strs(path_lst);
+	return (NULL);
+}
+
+//cmd_argsがNULL出ない前提で作成
+void	exec_cmd(char **cmd_args, char **envp)
+{
+	char		*cmd_path;
+
+	if (ft_strchr(cmd_args[0], '/') != NULL || access(cmd_args[0], F_OK) == EXIST)
+	{
+		if (access(cmd_args[0], X_OK) == -1)
+			perror_and_exit(cmd_args[0], 126);
+		ft_xexecve(cmd_args[0], cmd_args, envp);
+		return ;
+	}
+	cmd_path = search_and_make_path(cmd_args[0], envp);
+	if (cmd_path == NULL)
+		ft_perror_and_exit(cmd_args[0], "command not found", 127);
+	if (access(cmd_path, X_OK) == -1)
+		perror_and_exit(cmd_args[0], 126);
+	ft_xexecve(cmd_path, cmd_args, envp);
+}
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 static int open_redir_path(t_redir *node)
 {
@@ -61,50 +108,9 @@ t_bool	can_change_stream_to_redir(t_redir *redir_head, int dest_fd)
 	ft_xclose(redir_fd);
 	return (TRUE);
 }
-
-static char	*search_and_make_path(char *cmd_name, char **envp)
-{
-	char	**path_lst;
-	char	*cmd_path;
-	size_t	i;
-
-	path_lst = ft_xsplit(ft_getenv("PATH"), ':'); //xsplitにするとぶっ壊れる getevnでもぶっ壊れるため、xsplit側に問題あり->xcallocに原因
-	i = 0;
-	while (path_lst[i] != NULL)
-	{
-		cmd_path = ft_xstrjoin(path_lst[i], ft_xstrjoin("/", cmd_name));  //リークの関係上、作り直す必要あり
-		if (access(cmd_path, F_OK) == EXIST)
-		{
-			free_multi_strs(path_lst);
-			return (cmd_path);
-		}
-		else
-			free(cmd_path);
-		i++;
-	}
-	free_multi_strs(path_lst);
-	return (NULL);
-}
-
-//cmd_argsがNULL出ない前提で作成
-void	exec_cmd(char **cmd_args, char **envp)
-{
-	char		*cmd_path;
-
-	if (ft_strchr(cmd_args[0], '/') != NULL || access(cmd_args[0], F_OK) == EXIST)
-	{
-		if (access(cmd_args[0], X_OK) == -1)
-			perror_and_exit(cmd_args[0], 126);
-		ft_xexecve(cmd_args[0], cmd_args, envp);
-		return ;
-	}
-	cmd_path = search_and_make_path(cmd_args[0], envp);
-	if (cmd_path == NULL)
-		ft_perror_and_exit(cmd_args[0], "command not found", 127);
-	if (access(cmd_path, X_OK) == -1)
-		perror_and_exit(cmd_args[0], 126);
-	ft_xexecve(cmd_path, cmd_args, envp);
-}
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 t_bool change_instream(t_redir *redir_head, int prev_output_fd)
 {
@@ -157,6 +163,9 @@ void update_prev_fd(t_manager *manager, int *pipefd, t_bool last_cmd_flag)
 	else
 		manager->prev_output_fd = pipefd[R];
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 pid_t exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_flag)
 {

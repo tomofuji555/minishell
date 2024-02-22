@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 09:54:18 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 16:55:44 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ ssize_t	count_untill_redir_last(char *begining)
 		return (1);
 }
 
-ssize_t	count_untill_quote_last(char *begining)			//クォート内を抜き出す
+//閉じクォートが来ないで文末に来た場合、-1を返す
+ssize_t	count_untill_quote_last(char *begining)
 {
 	ssize_t	i;
 
@@ -48,22 +49,23 @@ ssize_t	count_untill_quote_last(char *begining)			//クォート内を抜き出�
 	while(begining[i] && begining[0] != begining[i])
 		i++;
 	if (begining[i] == '\0')
-		return (-1);									//error
+		return (-1);
 	return (i + 1);
 }
 
+//$"---"のパターンのみクォート内の文字数を数える
 ssize_t	count_untill_dollar_last(char *begining)
 {
 	char *next;
 
 	next = begining + sizeof(char);
-	if (*next == '?' || *next == '$') 			//そのまま
+	if (*next == '?' || *next == '$')
 		return (2);
-	if (is_quote(*next))							//クォート内を抜き出す
+	if (is_quote(*next))
 		return (1 + count_untill_quote_last(next));
-	if (*next == '\0' || is_delim(*next))			//そのまま
+	if (*next == '\0' || is_delim(*next))
 		return (1);
-	return (1 + count_untill_text_last(next));				//そのまま
+	return (1 + count_untill_text_last(next));
 }
 
 static ssize_t count_untill_last(char *begining)
@@ -81,6 +83,9 @@ static ssize_t count_untill_last(char *begining)
 	else
 		return (count_untill_text_last(begining));
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 static enum e_token_kind	save_redir_tkn_kind(char *begining)
 {
@@ -131,6 +136,9 @@ static enum e_token_kind	save_tkn_kind(char *begining)
 	else
 		return (TKN_TEXT);
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 //lenはクォーテーション内の文字数+1文字分
 static char *_substr_into_quote(char *begining, size_t count)
@@ -182,3 +190,6 @@ t_token *tokenize(char *line_ptr)
 	}
 	return (head);
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
