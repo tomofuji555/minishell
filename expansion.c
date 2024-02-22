@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/20 21:07:34 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:04:47 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ char	*expand_env_in_dquote(char *str)
 	return (expanded_str);
 }
 
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
+
 static size_t count_untill_last_and_set_kind(char *begining, enum e_token_kind *kind)
 {
 	ssize_t	i;
@@ -113,92 +117,70 @@ static t_token *tokenize_space_or_text(char *env_val)
 	return (head);
 }
 
-//引数を**型にしないと反映されない
-//static void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of_env_tkn)
-//{
-//	t_token *expanded_head;
-	
-//	expanded_head = tokenize_space_or_text \
-//		(search_env_val(env_tkn->val, count_envname(env_tkn->val)));
-//	if (*head == env_tkn) //headをexpansionした場合
-//	{
-//		if (expanded_head == NULL) //env_tknのvalがなかった
-//			*head = env_tkn->next;
-//		else
-//		{
-//			*head = expanded_head;
-//			find_last_tkn(expanded_head)->next = env_tkn->next;
-//		}
-//	}
-//	else //head以外をexpansionした場合
-//	{
-//		if (expanded_head == NULL) //env_tknのvalがなかった
-//			prev_of_env_tkn->next = env_tkn->next;
-//		else
-//		{
-//			prev_of_env_tkn->next = expanded_head;
-//			find_last_tkn(expanded_head)->next = env_tkn->next;
-//		}
-//	}
-//	free_tkn(env_tkn);
-//}
-
-static void	connect_expanded_env_tkn(t_token **head, t_token *expanded_head, t_token *env_tkn)
+static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token *prev)
 {
+	t_token *expanded_head;
+	t_token *next_ptr;
+
+	expanded_head = tokenize_space_or_text(search_env_val(env_tkn->val, count_envname(env_tkn->val)));
+	next_ptr = env_tkn->next;
 	if (expanded_head == NULL)
 	{
-		if (*head == env_tkn)
-			*head = env_tkn->next;
+		if (prev == NULL)
+			*dest_head = next_ptr;
 		else
-			save_prev_tkn(head, env_tkn)->next = env_tkn->next;
+			prev->next = next_ptr;
 	}
-	else //connect_tkn_lstで代替
+	else
 	{
-		if (*head == env_tkn)
-			*head = expanded_head;
+		if (prev == NULL)
+			*dest_head = expanded_head;
 		else
-			save_prev_tkn(head, env_tkn)->next = expanded_head;
-		find_last_tkn(expanded_head)->next = env_tkn->next;
+			prev->next = expanded_head;
+		find_last_tkn(expanded_head)->next = next_ptr;
 	}
+	free_tkn(env_tkn);
+	return (next_ptr);
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 //引数を**型にしないと反映されない
 void	expansion_tkn_lst(t_token **tkn_head)
 {
 	t_token *tkn_ptr;
-	t_token *expanded_head;
 
 	tkn_ptr = *tkn_head;
 	while(tkn_ptr != NULL)
 	{
 		if (tkn_ptr->kind == TKN_HEREDOC)
-			tkn_ptr = find_last_valuable_tkn(tkn_ptr->next);
-		else if (tkn_ptr->kind == TKN_D_QUOTE)
-			tkn_ptr->val = expand_env_in_dquote(tkn_ptr->val);
+			tkn_ptr = find_last_valuable_tkn(tkn_ptr->next)->next; //syntaxは保証されている前提
 		else if (tkn_ptr->kind == TKN_ENV)
+			tkn_ptr = expand_env_of_tkn(tkn_head, tkn_ptr, find_prev_tkn(*tkn_head, tkn_ptr));
+		else
 		{
-			t_token *del_tkn = tkn_ptr;
-			expanded_head = tokenize_space_or_text(search_env_val(tkn_ptr->val, count_envname(tkn_ptr->val)));
-			tkn_ptr = connect_expanded_env_tkn(tkn_head, expanded_head, tkn_ptr);
-			//
-			free_tkn(tkn_ptr);
+			if (tkn_ptr->kind == TKN_D_QUOTE)
+				tkn_ptr->val = expand_env_in_dquote(tkn_ptr->val);
+			tkn_ptr = tkn_ptr->next;
 		}
-		tkn_ptr = tkn_ptr->next;
 	}
 }
-			//expand_env_of_tkn(tkn_head, tkn_ptr, save_prev_tkn(*tkn_head, tkn_ptr));
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
-static size_t count_arg_strs(t_token *tkn_ptr) //名前修正が必要
+static size_t count_arg_strs(t_token *tkn_ptr)
 {
 	size_t i;
 
 	i = 1;
 	while (tkn_ptr != NULL)
 	{
-		if (is_valuable_tkn(tkn_ptr->kind)) //is_valuable_tknでもアリ
+		if (is_valuable_tkn(tkn_ptr->kind))
 		{
 			i++;
-			tkn_ptr = find_last_valuable_tkn(tkn_ptr); //多分この関数
+			tkn_ptr = find_last_valuable_tkn(tkn_ptr);
 		}
 		tkn_ptr = tkn_ptr->next;
 	}
@@ -213,11 +195,13 @@ char **make_cmd_args(t_token *tkn_head)
 	t_token *last;
 
 	cmd_args = (char **)ft_xmalloc(sizeof(char *) * count_arg_strs(tkn_head));
+	if (cmd_args == NULL)
+		return (NULL);
 	i = 0;
 	tkn_ptr = tkn_head;
 	while(tkn_ptr != NULL)
 	{
-		if (is_valuable_tkn(tkn_ptr->kind)) //is_valuable_tknでもアリ
+		if (is_valuable_tkn(tkn_ptr->kind))
 		{
 			last = find_last_valuable_tkn(tkn_ptr);
 			cmd_args[i++] = substr_from_tkn(tkn_ptr, last);
@@ -228,6 +212,9 @@ char **make_cmd_args(t_token *tkn_head)
 	cmd_args[i] = NULL;
 	return (cmd_args);
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 static t_redir	*find_last_redir(t_redir *head)
 {
@@ -320,6 +307,9 @@ t_redir	*make_redir_lst(t_token *tkn_ptr)
 	}
 	return (head);
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 void	expansion(t_tree_node *ptr)
 {
@@ -328,9 +318,12 @@ void	expansion(t_tree_node *ptr)
 		expansion_tkn_lst(&ptr->init_data.cmd_tokens);
 		expansion_tkn_lst(&ptr->init_data.infile_tokens);
 		expansion_tkn_lst(&ptr->init_data.outfile_tokens);
-		ptr->exec_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
-		ptr->exec_data.infile_paths = make_redir_lst(ptr->init_data.infile_tokens);
-		ptr->exec_data.outfile_paths = make_redir_lst(ptr->init_data.outfile_tokens);
+		//ptr->exec_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
+		//ptr->exec_data.infile_paths = make_redir_lst(ptr->init_data.infile_tokens);
+		//ptr->exec_data.outfile_paths = make_redir_lst(ptr->init_data.outfile_tokens);
 		ptr = ptr->right;
 	}
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */

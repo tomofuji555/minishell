@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _tkn_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/21 18:49:51 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/22 12:10:20 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 
 // targetにheadが来ていたら、NULLが帰ってくる
 // targetはlst内にある前提で終わらす
-t_token *save_prev_tkn(t_token *head, t_token *target)
+t_token *find_prev_tkn(t_token *head, t_token *target)
 {
 	t_token *ptr;
 
@@ -54,6 +54,8 @@ t_token	*find_last_tkn(t_token *head)
 {
 	t_token *ptr;
 
+	if (head == NULL)
+		return (NULL);
 	ptr = head;
 	while(ptr->next != NULL)
 		ptr = ptr->next;
@@ -64,6 +66,8 @@ t_token *find_last_valuable_tkn(t_token *head)
 {
 	t_token *ptr;
 
+	if (head == NULL)
+		return (NULL);
 	ptr = head;
 	while(ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
 		ptr = ptr->next;
@@ -140,25 +144,4 @@ char *substr_from_tkn(t_token *begining, t_token *last)
 	_strlcpy_from_tkn(str, begining, len);
 	// printf("last->val == %s;  len == %zd\n", last->val, len);
 	return (str);
-}
-
-//挿入先のリストのheadと挿入する直前のptr,挿入するリストのheadとlast,
-void	connect_tkn_lst(t_token **head, t_token *prev, t_token *add_lst)
-{
-	t_token *next;
-	t_token *ret;
-	
-	if (prev == NULL)
-	{
-		next = (*head)->next;
-		*head == add_lst;
-	}
-	else
-	{
-		next = prev->next->next;
-		prev->next = add_lst;
-	}
-	ret = find_last_tkn(add_lst);
-	ret->next = next;
-	return (ret);
 }

@@ -6,69 +6,65 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/20 21:05:49 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:06:10 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-static void	add_redir_tkns_last(t_token **to_head, t_token *prev_of_first, t_token **from_head)
+t_token	*insert_tkns_and_ret_last_aaa(t_token **redir_tkns_head, \
+	t_token *redir_last, t_token *first, t_token *last)
 {
-	t_token *first;
+	t_token *ret;
 	
-	//pushする元側の処理
-	if (prev_of_first == NULL)
+	if (*redir_tkns_head == NULL)
 	{
-		first = *from_head;
-		*from_head = find_last_valuable_tkn(first->next)->next;
+		ret = first;
+		*redir_tkns_head = first;
+		last->next = NULL;
 	}
 	else
 	{
-		first = prev_of_first->next;
-		prev_of_first->next = find_last_valuable_tkn(first->next)->next;
+		ret = first;
+		redir_last->next = first;
+		last->next = NULL;
 	}
-	//ここまで
-	
-	//pushされる先の処理
-	if (*to_head == NULL)
-		*to_head = first;
+	return (ret);
+}
+
+t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token **cmd_tkns_head, \
+	t_token *ptr)
+{
+	t_token *prev;
+	t_token *next_ptr;
+	t_token *last;
+
+	next_ptr = find_last_valuable_tkn(ptr->next)->next;
+	insert_tkns_and_ret_last_aaa(redir_tkns_head, \
+		find_last_tkn(*redir_tkns_head), ptr, find_last_valuable_tkn(ptr->next));
+	prev = find_prev_tkn(*cmd_tkns_head, ptr);
+	if (prev == NULL)
+		*cmd_tkns_head = next_ptr;
 	else
-		find_last_tkn(*to_head)->next = first;
-	find_last_valuable_tkn(first->next)->next = NULL;
-	//ここまで
+		prev->next = next_ptr;
+	return (next_ptr);
 }
 
 //init_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする
 static t_token *separate_and_make_redir_tkns_lst\
-	(t_token **head, t_bool (*is_func)(enum e_token_kind))
+	(t_token **cmd_tkns_head, t_bool (*is_func)(enum e_token_kind))
 {
 	t_token *redir_tkns_head;
-	t_token *prev;
 	t_token *ptr;
-	t_token *next;
 
 	redir_tkns_head = NULL;
-	ptr = *head;
-	prev = NULL;
-	while(ptr != NULL)
+	ptr = *cmd_tkns_head;
+	while (ptr != NULL)
 	{
 		if (is_func(ptr->kind))
-		{
-			//next = find_last_valuable_tkn(ptr->next)->next;
-			//add_redir_tkns_last(&redir_tkns_head, prev, head);
-			//prev = save_prev_tkn(*head, next);
-			//ptr = next;
-			find_last_valuable_tkn_tkn(ptr->next) = NULL;
-			connect_expanded_env_tkn(head, ptr, )
-
-			範囲を指定して
-			headを
-		}
+			ptr = push_redir_tkns_aaa(&redir_tkns_head, cmd_tkns_head, ptr);
 		else
-		{
-			prev = ptr;
 			ptr = ptr->next;
-		}
 	}
 	return (redir_tkns_head);
 }
@@ -87,6 +83,9 @@ static void	push_to_redir_tkns(t_tree_node *tnode_head)
 		tnode_ptr = tnode_ptr->right;
 	}
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
 
 //if (next_tree_nodeのtkn_head == now_tree_nodeのtkn_last)
 //	nextをNULLを入れて区切る
@@ -178,3 +177,6 @@ t_tree_node *parse(t_token *tkn_ptr)
 	push_to_redir_tkns(head);
 	return (head);
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */

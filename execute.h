@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/15 19:45:10 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:10:27 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ char	*ft_xsubstr(const char *s, unsigned int start, size_t len);
 char	*ft_xstrjoin(const char *s1, const char *s2);
 char	**ft_xsplit(const char *s, char c);
 //print_utils.c
-void				wc(void);
+void	wc(char *str);
 void				print_to_last(char *begining, char *last);
 void				print_tkn_lst(t_token *head);
 void				print_init_of_tnode_lst(t_tree_node *tnode_ptr);
@@ -167,7 +167,7 @@ void	ft_xexecve(char *cmd_path, char **cmd_args, char **envp);
 void	remove_tkn(t_token **head, t_token *ptr, t_token *prev);
 t_token		*find_last_valuable_tkn(t_token *head);
 t_token *find_last_valuable_tkn_var2(t_token *head);
-t_token		*save_prev_tkn(t_token *head, t_token *target);
+t_token		*find_prev_tkn(t_token *head, t_token *target);
 t_token	*find_last_tkn(t_token *head);
 void add_tkn_last(t_token **head, t_token *new);
 char		*substr_from_tkn(t_token *begining, t_token *last);
@@ -203,15 +203,13 @@ t_tree_node *parse(t_token *tkn_ptr);
 
 void	remove_space_afrer_redir(t_token **tkn_head);
 
-// static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr);
-// static void	add_tnode_last(t_tree_node **head, t_tree_node *new);
-// static t_tree_node	*find_last_tnode(t_tree_node *head);
-
-// static void	fill_null_last_tkn_of_tnode(t_tree_node *tnode_ptr);
-
-// static void	push_to_redir_tkns(t_tree_node *tnode_ptr);
-// static t_token *separate_and_make_redir_tkns_lst(t_token *ptr, t_bool (*is_func)(enum e_token_kind));
-// static void	add_redir_tkns_last(t_token **head, t_token *prev_of_first, t_token *last);
+static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr);
+static void	add_tnode_last(t_tree_node **head, t_tree_node *new);
+static t_tree_node	*find_last_tnode(t_tree_node *head);
+static void	fill_null_last_tkn_of_tnode(t_tree_node *tnode_ptr);
+static void	push_to_redir_tkns(t_tree_node *tnode_head);
+static t_token *separate_and_make_redir_tkns_lst(t_token **cmd_tkns_head, t_bool (*is_func)(enum e_token_kind));
+t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token **cmd_tkns_head,  t_token *ptr);
 //~~~~~~~~
 
 //~~~~expansion start~~~~
@@ -225,10 +223,10 @@ static void	add_redir_last(t_redir **head_node, t_redir *new_node);
 static t_redir	*find_last_redir(t_redir *head);
 
 char **make_cmd_args(t_token *tkn_head);
-static size_t count_strs(t_token *tkn_ptr);
+static size_t count_arg_strs(t_token *tkn_ptr);
 
 void	expansion_tkn_lst(t_token **tkn_head);
-static void	expand_env_of_tkn(t_token **head, t_token *env_tkn, t_token *prev_of_env_tkn);
+static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token *prev);
 static t_token *tokenize_space_or_text(char *env_val);
 static size_t count_untill_last_and_set_kind(char *begining, enum e_token_kind *kind);
 
@@ -239,17 +237,13 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len);
 
 //~~~~execute start~~~~
 void	_exec(t_tree_node *ptr, t_manager *manager);
-//void	exec_tmp(t_tree_node *ptr, t_manager manager);
-//void	do_exec(t_exec_data data, t_manager manager);
-//int exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_flag);
-//void change_instream(t_redir *redir_head, int prev_output_fd);
-//void change_outstream(t_redir *redir_head, int pipe_out_fd, t_bool last_cmd_flag);
-//void update_prev_fd(t_manager *manager, int *pipefd, t_bool last_cmd_flag);
-
-//void	exec_cmd(char **cmd_args, char **envp);
-//static char	*search_and_make_path(char *cmd_name, char **envp);
-
-//void	change_stream_to_redir(t_redir *redir_head, int dest_fd);
-//static int fd_find_last(t_redir *redir_ptr);
-//static int open_redir_path(t_redir *node);
+pid_t exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_flag);
+void update_prev_fd(t_manager *manager, int *pipefd, t_bool last_cmd_flag);
+t_bool change_outstream(t_redir *redir_head, int pipe_out_fd, t_bool last_cmd_flag);
+t_bool change_instream(t_redir *redir_head, int prev_output_fd);
+void	exec_cmd(char **cmd_args, char **envp);
+static char	*search_and_make_path(char *cmd_name, char **envp);
+t_bool	can_change_stream_to_redir(t_redir *redir_head, int dest_fd);
+static int fd_find_last(t_redir *redir_ptr);
+static int open_redir_path(t_redir *node);
 #endif 
