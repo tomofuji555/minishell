@@ -6,14 +6,14 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 15:53:42 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 13:30:15 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
 //next_ptrは事前に持つ。NULL埋め切りされるため、後で取得できない
-t_token	*split_and_append_redir_tkns(t_token **redir_tkns_head, t_token **cmd_tkns_head, t_token *first)
+t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token *first, t_token **cmd_tkns_head)
 {
 	t_token *last;
 	t_token *next_ptr;
@@ -35,7 +35,7 @@ t_token	*split_and_append_redir_tkns(t_token **redir_tkns_head, t_token **cmd_tk
 }
 
 //init_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする
-static t_token *make_redir_tkns_lst\
+static t_token *separate_and_make_redir_tkns_lst\
 	(t_token **cmd_tkns_head, t_bool (*is_func)(enum e_token_kind))
 {
 	t_token *redir_tkns_head;
@@ -46,7 +46,7 @@ static t_token *make_redir_tkns_lst\
 	while (ptr != NULL)
 	{
 		if (is_func(ptr->kind))
-			ptr = split_and_append_redir_tkns(&redir_tkns_head, cmd_tkns_head, ptr);
+			ptr = push_redir_tkns_aaa(&redir_tkns_head, ptr, cmd_tkns_head);
 		else
 			ptr = ptr->next;
 	}
@@ -60,9 +60,9 @@ static void	push_to_redir_tkns(t_tree_node *tnode_head)
 	tnode_ptr = tnode_head;
 	while(tnode_ptr != NULL)
 	{
-		tnode_ptr->init_data.infile_tokens = make_redir_tkns_lst\
+		tnode_ptr->init_data.infile_tokens = separate_and_make_redir_tkns_lst\
 			(&tnode_ptr->init_data.cmd_tokens, is_in_redir_tkn);
-		tnode_ptr->init_data.outfile_tokens = make_redir_tkns_lst\
+		tnode_ptr->init_data.outfile_tokens = separate_and_make_redir_tkns_lst\
 			(&tnode_ptr->init_data.cmd_tokens, is_out_redir_tkn);
 		tnode_ptr = tnode_ptr->right;
 	}

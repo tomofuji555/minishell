@@ -6,38 +6,14 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 12:10:20 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 13:20:52 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-//// //save_last~系は必ずptr->next!=NULLで止める
-//t_token *first_space_skip_and_find_last_valuable_tkn(t_token *tkn_ptr)
-//{
-//	while(tkn_ptr != NULL && tkn_ptr->kind == TKN_SPACE)
-//		tkn_ptr = tkn_ptr->next;
-//	if (tkn_ptr != NULL)
-//	{
-//		while(tkn_ptr->next != NULL && is_valuable_tkn(tkn_ptr->next->kind))
-//			tkn_ptr = tkn_ptr->next;
-//	}
-//	return (tkn_ptr);
-//}
-
-// //save_last~系は必ずptr->next!=NULLで止める
-// t_token *find_last_valuable_tkn(t_token *tkn_ptr)
-// {
-// 	while(tkn_ptr->next != NULL && tkn_ptr->kind == TKN_SPACE)
-// 		tkn_ptr = tkn_ptr->next;
-// 	while(tkn_ptr->next != NULL && is_valuable_tkn(tkn_ptr->next->kind))
-// 		tkn_ptr = tkn_ptr->next;
-// 	return (tkn_ptr);
-// }
-
-
 // targetにheadが来ていたら、NULLが帰ってくる
-// targetはlst内にある前提で終わらす
+// targetはlst内にないとクラッシュする
 t_token *find_prev_tkn(t_token *head, t_token *target)
 {
 	t_token *ptr;
