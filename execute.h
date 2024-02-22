@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/22 12:10:27 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 13:04:40 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ static t_tree_node	*find_last_tnode(t_tree_node *head);
 static void	fill_null_last_tkn_of_tnode(t_tree_node *tnode_ptr);
 static void	push_to_redir_tkns(t_tree_node *tnode_head);
 static t_token *separate_and_make_redir_tkns_lst(t_token **cmd_tkns_head, t_bool (*is_func)(enum e_token_kind));
-t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token **cmd_tkns_head,  t_token *ptr);
+t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token *first, t_token **cmd_tkns_head);
 //~~~~~~~~
 
 //~~~~expansion start~~~~

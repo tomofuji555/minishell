@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 11:57:47 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 13:17:53 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int main()
 	char *str1 = "  $AA aaaa";
 	char *str2 = "cat >  aaa$PWD$\"SSS\">>  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
 	char *str3 = "$LS'aaa'$'bbb'$LS'sss'";
-	char *str4 = "$ZZZ>\"$PWD\"$ECHO<<kkk cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
+	char *str4 = "$ZZZ>\"$PWD\"$ECHO<<kkk$PPP cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
 	char *str5 = "ls |$LS$";
-	t_token *tkn_head = tokenize(str4);
+	t_token *tkn_head = tokenize(str2);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);

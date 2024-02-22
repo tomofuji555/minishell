@@ -6,49 +6,44 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 12:06:10 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 13:17:38 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-t_token	*insert_tkns_and_ret_last_aaa(t_token **redir_tkns_head, \
-	t_token *redir_last, t_token *first, t_token *last)
-{
-	t_token *ret;
-	
-	if (*redir_tkns_head == NULL)
-	{
-		ret = first;
-		*redir_tkns_head = first;
-		last->next = NULL;
-	}
-	else
-	{
-		ret = first;
-		redir_last->next = first;
-		last->next = NULL;
-	}
-	return (ret);
-}
+//void	insert_tkns_and_ret_last_aaa(t_token **redir_tkns_head, t_token *redir_last, t_token *first, t_token *last)
+//{
+//	if (*redir_tkns_head == NULL)
+//		*redir_tkns_head = first;
+//	else
+//		redir_last->next = first;
+//	last->next = NULL;
+//}
 
-t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token **cmd_tkns_head, \
-	t_token *ptr)
+t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token *first, t_token **cmd_tkns_head)
 {
-	t_token *prev;
-	t_token *next_ptr;
 	t_token *last;
+	t_token *next_ptr;
+	t_token *prev;
 
-	next_ptr = find_last_valuable_tkn(ptr->next)->next;
-	insert_tkns_and_ret_last_aaa(redir_tkns_head, \
-		find_last_tkn(*redir_tkns_head), ptr, find_last_valuable_tkn(ptr->next));
-	prev = find_prev_tkn(*cmd_tkns_head, ptr);
+	last = find_last_valuable_tkn(first->next);
+	next_ptr = last->next;
+	if (*redir_tkns_head == NULL)
+		*redir_tkns_head = first;
+	else
+		find_last_tkn(*redir_tkns_head)->next = first;
+	last->next = NULL;
+	prev = find_prev_tkn(*cmd_tkns_head, first);
 	if (prev == NULL)
 		*cmd_tkns_head = next_ptr;
 	else
 		prev->next = next_ptr;
 	return (next_ptr);
 }
+	//next_ptr = find_last_valuable_tkn(ptr->next)->next;
+	//insert_tkns_and_ret_last_aaa(redir_tkns_head, \
+	//	find_last_tkn(*redir_tkns_head), ptr, find_last_valuable_tkn(ptr->next));
 
 //init_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする
 static t_token *separate_and_make_redir_tkns_lst\
@@ -62,7 +57,7 @@ static t_token *separate_and_make_redir_tkns_lst\
 	while (ptr != NULL)
 	{
 		if (is_func(ptr->kind))
-			ptr = push_redir_tkns_aaa(&redir_tkns_head, cmd_tkns_head, ptr);
+			ptr = push_redir_tkns_aaa(&redir_tkns_head, ptr, cmd_tkns_head);
 		else
 			ptr = ptr->next;
 	}

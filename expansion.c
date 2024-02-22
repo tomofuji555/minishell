@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 12:04:47 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:20:09 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ char	*expand_env_in_dquote(char *str)
 
 	if (str == NULL)
 		return (NULL);
-	expanded_len = _strlen_env_expanded(str) + 1;
-	if (expanded_len  == ft_strlen(str) + 1)
+	expanded_len = _strlen_env_expanded(str);
+	if (expanded_len  == ft_strlen(str))
 		return (str);
-	expanded_str = (char *)ft_xmalloc(sizeof(char) * expanded_len);
-	_strlcat_env_expanded(expanded_str, str, expanded_len);
+	expanded_str = (char *)ft_xmalloc(sizeof(char) * (expanded_len + 1));
+	_strlcat_env_expanded(expanded_str, str, (expanded_len + 1));
 	free(str);
 	return (expanded_str);
 }
