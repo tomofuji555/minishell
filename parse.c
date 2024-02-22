@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 15:53:42 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 16:44:28 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
 //next_ptrは事前に持つ。NULL埋め切りされるため、後で取得できない
-t_token	*split_and_append_redir_tkns(t_token **redir_tkns_head, t_token **cmd_tkns_head, t_token *first)
+t_token	*separate_and_append_redir_tkns(t_token **redir_tkns_head, t_token **cmd_tkns_head, t_token *first)
 {
 	t_token *last;
 	t_token *next_ptr;
@@ -46,14 +46,14 @@ static t_token *make_redir_tkns_lst\
 	while (ptr != NULL)
 	{
 		if (is_func(ptr->kind))
-			ptr = split_and_append_redir_tkns(&redir_tkns_head, cmd_tkns_head, ptr);
+			ptr = separate_and_append_redir_tkns(&redir_tkns_head, cmd_tkns_head, ptr);
 		else
 			ptr = ptr->next;
 	}
 	return (redir_tkns_head);
 }
 
-static void	push_to_redir_tkns(t_tree_node *tnode_head)
+static void	move_to_redir_tkns(t_tree_node *tnode_head)
 {
 	t_tree_node *tnode_ptr;
 	
@@ -73,7 +73,7 @@ static void	push_to_redir_tkns(t_tree_node *tnode_head)
 
 //if (next_tree_nodeのtkn_head == now_tree_nodeのtkn_last)
 //	nextをNULLを入れて区切る
-static void	fill_null_last_tkn_of_tnode(t_tree_node *tnode_ptr)
+static void	split_last_tkn(t_tree_node *tnode_ptr)
 {
 	t_token *tkn_ptr;
 	t_token *tkn_next_head;
@@ -120,7 +120,7 @@ static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr)
 }
 
 //redir_tknの次がNULLじゃない前提で実装している
-void	remove_space_afrer_redir(t_token **tkn_head)
+void	del_space_afrer_redir(t_token **tkn_head)
 {
 	t_token *prev;
 	t_token *ptr;
@@ -143,7 +143,7 @@ t_tree_node *parse(t_token *tkn_ptr)
 	t_tree_node *head;
 	t_tree_node *new;
 	
-	remove_space_afrer_redir(&tkn_ptr);
+	del_space_afrer_redir(&tkn_ptr);
 	head = NULL;
 	tkn_begining = tkn_ptr;
 	while(tkn_ptr != NULL)
@@ -157,8 +157,8 @@ t_tree_node *parse(t_token *tkn_ptr)
 		}
 		tkn_ptr =  tkn_ptr->next;
 	}
-	fill_null_last_tkn_of_tnode(head);
-	push_to_redir_tkns(head);
+	split_last_tkn(head);
+	move_to_redir_tkns(head);
 	return (head);
 }
 /* --------------------------------------------------------- */
