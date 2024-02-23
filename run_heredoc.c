@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   __run_heredoc.c                                    :+:      :+:    :+:   */
+/*   run_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 06:31:42 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:25:37 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,28 @@ char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind)
 	free(line);
 	ft_xclose(fd);
 	return (path);
+}
+
+
+
+void	do_heredoc(t_tree_node *tnode_head)
+{
+	t_tree_node *ptr;
+	t_redir	*rdir_ptr;
+
+	ptr = tnode_head;
+	while (ptr != NULL)
+	{
+		rdir_ptr = ptr->exec_data.infile_paths;
+		while (rdir_ptr != NULL)
+		{
+			if (rdir_ptr->kind == REDIR_HEREDOC || \
+				rdir_ptr->kind == REDIR_HEREDOC_NO_EXPAND)
+				rdir_ptr->val = run_heredoc(rdir_ptr->val, rdir_ptr->kind);
+			rdir_ptr = rdir_ptr->next;
+		}
+		ptr = ptr->right;
+	}
 }
 
 // int main()
