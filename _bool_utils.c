@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/12 15:46:52 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/23 23:09:09 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,10 @@ t_bool is_last_cmd(t_tree_node *ptr)
 t_bool is_first_cmd(t_tree_node *ptr)
 {
 	return (ptr->left == NULL && (ptr->prev == NULL || ptr->prev->right != ptr));
+}
+
+t_bool	is_cmd_node(t_tree_node *ptr)
+{
+	return (ptr->exec_data.cmd_args || ptr->exec_data.infile_paths || ptr->exec_data.outfile_paths);
+	//return (ptr->left == NULL && ptr->right == NULL);
 }

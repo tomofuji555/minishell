@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 20:39:34 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/23 22:25:25 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ static size_t count_arg_strs(t_token *tkn_ptr)
 {
 	size_t i;
 
-	i = 1;
+	i = 0;
 	while (tkn_ptr != NULL)
 	{
 		if (is_valuable_tkn(tkn_ptr->kind))
@@ -196,7 +196,10 @@ char **make_cmd_args(t_token *tkn_head)
 	t_token *tkn_ptr;
 	t_token *last;
 
-	cmd_args = (char **)ft_xmalloc(sizeof(char *) * count_arg_strs(tkn_head));
+	size_t count = count_arg_strs(tkn_head);
+	if (count == 0)
+		return (NULL);
+	cmd_args = (char **)ft_xmalloc(sizeof(char *) * (count + 1));
 	i = 0;
 	tkn_ptr = tkn_head;
 	while(tkn_ptr != NULL)

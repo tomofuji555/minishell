@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 10:59:30 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/23 22:20:36 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_cmd_args(char **strs)
 	size_t i = 0;
 	while (strs[i] != NULL)
 	{
-		printf("%zd=%s\n", i, strs[i]);
+		printf("%zd=%s;\n", i, strs[i]);
 		i++;
 	}
 }
@@ -115,9 +115,10 @@ static void	print_init_data(t_tree_node *ptr)
 
 static void	print_exec_data(t_tree_node	*ptr)
 {
-	printf("<<exec_data>>\n");
+	
 	if (ptr->exec_data.cmd_args)
 	{
+		printf("<<exec_data>>\n");
 		printf("<cmd>\n");
 		print_cmd_args(ptr->exec_data.cmd_args);
 	}

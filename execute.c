@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 21:14:37 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/23 23:31:17 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,8 +228,6 @@ pid_t exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_fl
 
 void	_exec(t_tree_node *ptr, t_manager *manager)
 {
-	int		pipe_fd[2];
-	pid_t	pid;
 	pid_t	last_pid;
 	size_t	fork_count;
 	int		status;
@@ -237,7 +235,7 @@ void	_exec(t_tree_node *ptr, t_manager *manager)
 	fork_count = 0;
 	while(ptr != NULL)
 	{
-		if (ft_strcmp(ptr->exec_data.cmd_args[0], "|") != 0)
+		if (is_cmd_node(ptr))
 		{
 			last_pid = exec_external_cmd(ptr->exec_data, manager, is_last_cmd(ptr));
 			fork_count++;

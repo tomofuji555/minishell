@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/22 13:04:40 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/23 23:27:32 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ t_bool				is_in_redir_tkn(enum e_token_kind kind);
 t_bool				is_out_redir_tkn(enum e_token_kind kind);
 t_bool				is_last_cmd(t_tree_node *ptr);
 t_bool				is_first_cmd(t_tree_node *ptr);
+t_bool				is_cmd_node(t_tree_node *ptr);
 //env_utils.c
 size_t				count_envname(char *dollar_ptr);
 char				*ft_getenv(const char *target_str);

@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 21:35:57 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/23 23:26:17 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int main()
 	char *str4 = "<a>c cat <b";
 	char *str5 = "ls | rev | aaa";
 	manager = init();
-	t_token *tkn_head = tokenize(str1);
+	t_token *tkn_head = tokenize(str3);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);

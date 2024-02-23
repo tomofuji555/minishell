@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/22 23:16:40 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/23 22:11:26 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	parse_and_exec_line(char *line, t_manager *manager)
 
 	token_head = tokenize(line);
 	if (token_head == NULL)
-		;//エラーを吐き出すが、exitはしない
+		return ;//エラーを吐きreturn、exitはしない
 	tnode_head = parse(token_head);
 	expansion(tnode_head);
 	_exec(tnode_head, manager);
