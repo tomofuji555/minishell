@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/23 22:25:25 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/24 19:05:46 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,8 +273,8 @@ static t_bool	contains_quote(t_token *begining)
 
 static enum e_redir_kind	convert_redir_kind(t_token *begining)
 {
-	if (has_space_between(begining))
-		return (AMBIGUOUS_REDIR);
+	//if (has_space_between(begining))
+	//	return (AMBIGUOUS_REDIR);
 	if (begining->kind == TKN_IN_FILE)
 		return (REDIR_IN_FILE);
 	else if (begining->kind == TKN_HEREDOC)
@@ -289,6 +289,8 @@ static enum e_redir_kind	convert_redir_kind(t_token *begining)
 	else
 		return (REDIR_APPEND_FILE);
 }
+
+char *clean_space()
 
 //リダイレクトのvalがifsのみだと、空文字列("")が入る
 static t_redir	*make_new_redir(t_token *begining, t_token *last)

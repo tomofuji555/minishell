@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/23 23:27:32 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/24 16:53:03 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_redir
 {
 	enum e_redir_kind	kind;
 	char				*val;
-	t_bool				ambiguout_flag;
 	struct s_redir		*next;
 }	t_redir;
 
@@ -127,6 +126,7 @@ t_bool				is_out_redir_tkn(enum e_token_kind kind);
 t_bool				is_last_cmd(t_tree_node *ptr);
 t_bool				is_first_cmd(t_tree_node *ptr);
 t_bool				is_cmd_node(t_tree_node *ptr);
+t_bool	is_absolute_path_cmd(char *first_cmd_arg);
 //env_utils.c
 size_t				count_envname(char *dollar_ptr);
 char				*ft_getenv(const char *target_str);

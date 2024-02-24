@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 23:25:37 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/24 18:04:14 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind)
 
 
 
-void	do_heredoc(t_tree_node *tnode_head)
+void	try_heredoc(t_tree_node *tnode_head)
 {
 	t_tree_node *ptr;
 	t_redir	*rdir_ptr;

@@ -28,10 +28,11 @@ int fork_exec(char *path, char *arg[], char **envp)
 int main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
-	//char	*path = "../../../../../../bin/ls";
-	char	*path = "ls";
-	//char	*arg[] = {"ls", "-a", NULL};
-	char	*arg[] = {"ls", NULL};
+	char	*path = "../../../../../bin/ls"; //相対パス
+	//char	*path = "../../../ls"; //権限ないls
+	//char	*path = "ls";
+	char	*arg[] = {"ls", "-a", NULL};
+	//char	*arg[] = {"ls", NULL};
 	int		status;
 	int val;
 
@@ -39,7 +40,11 @@ int main(int argc, char **argv, char **envp)
 	if (!pid)
 	{
 		printf("child!!!\n");
-		execve(path, arg, NULL);
+		if (execve(path, arg, NULL) == -1)
+		{
+			perror("errordesu!!!");
+			return (888);
+		}
 		// // exit(199);
 		// while(1);
 		//val = fork_exec(path, arg, NULL);

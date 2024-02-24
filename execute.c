@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/23 23:31:17 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/02/24 18:52:32 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,16 @@ void	exec_cmd(char **cmd_args, char **envp)
 {
 	char		*cmd_path;
 
-	if (ft_strchr(cmd_args[0], '/') != NULL || access(cmd_args[0], F_OK) == EXIST)
+	if (is_absolute_path_cmd(cmd_args[0]))
 	{
-		if (access(cmd_args[0], X_OK) == -1)
-			perror_and_exit(cmd_args[0], 126);
+		if (access(cmd_args[0], F_OK) != EXIST)
+			ft_perror_and_exit(cmd_args[0], "No such file or directory", 127);	
 		ft_xexecve(cmd_args[0], cmd_args, envp);
 		return ;
 	}
 	cmd_path = search_and_make_path(cmd_args[0], envp);
 	if (cmd_path == NULL)
 		ft_perror_and_exit(cmd_args[0], "command not found", 127);
-	if (access(cmd_path, X_OK) == -1)
-		perror_and_exit(cmd_args[0], 126);
 	ft_xexecve(cmd_path, cmd_args, envp);
 }
 /* --------------------------------------------------------- */
@@ -63,11 +61,11 @@ static int open_redir_path(t_redir *node)
 {
 	int fd;
 
-	//if(AMBIGUOUS)
-	//{
-	//	ft_putendl_fd( )//ambiguous  redirect
-	//	return (SYS_FAILURE);
-	//}
+	if(ft_strchr(node->val, ' '))
+	{
+		ft_perror_and_exit(node->val, "ambiguous redirect", 1);
+		return (SYS_FAILURE);
+	}
 	if (node->kind == REDIR_OUT_FILE)
 		fd = open(node->val, O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
 	else if (node->kind == REDIR_APPEND_FILE)
@@ -75,7 +73,7 @@ static int open_redir_path(t_redir *node)
 	else
 		fd = open(node->val, O_RDONLY);
 	if (fd == SYS_FAILURE)
-		perror(node->val); //No such file or directory / Permission denied
+		perror(node->val); //No such file or directory / Permission denied を勝手に吐いてくれる
 	return (fd);
 }
 
@@ -90,7 +88,7 @@ static int fd_find_last(t_redir *redir_ptr)
 			ft_xclose(fd);
 		fd = open_redir_path(redir_ptr);
 		if (fd == SYS_FAILURE)
-			return (fd);//error文吐く、exitするのは外
+			return (fd);
 		redir_ptr = redir_ptr->next;
 	}
 	return (fd);
@@ -180,51 +178,12 @@ pid_t exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_fl
 		ft_xclose(pipe_fd[R]);
 		if (change_instream(data.infile_paths, manager->prev_output_fd) == TRUE
 			&& change_outstream(data.outfile_paths, pipe_fd[W], last_cmd_flag) == TRUE)
-		{
 			exec_cmd(data.cmd_args, environ);
-		}
 		exit(1);
 	}
 	update_prev_fd(manager, pipe_fd, last_cmd_flag);
 	return (pid);
 }
-
-//void	do_exec(t_exec_data data, t_manager *manager)
-//{
-//	//if (is_builtin(ptr->exec_data.cmd_args[0]))
-//	//	exec_builtin_cmd(ptr, manager);
-//	//else
-//		exec_external_cmd(data, &manager);
-//}
-
-//void	epxec_tmp(t_tree_node *ptr, t_manager manager)
-//{
-//	while(--count)
-//	{
-//		if (!builtin)
-//		{
-//			fork_count++;
-//			fork();
-//			if (child)
-//			{
-//				exec_cmd();
-//			}
-//			last_pid = pid;
-//			prev_output_fd = pipe_fd[0];
-//		}
-//		else
-//		{
-//			exec_cmd();
-//			last_pid = pid;
-//			prev_output_fd = pipe_fd[0];
-//		}
-//	}
-//	while(--fork_count)
-//	{
-//		if (wait() == last_pid)
-//			exit_status = status;
-//	}
-//}
 
 void	_exec(t_tree_node *ptr, t_manager *manager)
 {
@@ -237,6 +196,10 @@ void	_exec(t_tree_node *ptr, t_manager *manager)
 	{
 		if (is_cmd_node(ptr))
 		{
+			//ビルトインかつ、１つだけのコマンドなら親プロセスで実行
+				//exec_single_builtin_cmd();
+			//ビルトインかつ複数あるコマンドなら子プロセスで実行
+				//exec_builtin_cmd();
 			last_pid = exec_external_cmd(ptr->exec_data, manager, is_last_cmd(ptr));
 			fork_count++;
 		}

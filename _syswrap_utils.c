@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _syswrap_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/20 14:54:12 by toshi            ###   ########.fr       */
+/*   Updated: 2024/02/24 18:10:29 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,20 @@ int ft_xdup2(int copied_fd, int dest_fd)
 {
 	dest_fd = dup2(copied_fd, dest_fd);
 	if (dest_fd == SYS_FAILURE)
-		perror_and_exit(NULL, 1);
+		perror_and_exit("dup2", 1);
 	return (dest_fd);
 }
 
 void ft_xclose(int fd)
 {
 	if (close(fd) == SYS_FAILURE)
-		perror_and_exit(NULL, 1);
+		perror_and_exit("close", 1);
 }
 
 void ft_xpipe(int *pipe_fd)
 {
 	if(pipe(pipe_fd) == SYS_FAILURE)
-		perror_and_exit(NULL, 1);
+		perror_and_exit("pipe", 1);
 }
 
 pid_t ft_xfork(void)
@@ -78,12 +78,14 @@ pid_t ft_xfork(void)
 
 	pid = fork();
 	if (pid == SYS_FAILURE)
-		perror_and_exit(NULL, 1);
+		perror_and_exit("fork", 1);
 	return (pid);
 }
 
+//accessでパスが保証されているコマンドが引数で入ってきている
+//execがエラーを出した時は実行許可がないパターンしか想定していない
 void ft_xexecve(char *cmd_path, char **cmd_args, char **envp)
 {
 	if (execve(cmd_path, cmd_args, envp) == SYS_FAILURE)
-		perror_and_exit(NULL, 1);
+		perror_and_exit(cmd_args[0], 126);
 }
