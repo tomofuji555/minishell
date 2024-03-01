@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 07:44:21 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 07:58:36 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*create_tmpfile_path(void)
 	num = 0;
 	while (num < ULLONG_MAX)
 	{
-		path = ft_xstrjoin("/tmp/", ulltonbase(num++, 16));
+		path = ft_xstrjoin("/tmp/", ulltonbase(num++, 16)); //おそらくリークの原因はココ！
 		if (access(path, F_OK) == NOT_EXIST)
 			return (path);
 		free (path);
