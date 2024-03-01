@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/23 22:20:36 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 06:43:03 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,20 @@ void	print_exec_of_tnode_lst(t_tree_node *tnode_ptr)
 	while(tnode_ptr != NULL)
 	{
 		printf("--------node_No==%zd--------\n", i++);
+		print_exec_data(tnode_ptr);
+		tnode_ptr = tnode_ptr->right;
+	}
+}
+
+void	print_tnode_lst(t_tree_node *tnode_ptr)
+{
+	size_t i;
+
+	i = 0;
+	while(tnode_ptr != NULL)
+	{
+		printf("--------node_No==%zd--------\n", i++);
+		print_init_data(tnode_ptr);
 		print_exec_data(tnode_ptr);
 		tnode_ptr = tnode_ptr->right;
 	}

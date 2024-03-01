@@ -6,16 +6,16 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 06:01:50 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 07:45:15 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-// __attribute__((destructor))
-// static void destructor() {
-//    system("leaks -q minishell");
-// }
+ __attribute__((destructor))
+ static void destructor() {
+    system("leaks -q minishell");
+ }
 
 // // tokenizeの確認用
 // int main()
@@ -47,16 +47,34 @@
 // 	print_init_of_tnode_lst(tnode_head);
 // }
 
-// // parserの確認 syntax_errorなし
+ // parserの確認 syntax_errorなし
 // int main(int argc, char **argv)
 // {
 // 	char *str1 = "cat >  aaa$PED$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk | aaa<<gaga>>glnagal";
 // 	t_token *tkn_head = tokenize(str1);
-// 	tkn_print_lst(tkn_head);
+// 	print_tkn_lst(tkn_head);
 // 	t_tree_node *tnode_head = parse(tkn_head);
-// 	tnode_print_lst(tnode_head);
-// 	tnode_free_lst(tnode_head);
+// 	print_init_of_tnode_lst(tnode_head);
+// 	free_tnode_lst(tnode_head);
 // }
+
+//// expansion_env_of_tknの確認
+//int main()
+//{
+//	char *str1 = "  $AA aaaa";
+//	char *str2 = "cat >  aaa$PWD$\"SSS\">>  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
+//	char *str3 = "$LS'aaa'$'bbb'$LS'sss'";
+//	char *str4 = "$ZZZ>\"$PWD\"$ECHO<<kkk$PPP cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
+//	char *str5 = "ls |$LS$";
+//	t_token *tkn_head = tokenize(str4);
+//	if (tkn_head == NULL)
+//		return (1);
+//	t_tree_node *tnode_head = parse(tkn_head);
+//	printf("---------------------------------------------------------------------------------\n");
+//	expansion(tnode_head);
+//	print_exec_of_tnode_lst(tnode_head);
+//	free_tnode_lst(tnode_head);
+//}
 
 // // expansion_env_in_dquote単体の確認
 // int main()
@@ -108,7 +126,8 @@ int main()
 	try_heredoc(tnode_head);
 	_exec(tnode_head, &manager);
 	remove_tmpfile(tnode_head);
-	//print_exec_of_tnode_lst(tnode_head);
+	free_tnode_lst(tnode_head);
+	free_multi_strs(manager.envp);
 	printf("終了ステータスは%d\n", manager.exit_status);
 }
 

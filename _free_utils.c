@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:12:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 08:30:01 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 07:21:44 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,48 @@ void	free_tkn_lst(t_token *head)
 	free_tkn(ptr);
 }
 
+void	free_redir_node(t_redir *redir_node)
+{
+	free(redir_node->val);
+	free(redir_node);
+}
+
+void	free_redir_node_lst(t_redir *head)
+{
+	t_redir *next_ptr;
+	t_redir *ptr;
+
+	if (head == NULL)
+		return ;
+	ptr = head;
+	next_ptr = head->next;
+	while(next_ptr != NULL)
+	{
+		free_redir_node(ptr);
+		ptr = next_ptr;
+		next_ptr = next_ptr->next;
+	}
+	free_redir_node(ptr);
+}
+
+void	free_init_data(t_init_data init_data)
+{
+	if (init_data.cmd_tokens)
+		free_tkn_lst(init_data.cmd_tokens);
+	if (init_data.infile_tokens)
+		free_tkn_lst(init_data.infile_tokens);
+	if (init_data.outfile_tokens)
+		free_tkn_lst(init_data.outfile_tokens);
+}
+
 void	free_tnode(t_tree_node 	*tnode)
 {
-	free_tkn_lst(tnode->init_data.cmd_tokens);
-	if (tnode->init_data.infile_tokens)
-		free_tkn_lst(tnode->init_data.infile_tokens);
-	if (tnode->init_data.outfile_tokens)
-		free_tkn_lst(tnode->init_data.outfile_tokens);
+	if (tnode->exec_data.cmd_args)
+		free_multi_strs(tnode->exec_data.cmd_args);
+	if (tnode->exec_data.infile_paths)
+		free_redir_node_lst(tnode->exec_data.infile_paths);	
+	if (tnode->exec_data.outfile_paths)
+		free_redir_node_lst(tnode->exec_data.outfile_paths);
 	free(tnode);
 }
 

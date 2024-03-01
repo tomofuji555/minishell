@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 03:26:07 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 07:36:16 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,6 +344,7 @@ void	expansion(t_tree_node *ptr)
 		ptr->exec_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
 		ptr->exec_data.infile_paths = make_redir_lst(ptr->init_data.infile_tokens);
 		ptr->exec_data.outfile_paths = make_redir_lst(ptr->init_data.outfile_tokens);
+		free_init_data(ptr->init_data);
 		ptr = ptr->right;
 	}
 }

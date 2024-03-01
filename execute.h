@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/02 05:57:08 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 07:10:49 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ char				*search_env_val(char *dollar_ptr, size_t env_name_len);
 void				free_multi_strs(char **strs);
 void				free_tkn(t_token *tkn);
 void				free_tkn_lst(t_token *head);
+void				free_init_data(t_init_data init_data);
 void				free_tnode(t_tree_node 	*tnode);
 void				free_tnode_lst(t_tree_node *head);
 //libftwrap_utils.c
