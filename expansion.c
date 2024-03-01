@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/24 19:05:46 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 03:26:07 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,13 +290,14 @@ static enum e_redir_kind	convert_redir_kind(t_token *begining)
 		return (REDIR_APPEND_FILE);
 }
 
-char *clean_space()
+//char *clean_space()
 
 //リダイレクトのvalがifsのみだと、空文字列("")が入る
 static t_redir	*make_new_redir(t_token *begining, t_token *last)
 {
 	t_redir	*node;
 	char *tmp_val;
+	char *tmp_val_2;
 
 	node = (t_redir *)ft_xmalloc(sizeof(t_redir));
 	node->kind = convert_redir_kind(begining);

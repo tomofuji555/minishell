@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
+#    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/02/13 19:03:42 by toshi            ###   ########.fr        #
+#    Updated: 2024/03/02 03:58:06 by tozeki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS		=	_bool_utils.c \
 				parse.c \
 				expansion.c\
 				execute.c \
+				run_heredoc.c \
 				main.c
 OBJS		=	$(SRCS:.c=.o)
 LIBFTPATH	=	libft/

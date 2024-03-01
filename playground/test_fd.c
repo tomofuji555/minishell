@@ -8,7 +8,8 @@
 int main()
 {
 	size_t i = 10;
-	int fd = open("./a", O_RDWR , S_IRWXU);
+	//int fd = open("./a", O_RDWR , S_IRWXU);
+	int fd = open("a", O_RDWR , S_IRWXU);
 	// int fd = open(NULL, O_RDWR , S_IRWXU);
 	if (fd == -1)
 		perror("fd");

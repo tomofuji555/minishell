@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/24 18:10:29 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 05:22:53 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void *ft_xcalloc(size_t count, size_t size)
 
 int ft_xdup2(int copied_fd, int dest_fd)
 {
-	dest_fd = dup2(copied_fd, dest_fd);
-	if (dest_fd == SYS_FAILURE)
+	if (dup2(copied_fd, dest_fd) == SYS_FAILURE)
 		perror_and_exit("dup2", 1);
 	return (dest_fd);
 }
@@ -80,6 +79,13 @@ pid_t ft_xfork(void)
 	if (pid == SYS_FAILURE)
 		perror_and_exit("fork", 1);
 	return (pid);
+}
+
+int ft_xunlink(char *pathname)
+{
+	if (unlink(pathname) == SYS_FAILURE)
+		perror_and_exit("unlink", 1);
+	return (0);
 }
 
 //accessでパスが保証されているコマンドが引数で入ってきている

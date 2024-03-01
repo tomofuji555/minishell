@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/23 22:11:26 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 03:30:20 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	run_prompt(t_manager *manager)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
-			break ;
+			perror_and_exit("readline_error", 1);
 		else if (ft_strcmp(line, "END") == 0)
 		{
 			free(line);

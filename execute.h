@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/02/24 16:53:03 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 05:57:08 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ int		ft_xdup2(int copied_fd, int dest_fd);
 void	ft_xclose(int fd);
 void	ft_xpipe(int *pipe_fd);
 pid_t	ft_xfork(void);
+int		ft_xunlink(char *pathname);
 void	ft_xexecve(char *cmd_path, char **cmd_args, char **envp);
 //tkn_utils.c
 void	remove_tkn(t_token **head, t_token *ptr, t_token *prev);
@@ -247,4 +248,11 @@ static char	*search_and_make_path(char *cmd_name, char **envp);
 t_bool	can_change_stream_to_redir(t_redir *redir_head, int dest_fd);
 static int fd_find_last(t_redir *redir_ptr);
 static int open_redir_path(t_redir *node);
+//~~~~~~~~
+
+//~~~~heredoc start~~~~
+void	remove_tmpfile(t_tree_node *tnode_head);
+void	try_heredoc(t_tree_node *tnode_head);
+//~~~~~~~~
+
 #endif 

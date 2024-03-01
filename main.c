@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/23 23:26:17 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 06:01:50 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,19 @@ int main()
 	char *str3 = "<./a cat <./b|>./c cat ";
 	char *str4 = "<a>c cat <b";
 	char *str5 = "ls | rev | aaa";
+	char *str6 = " << aaa cat | cat |  rev > x";
+	char *str7 = " <  	x  cat | cat ";
 	manager = init();
-	t_token *tkn_head = tokenize(str3);
+	t_token *tkn_head = tokenize(str6);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);
 	expansion(tnode_head);
-	print_exec_of_tnode_lst(tnode_head);
-	//_exec(tnode_head, &manager);
-	//printf("終了ステータスは%d\n", manager.exit_status);
+	try_heredoc(tnode_head);
+	_exec(tnode_head, &manager);
+	remove_tmpfile(tnode_head);
+	//print_exec_of_tnode_lst(tnode_head);
+	printf("終了ステータスは%d\n", manager.exit_status);
 }
 
 
