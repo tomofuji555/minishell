@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/02 07:10:49 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 10:34:29 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ char		*substr_from_tkn(t_token *begining, t_token *last);
 char				*ulltonbase(unsigned long long num, unsigned int base);
 size_t				ft2_strlcat(char *dest, const char *src, size_t size);
 int					ft_strcmp(const char *s1, const char *s2);
+char				*strjoin_and_free_str2(char *str1, char *str2);
 //~~~~utils end~~~~
 
 //~~~~ initi start~~~~

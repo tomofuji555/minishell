@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/08 07:01:44 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 10:33:35 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ int	ft_strcmp(const char *s1, const char *s2)
 		return (0);
 	else
 		return ((int)((unsigned char)s1[i] - (unsigned char)s2[i]));
+}
+
+char *strjoin_and_free_str2(char *str1, char *str2)
+{
+	char *joined_str;
+
+	joined_str = ft_xstrjoin(str1, str2);
+	free(str2);
+	return (joined_str);
 }
 
 
