@@ -6,16 +6,16 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 07:45:15 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:35:54 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
- __attribute__((destructor))
- static void destructor() {
-    system("leaks -q minishell");
- }
+// __attribute__((destructor))
+// static void destructor() {
+//    system("leaks -q minishell");
+// }
 
 // // tokenizeの確認用
 // int main()
@@ -106,19 +106,56 @@
 // 	tnode_free_lst(tnode_head);
 // }
 
+//heredoc用テスト
+// int main()
+// {
+// 	char *line;
+// 	char *filename = NULL;
+
+// 	while(1)
+// 	{
+// 		line = readline("minishell $ ");
+// 		if (line == NULL)
+// 			printf("error\n");
+// 		else
+// 		{
+// 			if(*line != '\0')
+// 			{
+// 				add_history(line);
+// 				if (ft_strcmp(line, "heredoc") == 0)
+// 					filename = run_heredoc("heredoc");
+// 				if (ft_strcmp(line, "end") == 0)
+// 				{
+// 					free(line);
+// 					break;
+// 				}
+// 			}
+// 			free(line);
+			
+// 			// printf("line=\"%s\"", line);
+// 			// printf("\n");
+// 			// free(line);
+// 		}
+// 	}
+// 	printf("file名 %s\n", filename);
+// 	free(filename);
+// }
+
 int main()
 {
 	t_manager manager;
 	
-	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev | head -n 5";
-	char *str2 = "cat | cat |  ls ";
+	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev |head -n 5";
+	char *str2 = "cat | cat |ls ";
 	char *str3 = "<./a cat <./b|>./c cat ";
 	char *str4 = "<a>c cat <b";
 	char *str5 = "ls | rev | aaa";
 	char *str6 = " << aaa cat | cat |  rev > x";
 	char *str7 = " <  	x  cat | cat ";
+	char *str8 = "aaa | cat | ls";
+	char *str9 = "echo $HOME$1$@$USER$_KK";
 	manager = init();
-	t_token *tkn_head = tokenize(str6);
+	t_token *tkn_head = tokenize(str9);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);

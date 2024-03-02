@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/02 10:34:29 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 11:03:27 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 #include <fcntl.h>
 #include "libft/libft.h"
 #include "stdbool.h"
-// #include "utils/utils.h"
 
 #define	SYS_FAILURE	-1
 #define	CHILD		0
@@ -139,8 +138,8 @@ void				free_init_data(t_init_data init_data);
 void				free_tnode(t_tree_node 	*tnode);
 void				free_tnode_lst(t_tree_node *head);
 //libftwrap_utils.c
-void	ft_perror(char *errtarget, char *errstr);
-void ft_perror_and_exit(char *errtarget, char *errstr, int exit_status);
+void	perror_arg2(char *errtarget, char *errstr);
+void	perror_arg2_and_exit(char *errtarget, char *errstr, int exit_status);
 void	perror_and_exit(char *err_title, int exit_status);
 char	*ft_xstrdup(const char *s1);
 char	*ft_xstrtrim(const char *s1, const char *set);

@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:12:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 07:21:44 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 11:39:00 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	free_init_data(t_init_data init_data)
 		free_tkn_lst(init_data.outfile_tokens);
 }
 
-void	free_tnode(t_tree_node 	*tnode)
+void	free_exec_data_and_tnode(t_tree_node 	*tnode)
 {
 	if (tnode->exec_data.cmd_args)
 		free_multi_strs(tnode->exec_data.cmd_args);
@@ -105,9 +105,9 @@ void	free_tnode_lst(t_tree_node *head)
 	next_ptr = head->right;
 	while(next_ptr != NULL)
 	{
-		free_tnode(ptr);
+		free_exec_data_and_tnode(ptr);
 		ptr = next_ptr;
 		next_ptr = next_ptr->right;
 	}
-	free_tnode(ptr);
+	free_exec_data_and_tnode(ptr);
 }

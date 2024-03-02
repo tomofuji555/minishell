@@ -6,31 +6,31 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/02/15 09:41:22 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 11:24:33 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-
-void	ft_perror(char *errtarget, char *errstr)
+void	perror_arg2(char *err_target, char *err_str)
 {
-	ft_putstr_fd(errtarget, STDERR_FILENO);
+	ft_putstr_fd(err_target, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(errstr, STDERR_FILENO);
+	ft_putendl_fd(err_str, STDERR_FILENO);
 }
 
-void ft_perror_and_exit(char *errtarget, char *errstr, int exit_status)
+void	perror_arg2_and_exit(char *err_target, char *err_str, int exit_status)
 {
-	ft_perror(errtarget, errstr);
+	perror_arg2(err_target, err_str);
 	exit(exit_status);
 }
 
-void perror_and_exit(char *err_title, int exit_status)
+void perror_and_exit(char *err_target, int exit_status)
 {
-	perror(err_title);
+	perror(err_target);
 	exit(exit_status);
 }
+
 //malloc失敗したら、exitするだけのft_strtrim
 char	*ft_xstrdup(const char *s1)
 {

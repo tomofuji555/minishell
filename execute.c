@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 10:34:38 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/02 11:02:57 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	exec_cmd(char **cmd_args, char **envp)
 	if (is_absolute_path_cmd(cmd_args[0]))
 	{
 		if (access(cmd_args[0], F_OK) != EXIST)
-			ft_perror_and_exit(cmd_args[0], "No such file or directory", 127);	
+			perror_arg2_and_exit(cmd_args[0], "No such file or directory", 127);	
 		ft_xexecve(cmd_args[0], cmd_args, envp);
 		return ;
 	}
 	cmd_path = search_and_make_path(cmd_args[0], envp);
 	if (cmd_path == NULL)
-		ft_perror_and_exit(cmd_args[0], "command not found", 127);
+		perror_arg2_and_exit(cmd_args[0], "command not found", 127);
 	ft_xexecve(cmd_path, cmd_args, envp);
 }
 /* --------------------------------------------------------- */
@@ -63,7 +63,7 @@ static int open_redir_path(t_redir *node)
 
 	if(ft_strchr(node->val, ' '))
 	{
-		ft_perror_and_exit(node->val, "ambiguous redirect", 1);
+		perror_arg2(node->val, "ambiguous redirect");
 		return (SYS_FAILURE);
 	}
 	if (node->kind == REDIR_OUT_FILE)
