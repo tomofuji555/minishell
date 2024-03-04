@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 07:36:16 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 01:44:56 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t _strlen_env_expanded(char *str)
 	{
 		if (*str == '$' && count_envname(str))
 		{
-			env_val = search_env_val(str, count_envname(str));
+			env_val = getenv_in_str(str, count_envname(str));
 			if (env_val)
 				len += ft_strlen(env_val);
 			str += (sizeof(char) * (count_envname(str)));
@@ -44,7 +44,7 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len)
 	{
 		if(*str == '$' && count_envname(str))
 		{
-			env_val = search_env_val(str, count_envname(str));
+			env_val = getenv_in_str(str, count_envname(str));
 			if (env_val)
 				dest_i += ft2_strlcat(dest, env_val, len);
 			str += (sizeof(char) * (count_envname(str)));
@@ -64,7 +64,10 @@ char	*expand_env_in_dquote(char *str)
 	char *expanded_str;
 
 	if (str == NULL)
+	{
+		ft_putendl_fd("dquote内valがNULL", STDERR_FILENO);
 		return (NULL);
+	}
 	expanded_len = _strlen_env_expanded(str);
 	if (expanded_len  == ft_strlen(str))
 		return (str);
@@ -122,7 +125,7 @@ static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token
 	t_token *expanded_head;
 	t_token *next_ptr;
 
-	expanded_head = tokenize_space_or_text(search_env_val(env_tkn->val, count_envname(env_tkn->val)));
+	expanded_head = tokenize_space_or_text(ft_getenv(env_tkn->val));
 	next_ptr = env_tkn->next;
 	if (expanded_head == NULL)
 	{

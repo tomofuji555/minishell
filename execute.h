@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/02 11:03:27 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 01:32:14 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,13 @@ typedef struct s_redir
 	struct s_redir		*next;
 }	t_redir;
 
+typedef struct s_env_node
+{
+	char				*key;
+	char				*val;
+	struct s_env_node	*next;
+}	t_env_node;
+
 typedef struct s_init_data
 {
 	t_token				*cmd_tokens;
@@ -126,10 +133,11 @@ t_bool				is_last_cmd(t_tree_node *ptr);
 t_bool				is_first_cmd(t_tree_node *ptr);
 t_bool				is_cmd_node(t_tree_node *ptr);
 t_bool	is_absolute_path_cmd(char *first_cmd_arg);
+t_bool	is_equal_str(const char *s1, char *s2);
 //env_utils.c
 size_t				count_envname(char *dollar_ptr);
 char				*ft_getenv(const char *target_str);
-char				*search_env_val(char *dollar_ptr, size_t env_name_len);
+char				*getenv_in_str(char *dollar_ptr, size_t env_name_len);
 //free_utils.c
 void				free_multi_strs(char **strs);
 void				free_tkn(t_token *tkn);
@@ -150,6 +158,7 @@ char	**ft_xsplit(const char *s, char c);
 void	wc(char *str);
 void				print_to_last(char *begining, char *last);
 void				print_tkn_lst(t_token *head);
+void				print_env_list(t_env_node *head);
 void				print_init_of_tnode_lst(t_tree_node *tnode_ptr);
 void				print_exec_of_tnode_lst(t_tree_node *tnode_ptr);
 void				print_cmd_args(char **strs);
@@ -177,7 +186,7 @@ char		*substr_from_tkn(t_token *begining, t_token *last);
 char				*ulltonbase(unsigned long long num, unsigned int base);
 size_t				ft2_strlcat(char *dest, const char *src, size_t size);
 int					ft_strcmp(const char *s1, const char *s2);
-char				*strjoin_and_free_str2(char *str1, char *str2);
+char				*join_and_free_str2(char *str1, char *str2);
 //~~~~utils end~~~~
 
 //~~~~ initi start~~~~
@@ -204,7 +213,7 @@ ssize_t				count_untill_dollar_last(char *begining);
 //~~~~ parse start~~~~
 t_tree_node *parse(t_token *tkn_ptr);
 
-void	remove_space_afrer_redir(t_token **tkn_head);
+void	del_space_afrer_redir(t_token **tkn_head);
 
 static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr);
 static void	add_tnode_last(t_tree_node **head, t_tree_node *new);

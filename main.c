@@ -6,16 +6,25 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 14:35:54 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 02:11:51 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-// __attribute__((destructor))
-// static void destructor() {
-//    system("leaks -q minishell");
-// }
+ __attribute__((destructor))
+ static void destructor() {
+    system("leaks -q minishell");
+ }
+
+////環境変数リストのテスト
+//t_env_node *envp_ver2();
+//int main()
+//{
+//	t_env_node *head;
+//	head = envp_ver2();
+//	print_env_list(head);
+//}
 
 // // tokenizeの確認用
 // int main()
@@ -27,8 +36,9 @@
 // 	char *str5 = "aaa$\"ABCD\" $\'ABCDEF\' \"abc\'defg\" ";
 // 	char *str6 = "$$$\"ABC\" $$$\"\" \"ABC\" \"\" ";
 //	char *str7 = ">  a\"$PWD\" ls <	 ppp|pwd >>   ll<<   d>> l >d";
-// 	t_token *head = tokenize(str7);
-//	remove_space_afrer_redir(&head);
+//	char *str8 = "bgakbga$_aganlanan_gnalga_nangal$$anglannal";
+// 	t_token *head = tokenize(str8);
+//	del_space_afrer_redir(&head);
 // 	print_tkn_lst(head);
 // 	free_tkn_lst(head);
 // }
@@ -122,9 +132,9 @@
 // 			if(*line != '\0')
 // 			{
 // 				add_history(line);
-// 				if (ft_strcmp(line, "heredoc") == 0)
-// 					filename = run_heredoc("heredoc");
-// 				if (ft_strcmp(line, "end") == 0)
+// 				if (is_equal_str(line, "heredoc"))
+//					filename = run_heredoc("heredoc");
+// 				if (is_equal_str(line, "heredoc"))
 // 				{
 // 					free(line);
 // 					break;
@@ -155,7 +165,7 @@ int main()
 	char *str8 = "aaa | cat | ls";
 	char *str9 = "echo $HOME$1$@$USER$_KK";
 	manager = init();
-	t_token *tkn_head = tokenize(str9);
+	t_token *tkn_head = tokenize(str5);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);

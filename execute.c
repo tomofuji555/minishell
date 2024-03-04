@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 11:02:57 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 00:31:52 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*search_and_make_path(char *cmd_name, char **envp)
 	i = 0;
 	while (path_lst[i] != NULL)
 	{
-		cmd_path = strjoin_and_free_str2(path_lst[i], ft_xstrjoin("/", cmd_name));  //リークの関係上、作り直す必要あり
+		cmd_path = join_and_free_str2(path_lst[i], ft_xstrjoin("/", cmd_name));  //リークの関係上、作り直す必要あり
 		if (access(cmd_path, F_OK) == EXIST)
 		{
 			free_multi_strs(path_lst);
@@ -61,7 +61,7 @@ static int open_redir_path(t_redir *node)
 {
 	int fd;
 
-	if(ft_strchr(node->val, ' '))
+	if(is_equal_str(node->val, "") || ft_strchr(node->val, ' '))
 	{
 		perror_arg2(node->val, "ambiguous redirect");
 		return (SYS_FAILURE);

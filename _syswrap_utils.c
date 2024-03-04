@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/02 05:22:53 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 00:58:56 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void *ft_xmalloc(size_t size)
 	void *ret;
 
 	if (size == 0)
-		return(NULL);
+		return (NULL);
 	ret = (void *)malloc(size);
 	if (ret == NULL)
 		perror_and_exit("malloc", 1);

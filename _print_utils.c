@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 06:43:03 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/04 23:41:14 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ void print_to_last(char *begining, char *last)
 		begining++;
 	}
 	printf("%c;\n", *begining);
+}
+
+void	print_env_list(t_env_node *head)
+{
+	t_env_node	*ptr;
+
+	ptr = head;
+	while (ptr != NULL)
+	{
+		printf("%s=%s\n", ptr->key, ptr->val);
+		ptr = ptr->next;
+	}
 }
 
 void	print_cmd_args(char **strs)

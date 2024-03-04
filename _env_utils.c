@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/15 18:01:14 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 01:32:24 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ char	*ft_getenv(const char *target_str)
 	char		*env_name;
 	size_t		i;
 
-	if (ft_strcmp(target_str, "?") == 0)
+	if (is_equal_str(target_str, "?"))
 		;//終了ステータスを返す
 	i = 0;
 	while (environ[i] != NULL)
 	{
 		env_name = ft_xsubstr(environ[i], 0, (size_t)(ft_strchr(environ[i], '=') - environ[i]));
-		if (ft_strcmp(target_str, env_name) == 0)
+		if (is_equal_str(target_str, env_name))
 		{
 			free(env_name);
 			return (ft_strchr(environ[i], '=') + sizeof(char));
@@ -50,7 +50,7 @@ char	*ft_getenv(const char *target_str)
 	return (NULL);
 }
 
-char *search_env_val(char *dollar_ptr, size_t env_name_len)
+char *getenv_in_str(char *dollar_ptr, size_t env_name_len)
 {
 	char *env_name;
 	char *env_val;

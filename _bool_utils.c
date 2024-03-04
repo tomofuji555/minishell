@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 11:14:58 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 00:20:57 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,9 @@ t_bool	is_cmd_node(t_tree_node *ptr)
 t_bool	is_absolute_path_cmd(char *first_cmd_arg)
 {
 	return (ft_strchr(first_cmd_arg, '/') != 0);
+}
+
+t_bool	is_equal_str(const char *s1, char *s2)
+{
+	return (ft_strlen(s1) == ft_strlen(s2) && ft_strncmp(s1, s2, ft_strlen(s1)) == 0);
 }

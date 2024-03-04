@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:27:24 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/14 23:57:19 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/05 01:32:14 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		print_redir_token_list(t_redir *head);
 //env_utils.c
 size_t		count_envname(char *dollar_ptr);
 char		*ft_getenv(const char *target_str);
-char		*search_env_val(char *dollar_ptr, size_t env_name_len);
+char		*getenv_in_str(char *dollar_ptr, size_t env_name_len);
 //bool_utils.c
 t_bool		is_redir_token(enum e_token_kind kind);
 t_bool		is_valuable_token(enum e_token_kind kind);

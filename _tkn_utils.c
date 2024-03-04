@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 13:20:52 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 00:57:20 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_token *find_prev_tkn(t_token *head, t_token *target)
 	return (ptr);
 }
 
+//ここのNULLリターンは必要か審議
 t_token	*find_last_tkn(t_token *head)
 {
 	t_token *ptr;
@@ -38,6 +39,7 @@ t_token	*find_last_tkn(t_token *head)
 	return (ptr);
 }
 
+//ここのNULLリターンは必要か審議
 t_token *find_last_valuable_tkn(t_token *head)
 {
 	t_token *ptr;

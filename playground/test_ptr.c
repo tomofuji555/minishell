@@ -19,10 +19,20 @@ void a(char **str)
 
 int main()
 {
-	char *str = "ABCDEFGHIJKMNL";
+	//char *str = "ABCDEFGHIJKMNL";
 
-	printf("before=%s;\n", str);
-	a(&str);
-	printf("after =%s;\n", str);
+	//printf("before=%s;\n", str);
+	//a(&str);
+	//printf("after =%s;\n", str);
 
+	int *array = (int *)malloc(sizeof(int) * 4);
+	array[0] = 10;
+	array[1] = 2;
+	array[2] = 4;
+	array[3] = 6;
+	printf("%p; num=%d\n",array, array[0]);
+	//array = array + sizeof(int);
+	//array++;
+	array += 2;
+	printf("%p; num=%d\n",array, array[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/02 11:24:33 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 00:58:30 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*ft_xstrtrim(const char *s1, const char *set)
 }
 
 //malloc失敗したら、exitするだけのft_substr
+//ここのNULLリターンは必要か審議
 char	*ft_xsubstr(const char *s, unsigned int start, size_t len)
 {
 	size_t	len_s;
@@ -102,6 +103,7 @@ char	*ft_xsubstr(const char *s, unsigned int start, size_t len)
 	return (str);
 }
 
+//ここのNULLリターンは必要か審議
 char	*ft_xstrjoin(const char *s1, const char *s2)
 {
 	size_t	len;
@@ -157,6 +159,7 @@ static char	**insert_strs(const char *s, char c, char **strs)
 	return (strs);
 }
 
+//ここのNULLリターンは必要か審議
 char	**ft_xsplit(const char *s, char c)
 {
 	size_t	len_i;

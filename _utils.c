@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/02 10:33:35 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 00:55:26 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static size_t	get_dig_nbase(unsigned long long num, unsigned int base)
 	return (dig);
 }
 
+//NULLが帰ってくるときの対応を考えないといけない
 char	*ulltonbase(unsigned long long num, unsigned int base)
 {
 	const char	*string_base = "0123456789ABCDEF";
@@ -60,6 +61,7 @@ size_t	ft2_strlcat(char *dest, const char *src, size_t size)
 		dest[dest_len + i] = src[i];
 		i++;
 	}
+	dest[dest_len + i] = '\0';
 	return (i);
 }
 
@@ -76,7 +78,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 		return ((int)((unsigned char)s1[i] - (unsigned char)s2[i]));
 }
 
-char *strjoin_and_free_str2(char *str1, char *str2)
+char *join_and_free_str2(char *str1, char *str2)
 {
 	char *joined_str;
 
