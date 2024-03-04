@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 01:32:24 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 02:45:51 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,44 @@ size_t	count_envname(char *dollar_ptr)
 }
 
 //envに必ず=がある前提で実装している
-char	*ft_getenv(const char *target_str)
+char	*ft_getenv(const char *env_name)
 {
 	extern char	**environ;
-	char		*env_name;
+	char		*key;
 	size_t		i;
 
-	if (is_equal_str(target_str, "?"))
+	if (is_equal_str(env_name, "?"))
 		;//終了ステータスを返す
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		env_name = ft_xsubstr(environ[i], 0, (size_t)(ft_strchr(environ[i], '=') - environ[i]));
-		if (is_equal_str(target_str, env_name))
+		key = ft_xsubstr(environ[i], 0, (size_t)(ft_strchr(environ[i], '=') - environ[i]));
+		if (is_equal_str(env_name, key))
 		{
-			free(env_name);
+			free(key);
 			return (ft_strchr(environ[i], '=') + sizeof(char));
 		}
-		free(env_name);
+		free(key);
 		i++;
 	}
 	return (NULL);
 }
+
+
+//char *ft_getenv_ver2(const char *env_name, t_env_node *head)
+//{
+//	t_env_node	*ptr;
+
+//	ptr = head;
+//	while (ptr != NULL)
+//	{
+//		if (is_equal_str(env_name, ptr->key))
+//			return (ptr->val);
+//		ptr = ptr->next;
+//	}
+//	return (NULL);
+//}
+
 
 char *getenv_in_str(char *dollar_ptr, size_t env_name_len)
 {

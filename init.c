@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/04 23:51:46 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 03:12:26 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@
 //char **unset(char **envp, char *rm_envvar_name)
 //環境変数にない文字列が来たら何もしない
 
+//t_manager *get_manager()
+//{
+//	static t_manager *manager;
+//	static size_t i = 0;
+
+//	if (i == 0)
+//		manager = init();
+//	return (manager);
+//}
 
 size_t	count_strs_2(char **strs)
 {
