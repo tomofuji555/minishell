@@ -6,26 +6,28 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 03:15:35 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 19:59:02 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-static size_t _strlen_env_expanded(char *str)
+static size_t _strlen_env_expanded(char *str, t_manager manager)
 {
 	size_t len;
 	char *env_val;
+	size_t count;
 
 	len = 0;
 	while(*str)
 	{
 		if (*str == '$' && count_envname(str))
 		{
-			env_val = getenv_in_str(str, count_envname(str));
+			count = count_envname(str);
+			env_val = getenv_in_str(str, count, manager);
 			if (env_val)
 				len += ft_strlen(env_val);
-			str += (sizeof(char) * (count_envname(str)));
+			str += sizeof(char) * count;
 		}
 		else
 			len++;
@@ -34,20 +36,22 @@ static size_t _strlen_env_expanded(char *str)
 	return (len);
 }
 
-static size_t _strlcat_env_expanded(char *dest, char *str, size_t len)
+static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager manager)
 {
 	size_t dest_i;
 	char *env_val;
+	size_t count;
 
 	dest_i = 0;
 	while(*str && dest_i < len)
 	{
 		if(*str == '$' && count_envname(str))
 		{
-			env_val = getenv_in_str(str, count_envname(str));
+			count = count_envname(str);
+			env_val = getenv_in_str(str, count, manager);
 			if (env_val)
 				dest_i += ft2_strlcat(dest, env_val, len);
-			str += (sizeof(char) * (count_envname(str)));
+			str += sizeof(char) * count;
 		}
 		else
 			dest[dest_i++] = *str;
@@ -58,7 +62,7 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len)
 }
 
 //文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
-char	*expand_env_in_dquote(char *str)
+char	*expand_env_in_dquote(char *str, t_manager manager)
 {
 	size_t expanded_len;
 	char *expanded_str;
@@ -68,11 +72,11 @@ char	*expand_env_in_dquote(char *str)
 		ft_putendl_fd("dquote内valがNULL", STDERR_FILENO);
 		return (NULL);
 	}
-	expanded_len = _strlen_env_expanded(str);
+	expanded_len = _strlen_env_expanded(str, manager);
 	if (expanded_len  == ft_strlen(str))
 		return (str);
 	expanded_str = (char *)ft_xmalloc(sizeof(char) * (expanded_len + 1));
-	_strlcat_env_expanded(expanded_str, str, (expanded_len + 1));
+	_strlcat_env_expanded(expanded_str, str, (expanded_len + 1), manager);
 	free(str);
 	return (expanded_str);
 }
@@ -81,14 +85,14 @@ char	*expand_env_in_dquote(char *str)
 /* --------------------------UNTIL-------------------------- */
 /* --------------------------------------------------------- */
 
-static size_t count_untill_last_and_set_kind(char *begining, enum e_token_kind *kind)
+static void set_kind_and_count(char *begining, enum e_token_kind *kind, ssize_t *count)
 {
 	ssize_t	i;
 
 	if (is_ifs(*begining))
 	{
 		*kind = TKN_SPACE;
-		return (count_untill_ifs_last(begining));
+		*count = count_untill_ifs_last(begining);
 	}
 	else
 	{
@@ -96,7 +100,7 @@ static size_t count_untill_last_and_set_kind(char *begining, enum e_token_kind *
 		i = 1;
 		while(begining[i] && !is_ifs(begining[i]))
 			i++;
-		return (i);
+		*count = i;
 	}
 }
 
@@ -112,7 +116,7 @@ static t_token *tokenize_space_or_text(char *env_val)
 	head = NULL;
 	while(*env_val)
 	{
-		count = count_untill_last_and_set_kind(env_val, &kind);
+		set_kind_and_count(env_val, &kind, &count);
 		new = make_new_tkn(env_val, count, kind);
 		add_tkn_last(&head, new);
 		env_val += count;
@@ -120,12 +124,12 @@ static t_token *tokenize_space_or_text(char *env_val)
 	return (head);
 }
 
-static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token *prev)
+static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token *prev, t_manager manager)
 {
 	t_token *expanded_head;
 	t_token *next_ptr;
 
-	expanded_head = tokenize_space_or_text(ft_getenv(env_tkn->val + sizeof(char)));
+	expanded_head = tokenize_space_or_text(ft_getenv(env_tkn->val + sizeof(char), manager));
 	next_ptr = env_tkn->next;
 	if (expanded_head == NULL)
 	{
@@ -151,7 +155,7 @@ static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token
 
 //引数を**型にしないと反映されない
 //syntaxは保証されている前提で実装
-void	expansion_tkn_lst(t_token **tkn_head)
+void	expansion_tkn_lst(t_token **tkn_head, t_manager manager)
 {
 	t_token *tkn_ptr;
 
@@ -165,7 +169,7 @@ void	expansion_tkn_lst(t_token **tkn_head)
 		else
 		{
 			if (tkn_ptr->kind == TKN_D_QUOTE)
-				tkn_ptr->val = expand_env_in_dquote(tkn_ptr->val);
+				tkn_ptr->val = expand_env_in_dquote(tkn_ptr->val, manager);
 			tkn_ptr = tkn_ptr->next;
 		}
 	}
@@ -194,17 +198,18 @@ static size_t count_arg_strs(t_token *tkn_ptr)
 //valuable_tknが一つもないtkn_lstはNULLに変換される
 char **make_cmd_args(t_token *tkn_head)
 {
-	char **cmd_args;
-	size_t i;
-	t_token *tkn_ptr;
-	t_token *last;
+	char	**cmd_args;
+	size_t	count;
+	t_token	*tkn_ptr;
+	size_t	i;
+	t_token	*last;
 
-	size_t count = count_arg_strs(tkn_head);
-	if (count == 0)
+	count = count_arg_strs(tkn_head);
+	if (!count)
 		return (NULL);
 	cmd_args = (char **)ft_xmalloc(sizeof(char *) * (count + 1));
-	i = 0;
 	tkn_ptr = tkn_head;
+	i = 0;
 	while(tkn_ptr != NULL)
 	{
 		if (is_valuable_tkn(tkn_ptr->kind))
@@ -260,7 +265,7 @@ static t_bool	has_space_between(t_token *begining)
 	return (FALSE);
 }
 
-static t_bool	contains_quote(t_token *begining)
+static t_bool	has_quote(t_token *begining)
 {
 	t_token *ptr;
 
@@ -276,13 +281,11 @@ static t_bool	contains_quote(t_token *begining)
 
 static enum e_redir_kind	convert_redir_kind(t_token *begining)
 {
-	//if (has_space_between(begining))
-	//	return (AMBIGUOUS_REDIR);
 	if (begining->kind == TKN_IN_FILE)
 		return (REDIR_IN_FILE);
 	else if (begining->kind == TKN_HEREDOC)
 	{
-		if (contains_quote(begining))
+		if (has_quote(begining))
 			return (REDIR_HEREDOC_NO_EXPAND);
 		else
 			return (REDIR_HEREDOC);
@@ -292,15 +295,14 @@ static enum e_redir_kind	convert_redir_kind(t_token *begining)
 	else
 		return (REDIR_APPEND_FILE);
 }
-
-//char *clean_space()
+	//if (is_redir_tkn(begining->next)|| has_space_between(begining))
+	//	return (AMBIGUOUS_REDIR);
 
 //リダイレクトのvalがifsのみだと、空文字列("")が入る
 static t_redir	*make_new_redir(t_token *begining, t_token *last)
 {
 	t_redir	*node;
 	char *tmp_val;
-	char *tmp_val_2;
 
 	node = (t_redir *)ft_xmalloc(sizeof(t_redir));
 	node->kind = convert_redir_kind(begining);
@@ -337,13 +339,13 @@ t_redir	*make_redir_lst(t_token *tkn_ptr)
 /* --------------------------UNTIL-------------------------- */
 /* --------------------------------------------------------- */
 
-void	expansion(t_tree_node *ptr)
+void	expansion(t_tree_node *ptr, t_manager manager)
 {
 	while(ptr != NULL)
 	{
-		expansion_tkn_lst(&ptr->init_data.cmd_tokens);
-		expansion_tkn_lst(&ptr->init_data.infile_tokens);
-		expansion_tkn_lst(&ptr->init_data.outfile_tokens);
+		expansion_tkn_lst(&ptr->init_data.cmd_tokens, manager);
+		expansion_tkn_lst(&ptr->init_data.infile_tokens, manager);
+		expansion_tkn_lst(&ptr->init_data.outfile_tokens, manager);
 		ptr->exec_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
 		ptr->exec_data.infile_paths = make_redir_lst(ptr->init_data.infile_tokens);
 		ptr->exec_data.outfile_paths = make_redir_lst(ptr->init_data.outfile_tokens);

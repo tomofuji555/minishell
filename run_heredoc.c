@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 00:31:52 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 17:34:57 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind)
 			perror_and_exit("readline_error", 1);
 		if (is_equal_str(line, delim))
 			break;
-		else
-			output_fd_and_free_line(fd, line, heredoc_kind);
+		output_fd_and_free_line(fd, line, heredoc_kind);
 	}
 	free(line);
 	free(delim);

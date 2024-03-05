@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/04 23:41:14 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:18:21 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ void print_to_last(char *begining, char *last)
 	printf("%c;\n", *begining);
 }
 
-void	print_env_list(t_env_node *head)
+void	print_env_list(t_env *head)
 {
-	t_env_node	*ptr;
+	t_env	*ptr;
 
 	ptr = head;
 	while (ptr != NULL)
 	{
+		//printf("%s\n", ptr->original);
 		printf("%s=%s\n", ptr->key, ptr->val);
 		ptr = ptr->next;
 	}
@@ -128,9 +129,9 @@ static void	print_init_data(t_tree_node *ptr)
 static void	print_exec_data(t_tree_node	*ptr)
 {
 	
+	printf("<<exec_data>>\n");
 	if (ptr->exec_data.cmd_args)
 	{
-		printf("<<exec_data>>\n");
 		printf("<cmd>\n");
 		print_cmd_args(ptr->exec_data.cmd_args);
 	}
@@ -167,7 +168,13 @@ void	print_exec_of_tnode_lst(t_tree_node *tnode_ptr)
 	while(tnode_ptr != NULL)
 	{
 		printf("--------node_No==%zd--------\n", i++);
-		print_exec_data(tnode_ptr);
+		if (is_cmd_node(tnode_ptr))
+			print_exec_data(tnode_ptr);
+		else
+		{
+			printf("<<pipe>>\n");
+			//print_exec_data(tnode_ptr);
+		}
 		tnode_ptr = tnode_ptr->right;
 	}
 }

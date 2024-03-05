@@ -6,7 +6,7 @@
 #    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/03/02 03:58:06 by tozeki           ###   ########.fr        #
+#    Updated: 2024/03/05 09:05:19 by tozeki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ SRCS		=	_bool_utils.c \
 				tokenize.c \
 				parse.c \
 				expansion.c\
-				execute.c \
 				run_heredoc.c \
 				main.c
 OBJS		=	$(SRCS:.c=.o)

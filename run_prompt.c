@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/05 00:16:08 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 16:54:33 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	run_prompt(t_manager *manager)
 		}
 		else
 			parse_and_exec_line(line, manager);
-	}	
+	}
 }
 
 int main(void)
@@ -52,5 +52,5 @@ int main(void)
 
 	manager = init();
 	run_prompt(&manager);
-	// finalize(manager);
+	finalize(manager);
 }

@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 02:45:51 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:18:21 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,19 @@ char	*ft_getenv(const char *env_name)
 	return (NULL);
 }
 
+char *ft_getenv_ver2(const char *env_name, t_env *head)
+{
+	t_env	*ptr;
 
-//char *ft_getenv_ver2(const char *env_name, t_env_node *head)
-//{
-//	t_env_node	*ptr;
-
-//	ptr = head;
-//	while (ptr != NULL)
-//	{
-//		if (is_equal_str(env_name, ptr->key))
-//			return (ptr->val);
-//		ptr = ptr->next;
-//	}
-//	return (NULL);
-//}
-
+	ptr = head;
+	while (ptr != NULL)
+	{
+		if (is_equal_str(env_name, ptr->key))
+			return (ptr->val);
+		ptr = ptr->next;
+	}
+	return (NULL);
+}
 
 char *getenv_in_str(char *dollar_ptr, size_t env_name_len)
 {

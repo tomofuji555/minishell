@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/05 00:58:56 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 07:38:42 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void ft_xclose(int fd)
 		perror_and_exit("close", 1);
 }
 
-void ft_xpipe(int *pipe_fd)
+void ft_xpipe(int *pipefd)
 {
-	if(pipe(pipe_fd) == SYS_FAILURE)
+	if(pipe(pipefd) == SYS_FAILURE)
 		perror_and_exit("pipe", 1);
 }
 

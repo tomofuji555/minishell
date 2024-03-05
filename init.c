@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/05 03:12:26 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:24:22 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,52 +31,54 @@
 //	return (manager);
 //}
 
-size_t	count_strs_2(char **strs)
-{
-	size_t i;
+//size_t	count_strs_2(char **strs)
+//{
+//	size_t i;
 	
-	i = 0;
-	while(strs[i] != NULL)
-		i++;
-	return (i);
-}
+//	i = 0;
+//	while(strs[i] != NULL)
+//		i++;
+//	return (i);
+//}
 
-char **init_envp(void)
-{
-	extern char **environ;
-	char	**new_envp;
-	size_t	i;
-	size_t	j;
-	size_t	str_count;
+//char **init_envp(void)
+//{
+//	extern char **environ;
+//	char	**new_envp;
+//	size_t	i;
+//	size_t	j;
+//	size_t	str_count;
 
-	str_count = count_strs_2(environ);
-	new_envp = (char **)ft_xmalloc((str_count + 1) * sizeof(char *));
-	i = 0;
-	j = 0;
-	while(i < str_count)
-	{
-		new_envp[i++] = ft_xstrdup(environ[j]);
-		j++;
-	}
-	new_envp[i] = NULL;
-	return (new_envp);
-}
+//	str_count = count_strs_2(environ);
+//	new_envp = (char **)ft_xmalloc((str_count + 1) * sizeof(char *));
+//	i = 0;
+//	j = 0;
+//	while(i < str_count)
+//	{
+//		new_envp[i++] = ft_xstrdup(environ[j]);
+//		j++;
+//	}
+//	new_envp[i] = NULL;
+//	return (new_envp);
+//}
 
 //envに＝がある前提で作成している
-t_env_node *make_new_enode(char *envvar)
+t_env *make_new_enode(char *envvar)
 {
-	t_env_node	*new;
+	t_env	*new;
 
-	new = (t_env_node *)ft_xmalloc(sizeof(t_env_node));
+	new = (t_env *)ft_xmalloc(sizeof(t_env));
+	new->original = ft_xstrdup(envvar);
 	new->key = ft_xsubstr(envvar, 0, (size_t)(ft_strchr(envvar, '=') - envvar));
 	new->val = ft_xsubstr(ft_strchr(envvar, '=') + sizeof(char), 0, (size_t)(ft_strchr(envvar, '\0') - ft_strchr(envvar, '=') - 1));
+	new->printed_flag = FALSE;
 	new->next = NULL;
 	return (new);
 }
 
-t_env_node *find_last_enode(t_env_node *head)
+t_env *find_last_enode(t_env *head)
 {
-	t_env_node	*ptr;
+	t_env	*ptr;
 
 	ptr = head;
 	while (ptr->next != NULL)
@@ -84,7 +86,7 @@ t_env_node *find_last_enode(t_env_node *head)
 	return (ptr);
 }
 
-void add_enode_last(t_env_node **head, t_env_node *new)
+void add_enode_last(t_env **head, t_env *new)
 {
 	if (*head == NULL)
 	{
@@ -94,12 +96,12 @@ void add_enode_last(t_env_node **head, t_env_node *new)
 	find_last_enode(*head)->next = new;
 }
 
-t_env_node *envp_ver2()
+t_env *make_env_list()
 {
 	extern char **environ;
 	size_t i;
-	t_env_node	*head;
-	t_env_node	*new;
+	t_env	*head;
+	t_env	*new;
 
 	i = 0;
 	while(environ[i] != NULL)
@@ -114,10 +116,9 @@ t_env_node *envp_ver2()
 t_manager init(void)
 {
 	t_manager manager;
-	//static size_t shell_level = 0;
 
 	manager.exit_status = 0;
-	manager.envp = init_envp();
+	manager.env_list = make_env_list();
 	manager.prev_output_fd = STDIN_FILENO;
 	return (manager);
 }

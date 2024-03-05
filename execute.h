@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/05 01:32:14 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:18:46 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ typedef struct s_redir
 
 typedef struct s_env_node
 {
+	char				*original;
 	char				*key;
 	char				*val;
+	t_bool				printed_flag;
 	struct s_env_node	*next;
-}	t_env_node;
+}	t_env;
 
 typedef struct s_init_data
 {
@@ -111,7 +113,7 @@ typedef struct s_tree_node
 
 typedef struct s_manager
 {
-	char	**envp;
+	t_env	*env_list;
 	int		exit_status;
 	int		prev_output_fd;
 	size_t	fork_count;
@@ -132,7 +134,7 @@ t_bool				is_out_redir_tkn(enum e_token_kind kind);
 t_bool				is_last_cmd(t_tree_node *ptr);
 t_bool				is_first_cmd(t_tree_node *ptr);
 t_bool				is_cmd_node(t_tree_node *ptr);
-t_bool	is_absolute_path_cmd(char *first_cmd_arg);
+t_bool	is_cmd_path(char *first_cmd_arg);
 t_bool	is_equal_str(const char *s1, char *s2);
 //env_utils.c
 size_t				count_envname(char *dollar_ptr);
@@ -158,7 +160,7 @@ char	**ft_xsplit(const char *s, char c);
 void	wc(char *str);
 void				print_to_last(char *begining, char *last);
 void				print_tkn_lst(t_token *head);
-void				print_env_list(t_env_node *head);
+void				print_env_list(t_env *head);
 void				print_init_of_tnode_lst(t_tree_node *tnode_ptr);
 void				print_exec_of_tnode_lst(t_tree_node *tnode_ptr);
 void				print_cmd_args(char **strs);
@@ -170,7 +172,7 @@ void	*ft_xrealloc(void *ptr, size_t size);
 void	*ft_xcalloc(size_t count, size_t size);
 int		ft_xdup2(int copied_fd, int dest_fd);
 void	ft_xclose(int fd);
-void	ft_xpipe(int *pipe_fd);
+void	ft_xpipe(int *pipefd);
 pid_t	ft_xfork(void);
 int		ft_xunlink(char *pathname);
 void	ft_xexecve(char *cmd_path, char **cmd_args, char **envp);
@@ -249,14 +251,14 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len);
 
 //~~~~execute start~~~~
 void	_exec(t_tree_node *ptr, t_manager *manager);
-pid_t exec_external_cmd(t_exec_data data, t_manager *manager, t_bool last_cmd_flag);
+void	exec_external_cmd(char **cmd_args, char **envp);
 void update_prev_fd(t_manager *manager, int *pipefd, t_bool last_cmd_flag);
-t_bool change_outstream(t_redir *redir_head, int pipe_out_fd, t_bool last_cmd_flag);
-t_bool change_instream(t_redir *redir_head, int prev_output_fd);
+t_bool can_change_outstream(t_redir *redir_head, int pipe_out_fd, t_bool last_cmd_flag);
+t_bool can_change_instream(t_redir *redir_head, int prev_output_fd);
 void	exec_cmd(char **cmd_args, char **envp);
 static char	*search_and_make_path(char *cmd_name, char **envp);
-t_bool	can_change_stream_to_redir(t_redir *redir_head, int dest_fd);
-static int fd_find_last(t_redir *redir_ptr);
+t_bool	can_change_stream_redirect(t_redir *redir_head, int dest_fd);
+static int find_last_fd(t_redir *redir_ptr);
 static int open_redir_path(t_redir *node);
 //~~~~~~~~
 

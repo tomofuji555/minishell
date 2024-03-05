@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 02:45:28 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:26:16 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
  }
 
 ////環境変数リストのテスト
-//t_env_node *envp_ver2();
+//t_env *envp_ver2();
 //int main()
 //{
-//	t_env_node *head;
+//	t_env *head;
 //	head = envp_ver2();
 //	print_env_list(head);
 //}
@@ -76,7 +76,8 @@ int main()
 	char *str3 = "$LS'aaa'$'bbb'$LS'sss'";
 	char *str4 = "$ZZZ>\"$PWD\"$ECHO<<kkk$PPP cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
 	char *str5 = "ls |$LS$";
-	t_token *tkn_head = tokenize(str4);
+	char *str6 = "cat >aaa$PWD<bbb$PWD ccc$PWD |$LS$";
+	t_token *tkn_head = tokenize(str6);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);
@@ -151,31 +152,31 @@ int main()
 // 	free(filename);
 // }
 
-//int main()
-//{
-//	t_manager manager;
+int main()
+{
+	t_manager manager;
 	
-//	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev |head -n 5";
-//	char *str2 = "cat | cat |ls ";
-//	char *str3 = "<./a cat <./b|>./c cat ";
-//	char *str4 = "<a>c cat <b";
-//	char *str5 = "ls | rev | aaa";
-//	char *str6 = " << aaa cat | cat |  rev > x";
-//	char *str7 = " <  	x  cat | cat ";
-//	char *str8 = "aaa | cat | ls";
-//	char *str9 = "echo $HOME$1$@$USER$_KK";
-//	manager = init();
-//	t_token *tkn_head = tokenize(str5);
-//	if (tkn_head == NULL)
-//		return (1);
-//	t_tree_node *tnode_head = parse(tkn_head);
-//	expansion(tnode_head);
-//	try_heredoc(tnode_head);
-//	_exec(tnode_head, &manager);
-//	remove_tmpfile(tnode_head);
-//	free_tnode_lst(tnode_head);
-//	free_multi_strs(manager.envp);
-//	printf("終了ステータスは%d\n", manager.exit_status);
-//}
+	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev |head -n 5";
+	char *str2 = "cat | cat |ls ";
+	char *str3 = "<./a cat <./b|>./c cat ";
+	char *str4 = "<a>c cat <b";
+	char *str5 = "ls | rev | aaa";
+	char *str6 = " << aaa cat | cat |  rev > x";
+	char *str7 = " <  	x  cat | cat ";
+	char *str8 = "aaa | cat | ls";
+	char *str9 = "echo $HOME$1$@$USER$_KK";
+	manager = init();
+	t_token *tkn_head = tokenize(str6);
+	if (tkn_head == NULL)
+		return (1);
+	t_tree_node *tnode_head = parse(tkn_head);
+	expansion(tnode_head, manager);
+	try_heredoc(tnode_head);
+	_exec(tnode_head, &manager);
+	remove_tmpfile(tnode_head);
+	free_tnode_lst(tnode_head);
+	free_multi_strs(manager.envp); //リスト型のfreeに修正
+	printf("終了ステータスは%d\n", manager.exit_status);
+}
 
 

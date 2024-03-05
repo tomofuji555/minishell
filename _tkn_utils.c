@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 00:57:20 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/05 17:22:14 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,7 @@ static size_t	_strlen_from_tkn(t_token *begining, t_token *last)
 	len = 0;
 	while(ptr != last->next)
 	{
-		i = 0;
-		while(ptr->val[i] != '\0')
-			i++;
-		len += i;
+		len += ft_strlen(ptr->val);
 		ptr = ptr->next;
 	}
 	return (len);
@@ -107,7 +104,6 @@ static size_t	_strlcpy_from_tkn(char *dest, t_token *src, size_t len)
 		}
 		src = src->next;
 	}
-	// printf("dest_i == %zd\n", dest_i);
 	dest[dest_i] = '\0';
 	return (dest_i);
 }
@@ -120,6 +116,5 @@ char *substr_from_tkn(t_token *begining, t_token *last)
 	len = 1 + _strlen_from_tkn(begining, last);
 	str = (char *)ft_xmalloc(sizeof(char) * len);
 	_strlcpy_from_tkn(str, begining, len);
-	// printf("last->val == %s;  len == %zd\n", last->val, len);
 	return (str);
 }
