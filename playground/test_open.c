@@ -20,7 +20,8 @@ int main()
 {
 	errno = 0;
 	//int fd = open("  a  b  v  ", O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
-	int fd = open("  a  b  v  ", O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
+	// int fd = open("  a  b  v  ", O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
+	int fd = open("../libft", O_WRONLY);
 	if (fd == -1)
 	{
 		perror("123");
