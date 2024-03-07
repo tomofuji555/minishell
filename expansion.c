@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 19:59:02 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager
 			count = count_envname(str);
 			env_val = getenv_in_str(str, count, manager);
 			if (env_val)
-				dest_i += ft2_strlcat(dest, env_val, len);
+				dest_i += strlcat_ret_catlen(dest, env_val, len);
 			str += sizeof(char) * count;
 		}
 		else
@@ -129,7 +129,7 @@ static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token
 	t_token *expanded_head;
 	t_token *next_ptr;
 
-	expanded_head = tokenize_space_or_text(ft_getenv(env_tkn->val + sizeof(char), manager));
+	expanded_head = tokenize_space_or_text(ft_getenv(env_tkn->val + sizeof(char), manager.env_list));
 	next_ptr = env_tkn->next;
 	if (expanded_head == NULL)
 	{
@@ -155,7 +155,7 @@ static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token
 
 //引数を**型にしないと反映されない
 //syntaxは保証されている前提で実装
-void	expansion_tkn_lst(t_token **tkn_head, t_manager manager)
+void	expansion_tkn_list(t_token **tkn_head, t_manager manager)
 {
 	t_token *tkn_ptr;
 
@@ -165,7 +165,7 @@ void	expansion_tkn_lst(t_token **tkn_head, t_manager manager)
 		if (tkn_ptr->kind == TKN_HEREDOC)
 			tkn_ptr = find_last_valuable_tkn(tkn_ptr->next)->next;
 		else if (tkn_ptr->kind == TKN_ENV)
-			tkn_ptr = expand_env_of_tkn(tkn_head, tkn_ptr, find_prev_tkn(*tkn_head, tkn_ptr));
+			tkn_ptr = expand_env_of_tkn(tkn_head, tkn_ptr, search_prev_tkn(*tkn_head, tkn_ptr), manager);
 		else
 		{
 			if (tkn_ptr->kind == TKN_D_QUOTE)
@@ -195,7 +195,7 @@ static size_t count_arg_strs(t_token *tkn_ptr)
 	return (i);
 }
 
-//valuable_tknが一つもないtkn_lstはNULLに変換される
+//valuable_tknが一つもないtkn_listはNULLに変換される
 char **make_cmd_args(t_token *tkn_head)
 {
 	char	**cmd_args;
@@ -313,7 +313,7 @@ static t_redir	*make_new_redir(t_token *begining, t_token *last)
 	return (node);
 }
 
-t_redir	*make_redir_lst(t_token *tkn_ptr)
+static t_redir	*make_redir_list(t_token *tkn_ptr)
 {
 	t_redir	*head;
 	t_redir *new;
@@ -343,13 +343,13 @@ void	expansion(t_tree_node *ptr, t_manager manager)
 {
 	while(ptr != NULL)
 	{
-		expansion_tkn_lst(&ptr->init_data.cmd_tokens, manager);
-		expansion_tkn_lst(&ptr->init_data.infile_tokens, manager);
-		expansion_tkn_lst(&ptr->init_data.outfile_tokens, manager);
-		ptr->exec_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
-		ptr->exec_data.infile_paths = make_redir_lst(ptr->init_data.infile_tokens);
-		ptr->exec_data.outfile_paths = make_redir_lst(ptr->init_data.outfile_tokens);
-		free_init_data(ptr->init_data);
+		expansion_tkn_list(&ptr->base_data.cmd_tokens, manager);
+		expansion_tkn_list(&ptr->base_data.infile_tokens, manager);
+		expansion_tkn_list(&ptr->base_data.outfile_tokens, manager);
+		ptr->refine_data.cmd_args = make_cmd_args(ptr->base_data.cmd_tokens);
+		ptr->refine_data.infile_paths = make_redir_list(ptr->base_data.infile_tokens);
+		ptr->refine_data.outfile_paths = make_redir_list(ptr->base_data.outfile_tokens);
+		free_base_data(ptr->base_data);
 		ptr = ptr->right;
 	}
 }

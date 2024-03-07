@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 18:18:21 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,53 +32,8 @@ void print_to_last(char *begining, char *last)
 	printf("%c;\n", *begining);
 }
 
-void	print_env_list(t_env *head)
-{
-	t_env	*ptr;
-
-	ptr = head;
-	while (ptr != NULL)
-	{
-		//printf("%s\n", ptr->original);
-		printf("%s=%s\n", ptr->key, ptr->val);
-		ptr = ptr->next;
-	}
-}
-
-void	print_cmd_args(char **strs)
-{
-	size_t i = 0;
-	while (strs[i] != NULL)
-	{
-		printf("%zd=%s;\n", i, strs[i]);
-		i++;
-	}
-}
-
-//redir_listの内容をprint
-void print_redir_lst(t_redir *head)
-{
-	t_redir *ptr;
-	
-	ptr = head;
-	while(ptr != NULL)
-	{	
-		if (ptr->kind == REDIR_IN_FILE)
-			printf("kind= IN;   val=%s;\n", ptr->val);
-		else if (ptr->kind == REDIR_HEREDOC)
-			printf("kind= HERE; val=%s;\n", ptr->val);
-		else if (ptr->kind == REDIR_HEREDOC_NO_EXPAND)
-			printf("kind= NOEX; val=%s;\n", ptr->val);
-		else if (ptr->kind == REDIR_OUT_FILE)
-			printf("kind= OUT;  val=%s;\n", ptr->val);
-		else if (ptr->kind == REDIR_APPEND_FILE)
-			printf("kind= APP;  val=%s;\n", ptr->val);
-		ptr = ptr->next;
-	}
-}
-
 //tokenの内容をprint
-void print_tkn_lst(t_token *ptr)
+void print_tkn_list(t_token *ptr)
 {
 	while (ptr != NULL)
 	{	
@@ -106,48 +61,93 @@ void print_tkn_lst(t_token *ptr)
 	}
 }
 
-static void	print_init_data(t_tree_node *ptr)
+void	print_env_list(t_env *head)
 {
-	printf("<<init_data>>\n");
-	if (ptr->init_data.cmd_tokens != NULL)
+	t_env	*ptr;
+
+	ptr = head;
+	while (ptr != NULL)
 	{
-		printf("<cmd>\n");
-		print_tkn_lst(ptr->init_data.cmd_tokens);
-	}
-	if (ptr->init_data.infile_tokens != NULL)
-	{
-		printf("<infile>\n");
-		print_tkn_lst(ptr->init_data.infile_tokens);
-	}
-	if (ptr->init_data.outfile_tokens != NULL)
-	{
-		printf("<outfile>\n");
-		print_tkn_lst(ptr->init_data.outfile_tokens);
+		//printf("%s\n", ptr->original);
+		printf("%s=%s\n", ptr->key, ptr->val);
+		ptr = ptr->next;
 	}
 }
 
-static void	print_exec_data(t_tree_node	*ptr)
+void	print_cmd_args(char **strs)
+{
+	size_t i = 0;
+	while (strs[i] != NULL)
+	{
+		printf("%zd=%s;\n", i, strs[i]);
+		i++;
+	}
+}
+
+//redir_listの内容をprint
+void print_redir_list(t_redir *head)
+{
+	t_redir *ptr;
+	
+	ptr = head;
+	while(ptr != NULL)
+	{	
+		if (ptr->kind == REDIR_IN_FILE)
+			printf("kind= IN;   val=%s;\n", ptr->val);
+		else if (ptr->kind == REDIR_HEREDOC)
+			printf("kind= HERE; val=%s;\n", ptr->val);
+		else if (ptr->kind == REDIR_HEREDOC_NO_EXPAND)
+			printf("kind= NOEX; val=%s;\n", ptr->val);
+		else if (ptr->kind == REDIR_OUT_FILE)
+			printf("kind= OUT;  val=%s;\n", ptr->val);
+		else if (ptr->kind == REDIR_APPEND_FILE)
+			printf("kind= APP;  val=%s;\n", ptr->val);
+		ptr = ptr->next;
+	}
+}
+
+static void	print_base_data(t_tree_node *ptr)
+{
+	printf("<<base_data>>\n");
+	if (ptr->base_data.cmd_tokens != NULL)
+	{
+		printf("<cmd>\n");
+		print_tkn_list(ptr->base_data.cmd_tokens);
+	}
+	if (ptr->base_data.infile_tokens != NULL)
+	{
+		printf("<infile>\n");
+		print_tkn_list(ptr->base_data.infile_tokens);
+	}
+	if (ptr->base_data.outfile_tokens != NULL)
+	{
+		printf("<outfile>\n");
+		print_tkn_list(ptr->base_data.outfile_tokens);
+	}
+}
+
+static void	print_refine_data(t_tree_node	*ptr)
 {
 	
-	printf("<<exec_data>>\n");
-	if (ptr->exec_data.cmd_args)
+	printf("<<refine_data>>\n");
+	if (ptr->refine_data.cmd_args)
 	{
 		printf("<cmd>\n");
-		print_cmd_args(ptr->exec_data.cmd_args);
+		print_cmd_args(ptr->refine_data.cmd_args);
 	}
-	if (ptr->exec_data.infile_paths)
+	if (ptr->refine_data.infile_paths)
 	{
 		printf("<infile>\n");
-		print_redir_lst(ptr->exec_data.infile_paths);
+		print_redir_list(ptr->refine_data.infile_paths);
 	}
-	if (ptr->exec_data.outfile_paths)
+	if (ptr->refine_data.outfile_paths)
 	{
 		printf("<outfile>\n");
-		print_redir_lst(ptr->exec_data.outfile_paths);
+		print_redir_list(ptr->refine_data.outfile_paths);
 	}
 }
 
-void	print_init_of_tnode_lst(t_tree_node *tnode_ptr)
+void	print_init_of_tnode_list(t_tree_node *tnode_ptr)
 {
 	size_t i;
 
@@ -155,12 +155,12 @@ void	print_init_of_tnode_lst(t_tree_node *tnode_ptr)
 	while(tnode_ptr != NULL)
 	{
 		printf("--------node_No==%zd--------\n", i++);
-		print_init_data(tnode_ptr);
+		print_base_data(tnode_ptr);
 		tnode_ptr = tnode_ptr->right;
 	}
 }
 
-void	print_exec_of_tnode_lst(t_tree_node *tnode_ptr)
+void	print_exec_of_tnode_list(t_tree_node *tnode_ptr)
 {
 	size_t i;
 
@@ -169,31 +169,17 @@ void	print_exec_of_tnode_lst(t_tree_node *tnode_ptr)
 	{
 		printf("--------node_No==%zd--------\n", i++);
 		if (is_cmd_node(tnode_ptr))
-			print_exec_data(tnode_ptr);
+			print_refine_data(tnode_ptr);
 		else
 		{
 			printf("<<pipe>>\n");
-			//print_exec_data(tnode_ptr);
+			//print_refine_data(tnode_ptr);
 		}
 		tnode_ptr = tnode_ptr->right;
 	}
 }
 
-void	print_tnode_lst(t_tree_node *tnode_ptr)
-{
-	size_t i;
-
-	i = 0;
-	while(tnode_ptr != NULL)
-	{
-		printf("--------node_No==%zd--------\n", i++);
-		print_init_data(tnode_ptr);
-		print_exec_data(tnode_ptr);
-		tnode_ptr = tnode_ptr->right;
-	}
-}
-
-//void	print_tnode_lst(t_tree_node *tnode_ptr)
+//void	print_tnode_list(t_tree_node *tnode_ptr)
 //{
 //	size_t i;
 
@@ -201,8 +187,22 @@ void	print_tnode_lst(t_tree_node *tnode_ptr)
 //	while(tnode_ptr != NULL)
 //	{
 //		printf("--------node_No==%zd--------\n", i++);
-//		print_init_data(tnode_ptr);
-//		//print_exec_data(tnode_ptr);
+//		print_base_data(tnode_ptr);
+//		print_refine_data(tnode_ptr);
+//		tnode_ptr = tnode_ptr->right;
+//	}
+//}
+
+//void	print_tnode_list(t_tree_node *tnode_ptr)
+//{
+//	size_t i;
+
+//	i = 0;
+//	while(tnode_ptr != NULL)
+//	{
+//		printf("--------node_No==%zd--------\n", i++);
+//		print_base_data(tnode_ptr);
+//		//print_refine_data(tnode_ptr);
 //		tnode_ptr = tnode_ptr->right;
 //	}
 //}

@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 16:55:44 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 04:44:49 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,9 +179,8 @@ t_token *tokenize(char *line_ptr)
 		count = count_untill_last(line_ptr);
 		if (count == -1)
 		{
-			free_tkn_lst(head);
-			ft_putendl_fd("Once you have entered the quotation, \
-						please close it properly >:( ", STDERR_FILENO);
+			free_tkn_list(head);
+			ft_putendl_fd("please close the quotation", STDERR_FILENO);
 			return (NULL);
 		}
 		new = make_new_tkn(line_ptr, count, save_tkn_kind(line_ptr));

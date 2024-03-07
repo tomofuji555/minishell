@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 09:20:51 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 02:44:18 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_bool is_first_cmd(t_tree_node *ptr)
 
 t_bool	is_cmd_node(t_tree_node *ptr)
 {
-	return (ptr->exec_data.cmd_args || ptr->exec_data.infile_paths || ptr->exec_data.outfile_paths);
+	return (ptr->refine_data.cmd_args || ptr->refine_data.infile_paths || ptr->refine_data.outfile_paths);
 	//return (ptr->left == NULL && ptr->right == NULL); //木構造
 }
 
@@ -74,4 +74,11 @@ t_bool	is_cmd_path(char *first_cmd_arg)
 t_bool	is_equal_str(const char *s1, char *s2)
 {
 	return (ft_strlen(s1) == ft_strlen(s2) && ft_strncmp(s1, s2, ft_strlen(s1)) == 0);
+}
+
+t_bool	is_builtin(char *cmd)
+{
+	return (is_equal_str(cmd, "echo") || is_equal_str(cmd, "cd") || is_equal_str(cmd, "pwd") \
+		|| is_equal_str(cmd, "export") || is_equal_str(cmd, "unset") || is_equal_str(cmd, "env") \
+		|| is_equal_str(cmd, "exit"));
 }

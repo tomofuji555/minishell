@@ -119,7 +119,7 @@ t_token *tokenize(char *line_ptr)
 		// print_to_last(line_ptr, last);
 		if (last == NULL)
 		{
-			tkn_free_lst(head);
+			tkn_free_list(head);
 			return (NULL);
 		}
 		new = tkn_make_new(line_ptr, last);

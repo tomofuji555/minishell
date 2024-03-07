@@ -3,54 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   run_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/07 23:19:58 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/08 05:39:51 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-// void	parse_and_exec_line(char *line, t_manager *manager)
-// {
-// 	t_token		*token_head;
-// 	t_tree_node	*tnode_head;
+__attribute__((destructor))
+ static void destructor() {
+    system("leaks -q a.out");
+}
 
-// 	token_head = tokenize(line);
-// 	if (token_head == NULL)
-// 		return ;//エラーを吐きreturn、exitはしない ->errorを履くのはtokenize,ここに入るのは、エラーと""のとき
-// 	tnode_head = parse(token_head);
-// 	expansion(tnode_head);
-// 	_exec(tnode_head, manager);
-// 	free(line);
-// }
+//void	process_line(char *line, t_manager *manager)
+//{
+//	t_token		*token_head;
+//	t_tree_node	*tnode_head;
+
+//	token_head = tokenize(line);
+//	if (token_head == NULL)
+//	{
+//		manager->exit_status = 1;
+//		return ; //errorを履くのはtokenize,ここに入るのは、エラーと""のとき
+//	}
+//	tnode_head = parse(token_head);
+//	expansion(tnode_head, *manager);
+//	_exec(tnode_head, manager);
+//	free_tnode_list(tnode_head);
+//}
 
 #include <string.h>
 void	run_prompt(t_manager *manager)
 {
 	char *line;
 
-	while (1)
+	while (line != NULL)
 	{
 		line = readline("minishell$ ");
-		if (line == NULL)
+		if (strcmp(line, "END") == 0)
 		{
-			// perror_and_exit("readline_error", 1);
-			printf("NULL\n");
+			if (strcmp(line, "END") == 0)
+				free(line);
+			break ;
 		}
-		else if (strcmp(line, "END") == 0)//is_equal_str(line, "END")
+		if (strcmp(line, "") != 0)
 		{
-			free(line);
-			break;
-		}
-		else if (strcmp(line, "") == 0)
-			;
-		else
-		{
-			// parse_and_exec_line(line, manager);
+			add_history(line);
 			printf("line=%s;\n", line);
 		}
+		free(line);
 	}
 }
 
@@ -58,7 +61,7 @@ int main(void)
 {
 	t_manager manager;
 
-	// manager = init();
+	//manager = init();
 	run_prompt(&manager);
 	// finalize(manager);
 }

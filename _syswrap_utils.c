@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/05 07:38:42 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 04:20:15 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,46 @@ int ft_xunlink(char *pathname)
 	return (0);
 }
 
+static size_t count_envvar(t_env *env_list)
+{
+	t_env	*ptr;
+	size_t	count;
+
+	count = 0;
+	ptr = env_list;
+	while (ptr != NULL)
+	{
+		count++;
+		ptr = ptr->next;
+	}
+	return (count);
+}
+
+static char **make_envp(t_env *env_list)
+{
+	char	**envp;
+	t_env	*ptr;
+	size_t	i;
+
+	envp = (char **)ft_xmalloc(sizeof(char *) * (count_envvar(env_list) + 1));
+	i = 0;
+	ptr = env_list;
+	while (ptr != NULL)
+	{
+		envp[i++] = join_and_free_str2(env_list->key, ft_xstrjoin("=", env_list->val));
+		ptr = ptr->next;
+	}
+	envp[i] = NULL;
+	return (envp);
+}
+
 //accessでパスが保証されているコマンドが引数で入ってきている
 //execがエラーを出した時は実行許可がないパターンしか想定していない
-void ft_xexecve(char *cmd_path, char **cmd_args, char **envp)
+void ft_xexecve(char *cmd_path, char **cmd_args, t_env *env_list)
 {
+	char **envp;
+
+	envp = make_envp(env_list);
 	if (execve(cmd_path, cmd_args, envp) == SYS_FAILURE)
 		perror_and_exit(cmd_args[0], 126);
 }

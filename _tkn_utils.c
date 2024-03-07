@@ -6,25 +6,11 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 17:22:14 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-
-// targetにheadが来ていたら、NULLが帰ってくる
-// targetはlst内にないとクラッシュする
-t_token *find_prev_tkn(t_token *head, t_token *target)
-{
-	t_token *ptr;
-
-	if (head == target)
-		return (NULL);
-	ptr = head;
-	while (ptr->next != target)
-		ptr = ptr->next;
-	return (ptr);
-}
 
 //ここのNULLリターンは必要か審議
 t_token	*find_last_tkn(t_token *head)
@@ -48,6 +34,20 @@ t_token *find_last_valuable_tkn(t_token *head)
 		return (NULL);
 	ptr = head;
 	while(ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
+		ptr = ptr->next;
+	return (ptr);
+}
+
+// targetにheadが来ていたら、NULLが帰ってくる
+// targetはlist内にないとクラッシュする
+t_token *search_prev_tkn(t_token *head, t_token *target)
+{
+	t_token *ptr;
+
+	if (head == target)
+		return (NULL);
+	ptr = head;
+	while (ptr->next != target)
 		ptr = ptr->next;
 	return (ptr);
 }

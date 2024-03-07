@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 18:26:16 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 //	char *str8 = "bgakbga$_aganlanan_gnalga_nangal$$anglannal";
 // 	t_token *head = tokenize(str8);
 //	del_space_afrer_redir(&head);
-// 	print_tkn_lst(head);
-// 	free_tkn_lst(head);
+// 	print_tkn_list(head);
+// 	free_tkn_list(head);
 // }
 
 // // push_redirの確認
@@ -54,7 +54,7 @@
 // 	if (tkn_head == NULL)
 // 		return (1);
 // 	t_tree_node *tnode_head = parse(tkn_head);
-// 	print_init_of_tnode_lst(tnode_head);
+// 	print_init_of_tnode_list(tnode_head);
 // }
 
  // parserの確認 syntax_errorなし
@@ -62,30 +62,34 @@
 // {
 // 	char *str1 = "cat >  aaa$PED$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk | aaa<<gaga>>glnagal";
 // 	t_token *tkn_head = tokenize(str1);
-// 	print_tkn_lst(tkn_head);
+// 	print_tkn_list(tkn_head);
 // 	t_tree_node *tnode_head = parse(tkn_head);
-// 	print_init_of_tnode_lst(tnode_head);
-// 	free_tnode_lst(tnode_head);
+// 	print_init_of_tnode_list(tnode_head);
+// 	free_tnode_list(tnode_head);
 // }
 
-// expansion_env_of_tknの確認
-int main()
-{
-	char *str1 = "  $AA aaaa";
-	char *str2 = "cat >  aaa$PWD$\"SSS\">>  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
-	char *str3 = "$LS'aaa'$'bbb'$LS'sss'";
-	char *str4 = "$ZZZ>\"$PWD\"$ECHO<<kkk$PPP cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
-	char *str5 = "ls |$LS$";
-	char *str6 = "cat >aaa$PWD<bbb$PWD ccc$PWD |$LS$";
-	t_token *tkn_head = tokenize(str6);
-	if (tkn_head == NULL)
-		return (1);
-	t_tree_node *tnode_head = parse(tkn_head);
-	printf("---------------------------------------------------------------------------------\n");
-	expansion(tnode_head);
-	print_exec_of_tnode_lst(tnode_head);
-	free_tnode_lst(tnode_head);
-}
+//// expansion_env_of_tknの確認
+//int main()
+//{
+//	t_manager manager;
+	
+//	char *str1 = "  $AA aaaa";
+//	char *str2 = "cat >  aaa$PWD$\"SSS\">>  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
+//	char *str3 = "$LS'aaa'$'bbb'$LS'sss'";
+//	char *str4 = "$ZZZ>\"$PWD\"$ECHO<<kkk$PPP cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
+//	char *str5 = "ls |$LS$";
+//	char *str6 = "cat >aaa$PWD<bbb$PWD ccc$PWD |$LS$";
+//	manager = init();
+//	t_token *tkn_head = tokenize(str6);
+//	if (tkn_head == NULL)
+//		return (1);
+//	t_tree_node *tnode_head = parse(tkn_head);
+//	printf("---------------------------------------------------------------------------------\n");
+//	expansion(tnode_head, manager);
+//	print_exec_of_tnode_list(tnode_head);
+//	free_env_list(manager.env_list);
+//	free_tnode_list(tnode_head);
+//}
 
 // // expansion_env_in_dquote単体の確認
 // int main()
@@ -111,10 +115,10 @@ int main()
 // 	if (tkn_head == NULL)
 // 		return (1);
 // 	t_tree_node *tnode_head = parse(tkn_head);
-// 	tnode_print_lst(tnode_head);
+// 	tnode_print_list(tnode_head);
 // 	printf("---------------------------------------------------------------------------------\n");
-// 	tnode_print_lst(tnode_head);
-// 	tnode_free_lst(tnode_head);
+// 	tnode_print_list(tnode_head);
+// 	tnode_free_list(tnode_head);
 // }
 
 //heredoc用テスト
@@ -166,16 +170,16 @@ int main()
 	char *str8 = "aaa | cat | ls";
 	char *str9 = "echo $HOME$1$@$USER$_KK";
 	manager = init();
-	t_token *tkn_head = tokenize(str6);
+	t_token *tkn_head = tokenize(str2);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);
 	expansion(tnode_head, manager);
-	try_heredoc(tnode_head);
+	try_heredoc(tnode_head, manager);
 	_exec(tnode_head, &manager);
 	remove_tmpfile(tnode_head);
-	free_tnode_lst(tnode_head);
-	free_multi_strs(manager.envp); //リスト型のfreeに修正
+	free_tnode_list(tnode_head);
+	free_env_list(manager.env_list);
 	printf("終了ステータスは%d\n", manager.exit_status);
 }
 

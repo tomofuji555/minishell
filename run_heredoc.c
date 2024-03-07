@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/05 17:34:57 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 04:57:49 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 void	remove_tmpfile(t_tree_node *tnode_head)
 {
 	t_tree_node *ptr;
-	t_redir	*rdir_ptr;
+	t_redir	*redir_ptr;
 
 	ptr = tnode_head;
 	while (ptr != NULL)
 	{
-		rdir_ptr = ptr->exec_data.infile_paths;
-		while (rdir_ptr != NULL)
+		redir_ptr = ptr->refine_data.infile_paths;
+		while (redir_ptr != NULL)
 		{
-			if (rdir_ptr->kind == REDIR_HEREDOC || \
-				rdir_ptr->kind == REDIR_HEREDOC_NO_EXPAND)
-				ft_xunlink(rdir_ptr->val);
-			rdir_ptr = rdir_ptr->next;
+			if (redir_ptr->kind == REDIR_HEREDOC || \
+				redir_ptr->kind == REDIR_HEREDOC_NO_EXPAND)
+				ft_xunlink(redir_ptr->val);
+			redir_ptr = redir_ptr->next;
 		}
 		ptr = ptr->right;
 	}
 }
 
 //ULLMAX通り以上のファイルを作成されるとエラー
-char	*create_tmpfile_path(void)
+static char	*create_tmpfile_path(void)
 {
 	unsigned long long num;
 	char *path;
@@ -52,17 +52,17 @@ char	*create_tmpfile_path(void)
 
 //kindがREDIR_HEREDOC_NO_EXPANDでなければEXPAND
 //putし、そのlineをfree
-void output_fd_and_free_line(int fd, char *line, enum e_redir_kind heredoc_kind)
+static void output_fd_and_free_line(int fd, char *line, enum e_redir_kind heredoc_kind, t_manager manager)
 {
 	if (heredoc_kind == REDIR_HEREDOC)
-		line = expand_env_in_dquote(line);
+		line = expand_env_in_dquote(line, manager);
 	ft_putendl_fd(line, fd);
 	free(line);
 }
 
 //heredocで書き込んだファイルのpathを返す
 //delimのfreeは無し->delimをfreeしないとリークする
-char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind)
+static char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind, t_manager manager)
 {
 	char	*line;
 	char	*path;
@@ -79,7 +79,7 @@ char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind)
 			perror_and_exit("readline_error", 1);
 		if (is_equal_str(line, delim))
 			break;
-		output_fd_and_free_line(fd, line, heredoc_kind);
+		output_fd_and_free_line(fd, line, heredoc_kind, manager);
 	}
 	free(line);
 	free(delim);
@@ -87,21 +87,21 @@ char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind)
 	return (path);
 }
 
-void	try_heredoc(t_tree_node *tnode_head)
+void	try_heredoc(t_tree_node *tnode_head, t_manager manager)
 {
 	t_tree_node *ptr;
-	t_redir	*rdir_ptr;
+	t_redir	*redir_ptr;
 
 	ptr = tnode_head;
 	while (ptr != NULL)
 	{
-		rdir_ptr = ptr->exec_data.infile_paths;
-		while (rdir_ptr != NULL)
+		redir_ptr = ptr->refine_data.infile_paths;
+		while (redir_ptr != NULL)
 		{
-			if (rdir_ptr->kind == REDIR_HEREDOC || \
-				rdir_ptr->kind == REDIR_HEREDOC_NO_EXPAND)
-				rdir_ptr->val = run_heredoc(rdir_ptr->val, rdir_ptr->kind);
-			rdir_ptr = rdir_ptr->next;
+			if (redir_ptr->kind == REDIR_HEREDOC || \
+				redir_ptr->kind == REDIR_HEREDOC_NO_EXPAND)
+				redir_ptr->val = run_heredoc(redir_ptr->val, redir_ptr->kind, manager);
+			redir_ptr = redir_ptr->next;
 		}
 		ptr = ptr->right;
 	}

@@ -9,15 +9,15 @@
 
 static char	*make_path(char *cmd_name, char **envp)
 {
-	char	**path_lst;
+	char	**path_list;
 	char	*cmd_path;
 	size_t	i;
 
-	path_lst = ft_split(getenv("PATH"), ':'); //xsplitに
+	path_list = ft_split(getenv("PATH"), ':'); //xsplitに
 	i = 0;
-	while (path_lst[i] != NULL)
+	while (path_list[i] != NULL)
 	{
-		cmd_path = ft_strjoin(path_lst[i], ft_strjoin("/", cmd_name));
+		cmd_path = ft_strjoin(path_list[i], ft_strjoin("/", cmd_name));
 		if (access(cmd_path, F_OK) == EXIST)
 			return (cmd_path);
 		i++;

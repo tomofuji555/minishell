@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/05 00:58:30 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 01:08:52 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	perror_arg2(char *err_target, char *err_str)
 	ft_putendl_fd(err_str, STDERR_FILENO);
 }
 
-void	perror_arg2_and_exit(char *err_target, char *err_str, int exit_status)
-{
-	perror_arg2(err_target, err_str);
-	exit(exit_status);
-}
-
 void perror_and_exit(char *err_target, int exit_status)
 {
 	perror(err_target);
+	exit(exit_status);
+}
+
+void	perror_arg2_and_exit(char *err_target, char *err_str, int exit_status)
+{
+	perror_arg2(err_target, err_str);
 	exit(exit_status);
 }
 

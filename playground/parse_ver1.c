@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parse_ver1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/02/22 13:30:15 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token *first, t_token 
 	else
 		find_last_tkn(*redir_tkns_head)->next = first;
 	last->next = NULL;
-	prev = find_prev_tkn(*cmd_tkns_head, first);
+	prev = search_prev_tkn(*cmd_tkns_head, first);
 	if (prev == NULL)
 		*cmd_tkns_head = next_ptr;
 	else
@@ -34,8 +34,8 @@ t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token *first, t_token 
 	return (next_ptr);
 }
 
-//init_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする
-static t_token *separate_and_make_redir_tkns_lst\
+//base_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする
+static t_token *separate_and_make_redir_tkns_list\
 	(t_token **cmd_tkns_head, t_bool (*is_func)(enum e_token_kind))
 {
 	t_token *redir_tkns_head;
@@ -60,10 +60,10 @@ static void	push_to_redir_tkns(t_tree_node *tnode_head)
 	tnode_ptr = tnode_head;
 	while(tnode_ptr != NULL)
 	{
-		tnode_ptr->init_data.infile_tokens = separate_and_make_redir_tkns_lst\
-			(&tnode_ptr->init_data.cmd_tokens, is_in_redir_tkn);
-		tnode_ptr->init_data.outfile_tokens = separate_and_make_redir_tkns_lst\
-			(&tnode_ptr->init_data.cmd_tokens, is_out_redir_tkn);
+		tnode_ptr->base_data.infile_tokens = separate_and_make_redir_tkns_list\
+			(&tnode_ptr->base_data.cmd_tokens, is_in_redir_tkn);
+		tnode_ptr->base_data.outfile_tokens = separate_and_make_redir_tkns_list\
+			(&tnode_ptr->base_data.cmd_tokens, is_out_redir_tkn);
 		tnode_ptr = tnode_ptr->right;
 	}
 }
@@ -80,8 +80,8 @@ static void	fill_null_last_tkn_of_tnode(t_tree_node *tnode_ptr)
 
 	while(tnode_ptr->right != NULL)
 	{	
-		tkn_ptr = tnode_ptr->init_data.cmd_tokens;
-		tkn_next_head = tnode_ptr->right->init_data.cmd_tokens;
+		tkn_ptr = tnode_ptr->base_data.cmd_tokens;
+		tkn_next_head = tnode_ptr->right->base_data.cmd_tokens;
 		while(tkn_ptr->next != tkn_next_head)
 			tkn_ptr = tkn_ptr->next;
 		tkn_ptr->next = NULL;
@@ -115,7 +115,7 @@ static t_tree_node *make_new_tnode(t_token *tkn_begining, t_token *tkn_ptr)
 	t_tree_node *new;
 
 	new = (t_tree_node *)ft_xcalloc(1, sizeof(t_tree_node));
-	new->init_data.cmd_tokens = tkn_begining;
+	new->base_data.cmd_tokens = tkn_begining;
 	return (new);
 }
 
