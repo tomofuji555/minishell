@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   run_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/05 16:54:33 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/07 23:19:58 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	parse_and_exec_line(char *line, t_manager *manager)
-{
-	t_token		*token_head;
-	t_tree_node	*tnode_head;
+// void	parse_and_exec_line(char *line, t_manager *manager)
+// {
+// 	t_token		*token_head;
+// 	t_tree_node	*tnode_head;
 
-	token_head = tokenize(line);
-	if (token_head == NULL)
-		return ;//エラーを吐きreturn、exitはしない
-	tnode_head = parse(token_head);
-	expansion(tnode_head);
-	_exec(tnode_head, manager);
-	free(line);
-}
+// 	token_head = tokenize(line);
+// 	if (token_head == NULL)
+// 		return ;//エラーを吐きreturn、exitはしない ->errorを履くのはtokenize,ここに入るのは、エラーと""のとき
+// 	tnode_head = parse(token_head);
+// 	expansion(tnode_head);
+// 	_exec(tnode_head, manager);
+// 	free(line);
+// }
 
-
+#include <string.h>
 void	run_prompt(t_manager *manager)
 {
 	char *line;
@@ -35,14 +35,22 @@ void	run_prompt(t_manager *manager)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
-			perror_and_exit("readline_error", 1);
-		else if (is_equal_str(line, "END"))
+		{
+			// perror_and_exit("readline_error", 1);
+			printf("NULL\n");
+		}
+		else if (strcmp(line, "END") == 0)//is_equal_str(line, "END")
 		{
 			free(line);
 			break;
 		}
+		else if (strcmp(line, "") == 0)
+			;
 		else
-			parse_and_exec_line(line, manager);
+		{
+			// parse_and_exec_line(line, manager);
+			printf("line=%s;\n", line);
+		}
 	}
 }
 
@@ -50,7 +58,7 @@ int main(void)
 {
 	t_manager manager;
 
-	manager = init();
+	// manager = init();
 	run_prompt(&manager);
-	finalize(manager);
+	// finalize(manager);
 }
