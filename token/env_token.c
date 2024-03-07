@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "tokenize.h"
 
 ssize_t	quort_in_env(t_token **head, char *line)
 {
@@ -19,7 +19,7 @@ ssize_t	quort_in_env(t_token **head, char *line)
 
 	start = line;
 	flag = 0;
-	while (*line)
+	while (line != NULL)
 	{
 		line++;
 		if (*start == *line)
@@ -31,7 +31,7 @@ ssize_t	quort_in_env(t_token **head, char *line)
 	}
 	if (!flag)
 		return (quort_error ( ));
-	return (line - start + 1);
+	return (line - start + 2);
 }
 
 ssize_t	env_token(t_token **head, char *line)
