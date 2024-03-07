@@ -6,16 +6,16 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 06:06:40 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
- __attribute__((destructor))
- static void destructor() {
-    system("leaks -q minishell");
- }
+// __attribute__((destructor))
+// static void destructor() {
+//    system("leaks -q minishell");
+// }
 
 ////環境変数リストのテスト
 //t_env *envp_ver2();

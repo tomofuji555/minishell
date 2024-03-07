@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:12:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/08 06:22:21 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ void	free_tkn_list(t_token *head)
 	free_tkn(ptr);
 }
 
+void	free_env_node(t_env *env_node)
+{
+	free(env_node->key);
+	free(env_node->val);
+	free(env_node->original);
+	free(env_node);
+}
+
 void	free_env_list(t_env *env_list)
 {
 	t_env *next_ptr;
@@ -60,17 +68,11 @@ void	free_env_list(t_env *env_list)
 	next_ptr = env_list->next;
 	while(next_ptr != NULL)
 	{
-		free(ptr->key);
-		free(ptr->val);
-		free(ptr->original);
-		free(ptr);
+		free_env_node(ptr);
 		ptr = next_ptr;
 		next_ptr = next_ptr->next;
 	}
-	free(ptr->key);
-	free(ptr->val);
-	free(ptr->original);
-	free(ptr);
+	free_env_node(ptr);
 }
 
 void	free_redir_node(t_redir *redir_node)
