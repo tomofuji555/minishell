@@ -42,7 +42,7 @@ ssize_t	env_token(t_token **head, char *line)
 	line++;
 	if (*line == '$' || *line == '?')
 	{
-		token_list (head, line, line - start, TKN_ENV);
+		token_list (head, start, line - start + 1, TKN_ENV);
 		return (line - start + 1);
 	}
 	else if (*line == '\'' || *line == '\"')
@@ -56,7 +56,7 @@ ssize_t	env_token(t_token **head, char *line)
 	{
 		while (*line != '\0' && !is_metachar (*line))
 			line++;
-		token_list (head, start + 1, line - start - 1, TKN_ENV);
+		token_list (head, start, line - start, TKN_ENV);
 	}
 	return (line - start);
 }

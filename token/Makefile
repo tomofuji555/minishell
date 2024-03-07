@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = tokenize
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 RL_FLAGS = -lreadline -lhistory
 SRCS = tokenize.c lstlast.c lst_add_back.c ft_strdup.c ft_strlen.c ft_substr.c free_lst_all.c text_token.c space_token.c quort_token.c env_token.c pipe_token.c input_token.c output_token.c
 OBJS = $(SRCS:.c=.o)
