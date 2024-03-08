@@ -19,7 +19,7 @@ ssize_t	quort_in_env(t_token **head, char *line)
 
 	start = line;
 	flag = 0;
-	while (line != NULL)
+	while (*line != '\0')
 	{
 		line++;
 		if (*start == *line)

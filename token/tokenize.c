@@ -10,45 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "tokenize.h"
 
 //__attribute__((destructor))
 //static void destructor() {
 	//system("leaks -q minishell");
 //}
 
-int	main(void)
-{
-	char	*line;
-	t_token	*head;
-	t_token	*current;
-
-	head = NULL;
-	while (1)
-	{
-		line = readline("minishell$ ");
-		if (line == NULL)
-			break ;
-		if (split_to_token (&head, line) < 0)
-		{
-			free_lst_all (&head);
-		}
-		else
-		{
-			current = head;
-			while (current != NULL)
-			{
-				printf ("%s %d\n", current->val, current->kind);
-				current = current->next;
-			}
-			if (*line)
-				add_history(line);
-			free_lst_all (&head);
-		}
-		free (line);
-	}
-	exit(0);
-}
 
 int	is_metachar(char c)
 {
@@ -109,9 +77,9 @@ ssize_t	split_to_token(t_token **head, char *line)
 			mv_count = quort_token (head, line);
 		else
 			mv_count = text_token (head, line);
-		line = line + mv_count;
 		if (mv_count < 0)
 			return (-1);
+		line = line + mv_count;
 	}
 	return (1);
 }
