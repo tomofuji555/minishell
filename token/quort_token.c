@@ -12,9 +12,13 @@
 
 #include "tokenize.h"
 
-ssize_t	quort_error(void)
+ssize_t	quort_error(char c)
 {
-	printf ( "Argument is not surrounded by quort\n");
+	//printf ( "Argument is not surrounded by quort\n");
+	if (c == '\'')
+		ft_putendl_fd ("-bash: syntax error near unexpected token ' \' ' ", 2);
+	if (c == '\"')
+		ft_putendl_fd ("-bash: syntax error near unexpected token ' \" ' ", 2);
 	return (-1);
 }
 
@@ -41,6 +45,6 @@ ssize_t	quort_token(t_token **head, char *line)
 		}
 	}
 	if (!flag)
-		return (quort_error ( ));
+		return (quort_error (*start));
 	return (line - start + 1);
 }
