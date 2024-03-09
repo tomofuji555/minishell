@@ -71,9 +71,5 @@ ssize_t	quort_in_env(t_token **head, char *line);
 ssize_t	env_token(t_token **head, char *line);
 int		is_metachar(char c);
 ssize_t	quort_error(char c);
-void	parse(t_token **head);
-void	del_space_token(t_token **head);
-t_token	*find_space_token(t_token *head);
-t_token	*find_pre_space_token(t_token *head);
 
 #endif
