@@ -14,7 +14,6 @@
 
 ssize_t	quort_error(char c)
 {
-	//printf ( "Argument is not surrounded by quort\n");
 	if (c == '\'')
 		ft_putendl_fd ("-bash: syntax error near unexpected token ' \' ' ", 2);
 	if (c == '\"')
