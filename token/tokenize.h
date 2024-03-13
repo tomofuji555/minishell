@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   tokenize.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2023/12/19 16:46:17 by tofujiwa         ###   ########.fr       */
+/*   Created: 2024/03/13 22:26:42 by tofujiwa          #+#    #+#             */
+/*   Updated: 2024/03/13 22:28:40 by username         ###   ########          */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef TOKENIZE_H
+# define TOKENIZE_H
 
 //#include <cstddef>
 # include <stdlib.h>
