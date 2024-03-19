@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 04:57:49 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/19 22:26:56 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ static char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind, t_manager 
 	{
 		line = readline("> ");
 		if (line == NULL)
-			perror_and_exit("readline_error", 1);
+			break ;
 		if (is_equal_str(line, delim))
+		{
+			free(line);
 			break;
+		}
 		output_fd_and_free_line(fd, line, heredoc_kind, manager);
 	}
-	free(line);
 	free(delim);
 	ft_xclose(fd);
 	return (path);

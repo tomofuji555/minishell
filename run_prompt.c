@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/08 05:39:51 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/19 22:25:05 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,15 @@ void	run_prompt(t_manager *manager)
 {
 	char *line;
 
-	while (line != NULL)
+	while (1)
 	{
 		line = readline("minishell$ ");
-		if (strcmp(line, "END") == 0)
+		if (line == NULL)
 		{
-			if (strcmp(line, "END") == 0)
-				free(line);
-			break ;
+			printf("NULLが来た\n");
+			break;	
 		}
-		if (strcmp(line, "") != 0)
+		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
 			printf("line=%s;\n", line);
