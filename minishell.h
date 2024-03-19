@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/01/05 17:30:06 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/19 21:51:15 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,15 @@ typedef struct s_redir
 	char				*val;
 	struct s_redir		*next;
 }	t_redir;
+
+typedef struct s_env
+{
+	char				*original;
+	char				*key;
+	char				*val;
+	t_bool				printed_flag;
+	struct s_env		*next;
+}	t_env;
 
 typedef struct s_init_arg_data
 {
