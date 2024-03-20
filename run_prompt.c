@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/19 22:25:05 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/20 20:14:25 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void	run_prompt(t_manager *manager)
 			printf("NULLが来た\n");
 			break;	
 		}
+		else if (strcmp(line, "END") == 0)
+		{
+			free(line);
+			break;
+		}
 		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
@@ -56,11 +61,28 @@ void	run_prompt(t_manager *manager)
 	}
 }
 
+void handle_prompt_sigquit(int num)
+{
+	return ;
+}
+
+void handle_prompt_sigint(int num)
+{
+	printf("\n");
+	rl_on_new_line();
+	// rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int main(void)
 {
 	t_manager manager;
 
 	//manager = init();
+	signal(SIGQUIT, handle_prompt_sigquit);
+	signal(SIGINT, SIG_IGN);
 	run_prompt(&manager);
+	// signal
+	sleep(1);
 	// finalize(manager);
 }
