@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/20 20:14:25 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/20 21:24:05 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void handle_prompt_sigint(int num)
 {
 	printf("\n");
 	rl_on_new_line();
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -79,8 +79,9 @@ int main(void)
 	t_manager manager;
 
 	//manager = init();
-	signal(SIGQUIT, handle_prompt_sigquit);
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_prompt_sigint);
+	//signal(SIGQUIT, handle_prompt_sigquit);
+	//signal(SIGINT, SIG_IGN);
 	run_prompt(&manager);
 	// signal
 	sleep(1);
