@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   prev_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomokifujiwara <username@student.42.f      +#+  +:+       +#+        */
+/*   By: username <username@student.your42netw      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 16:13:46 by tomokifuj         #+#    #+#             */
-/*   Updated: 2024/03/08 16:13:49 by tomokifuj        ###   ########.fr       */
+/*   Created: 2024/03/22 16:39:12 by username          #+#    #+#             */
+/*   Updated: 2024/03/22 16:39:14 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenize.h"
+#include "parse.h"
 
-void	ft_putchar_fd(char c, int fd)
+t_tree_node	*prev_node(t_tree_node *prev_tree)
 {
-	write (fd, &c, 1);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	size_t	i;
-	size_t	len;
-
-	if (!s)
-		return ;
-	i = 0;
-	len = ft_strlen(s);
-	while (i < len)
-	{
-		write (fd, &s[i], 1);
-		i++;
-	}
+	if (prev_tree == NULL)
+		return (NULL);
+	return (prev_tree);
 }

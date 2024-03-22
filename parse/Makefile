@@ -10,11 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = parse
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 RL_FLAGS = -lreadline -lhistory
-SRCS = tokenize.c lstlast.c lst_add_back.c ft_strdup.c ft_strlen.c ft_substr.c free_lst_all.c text_token.c space_token.c quort_token.c env_token.c pipe_token.c input_token.c output_token.c ft_putstr_fd.c ft_putendl_fd.c
+SRCS = parse.c right_node.c left_node.c prev_node.c syntax_check.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
