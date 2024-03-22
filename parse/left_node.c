@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   left_node.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: username <username@student.your42netw      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 16:40:15 by username          #+#    #+#             */
+/*   Updated: 2024/03/22 16:40:17 by username         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parse.h"
 
 t_token	*cmd_of_ls(t_token **head, t_token **last_pipe)
@@ -17,7 +29,8 @@ t_token	*cmd_of_ls(t_token **head, t_token **last_pipe)
 	return (*last_pipe);
 }
 
-t_tree_node	*init_ls_node(t_token **head, t_token *last_pipe, t_tree_node *prev_node)
+t_tree_node	*init_ls_node(t_token **head, t_token *last_pipe, \
+t_tree_node *prev_node)
 {
 	t_tree_node	*ls_node;
 

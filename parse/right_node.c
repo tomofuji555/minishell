@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   right_node.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: username <username@student.your42netw      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 16:41:13 by username          #+#    #+#             */
+/*   Updated: 2024/03/22 16:41:53 by username         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parse.h"
 
 t_token	*rs_append_node_and_add_null(t_token **head, t_token *last_pipe)
@@ -37,7 +49,8 @@ t_token	*cmd_of_rs(t_token **head, t_token *last_pipe, t_bool is_first)
 	return (rs_token_node);
 }
 
-t_tree_node	*init_rs_node(t_token **head, t_token *last_pipe, t_bool is_first, t_tree_node *prev_node)
+t_tree_node	*init_rs_node(t_token **head, t_token *last_pipe, \
+t_bool is_first, t_tree_node *prev_node)
 {
 	t_tree_node	*rs_node;
 
@@ -55,7 +68,8 @@ t_tree_node	*init_rs_node(t_token **head, t_token *last_pipe, t_bool is_first, t
 	return (rs_node);
 }
 
-t_tree_node	*rs_tree_node(t_token **head, t_token *last_pipe, t_bool is_first, t_tree_node *prev_node)
+t_tree_node	*rs_tree_node(t_token **head, t_token *last_pipe, \
+t_bool is_first, t_tree_node *prev_node)
 {
 	t_token		*temp_head;
 	t_tree_node	*node;

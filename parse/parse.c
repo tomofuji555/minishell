@@ -1,27 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: username <username@student.your42netw      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 16:33:48 by username          #+#    #+#             */
+/*   Updated: 2024/03/22 16:33:51 by username         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parse.h"
 
 void	split_by_pipe(t_tree_node **tree, t_token **head, ssize_t count)
 {
+	t_tree_node	*tree_head;
 	t_tree_node	*prev_tree;
 	t_bool		is_root;
 	t_token		*last_pipe;
 
+	tree_head = *tree;
 	is_root = TRUE;
 	prev_tree = NULL;
 	while (count)
 	{
 		last_pipe = find_last_pipe (*head, count);
 		(*tree)->right = rs_tree_node (head, last_pipe, is_root, prev_tree);
-		(*tree)->init_arg_data.cmd_tokens = put_pipe_token (head, last_pipe, count);
+		(*tree)->init_arg_data.cmd_tokens = \
+		put_pipe_token (head, last_pipe, count);
 		(*tree)->left = ls_tree_node (head, prev_tree);
 		(*tree)->prev = prev_node (prev_tree);
-		//if (!check_tree (*tree))
-			//return ;
 		is_root = FALSE;
 		prev_tree = *tree;
 		*tree = (*tree)->left;
 		count = count_pipe (*head);
 	}
+	*tree = tree_head;
 }
 
 ssize_t	count_pipe(t_token *head)
@@ -69,7 +83,7 @@ t_token	*put_pipe_token(t_token **head, t_token *last_pipe, ssize_t count)
 	return (last_pipe);
 }
 
-t_token	*find_last_pipe(t_token *head, ssize_t count) //problem
+t_token	*find_last_pipe(t_token *head, ssize_t count)
 {
 	t_token	*current_head;
 	ssize_t	pipe_count;
