@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/20 21:24:05 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/23 03:03:38 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ void	run_prompt(t_manager *manager)
 		{
 			printf("NULLが来た\n");
 			break;	
-		}
-		else if (strcmp(line, "END") == 0)
-		{
-			free(line);
-			break;
 		}
 		else if (strcmp(line, "") != 0)
 		{
