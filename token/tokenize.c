@@ -14,9 +14,8 @@
 
 //__attribute__((destructor))
 //static void destructor() {
-	//system("leaks -q minishell");
+//system("leaks -q minishell");
 //}
-
 
 int	is_metachar(char c)
 {
@@ -30,20 +29,20 @@ int	is_metachar(char c)
 
 t_token	*make_new_token(char *start, ssize_t mv_count, int token_kind)
 {
-	t_token *node;
+	t_token	*node;
 
-    node = (t_token *)malloc(sizeof(t_token));
-    if (node == NULL)
-        return (NULL);
-    node->val = ft_substr(start, 0, mv_count);
-    if (node->val == NULL)
-    {
-        free(node);
-        return (NULL);
-    }
-    node->next = NULL;
-    node->kind = token_kind;
-    return (node);
+	node = (t_token *)malloc(sizeof(t_token));
+	if (node == NULL)
+		return (NULL);
+	node->val = ft_substr(start, 0, mv_count);
+	if (node->val == NULL)
+	{
+		free(node);
+		return (NULL);
+	}
+	node->next = NULL;
+	node->kind = token_kind;
+	return (node);
 }
 
 void	token_list(t_token **head, char *start, ssize_t count, int kind)

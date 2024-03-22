@@ -12,10 +12,10 @@
 
 #include "tokenize.h"
 
-void free_lst_all(t_token **head)
+void	free_lst_all(t_token **head)
 {
-	t_token *current;
-	t_token *next;
+	t_token	*current;
+	t_token	*next;
 
 	current = *head;
 	while (current != NULL)
@@ -28,4 +28,3 @@ void free_lst_all(t_token **head)
 	}
 	*head = NULL;
 }
-

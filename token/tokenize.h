@@ -41,7 +41,7 @@ enum e_token_kind
 	TKN_APPEND_FILE = 9,
 };
 
-typedef struct	s_token
+typedef struct s_token
 {
 	enum e_token_kind	kind;
 	char				*val;
