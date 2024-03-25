@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _tkn_utils.c                                       :+:      :+:    :+:   */
+/*   _utils_tkn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 03:20:23 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	remove_tkn(t_token **head, t_token *target, t_token *prev)
 static size_t	_strlen_from_tkn(t_token *begining, t_token *last)
 {
 	t_token	*ptr;
-	size_t	i;
 	size_t	len;
 
 	ptr = begining;

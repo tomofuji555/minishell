@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:06:56 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/08 05:16:14 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 03:15:20 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	execute(t_tree_node *root, t_manager *manager)
 	//if (!root->right && root->refine_data.cmd_args && is_builtin(root->refine_data.cmd_args[0]))
 	//	do_single_builtin(root->refine_data, &manager);
 	//else
-		_exec(root, manager);
+		exec_cmd_in_child(root, manager);
 }
 
 //exec_in_while(t_tree_node *root)

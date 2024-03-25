@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/20 19:22:49 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/26 03:57:27 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <fcntl.h>
 #include "libft/libft.h"
-#include "stdbool.h"
 
 #define	SYS_FAILURE	-1
 #define	CHILD		0
@@ -119,7 +118,7 @@ typedef struct s_manager
 	int		prev_outfd;
 	size_t	fork_count;
 	pid_t	last_pid;
-	bool	last_cmd_flag;
+	t_bool	last_cmd_flag;
 }	t_manager;
 
 //~~~~utils start~~~~
@@ -185,13 +184,13 @@ void		add_tkn_last(t_token **head, t_token *new);
 void		remove_tkn(t_token **head, t_token *ptr, t_token *prev);
 char		*substr_from_tkn(t_token *begining, t_token *last);
 //utils.c
-char		*ulltonbase(unsigned long long num, unsigned int base);
 size_t		strlcat_ret_catlen(char *dest, const char *src, size_t size);
 char		*join_and_free_str2(char *str1, char *str2);
 //~~~~utils end~~~~
 
 //~~~~ initi start~~~~
-t_manager	init(void);
+t_manager initialize(void);
+void	finalize(t_manager manager);
 //~~~~~~~~
 
 //~~~~ tokenize start~~~~
@@ -211,7 +210,8 @@ char	*expand_env_in_dquote(char *str, t_manager manager);
 //~~~~~~~~
 
 //~~~~execute start~~~~
-void	_exec(t_tree_node *ptr, t_manager *manager);
+void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager);
+void	execute(t_tree_node *root, t_manager *manager);
 //~~~~~~~~
 
 //~~~~heredoc start~~~~

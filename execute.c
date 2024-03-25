@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 04:09:12 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ static pid_t fork_and_exec_cmd(t_refine_data data, t_manager *manager, t_bool la
 	return (pid);
 }
 
-void	_exec(t_tree_node *ptr, t_manager *manager)
+void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager)
 {
 	while(ptr != NULL)
 	{
@@ -226,7 +226,7 @@ void	execute(t_tree_node *root, t_manager *manager)
 	int tmpfd_in;
 	
 	tmpfd_in = STDIN_FILENO;
-	_exec(root, manager);
+	exec_cmd_in_child(root, manager);
 	//wait_child(manager);
 	manager->prev_outfd = tmpfd_in;
 	manager->last_cmd_flag = FALSE;

@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/08 03:19:44 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 03:39:29 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static t_env *make_env_list()
 	t_env	*head;
 	t_env	*new;
 
+	head = NULL;
 	i = 0;
 	while(environ[i] != NULL)
 	{
@@ -63,7 +64,7 @@ static t_env *make_env_list()
 	return (head);
 }
 
-t_manager init(void)
+t_manager initialize(void)
 {
 	t_manager manager;
 
@@ -73,6 +74,11 @@ t_manager init(void)
 	manager.fork_count = 0;
 	manager.last_cmd_flag = FALSE;
 	return (manager);
+}
+
+void	finalize(t_manager manager)
+{
+	free_env_list(manager.env_list);
 }
 
 //size_t	count_strs_2(char **strs)

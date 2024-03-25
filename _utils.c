@@ -6,45 +6,45 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 02:06:38 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 03:57:21 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-static size_t	get_dig_nbase(unsigned long long num, unsigned int base)
-{
-	size_t	dig;
+//static size_t	get_dig_nbase(unsigned long long num, unsigned int base)
+//{
+//	size_t	dig;
 
-	dig = 1;
-	while (num >= base)
-	{
-		num /= base;
-		dig++;
-	}
-	return (dig);
-}
+//	dig = 1;
+//	while (num >= base)
+//	{
+//		num /= base;
+//		dig++;
+//	}
+//	return (dig);
+//}
 
-//NULLが帰ってくるときの対応を考えないといけない
-char	*ulltonbase(unsigned long long num, unsigned int base)
-{
-	const char	*string_base = "0123456789ABCDEF";
-	char		*str;
-	size_t		dig;
+////NULLが帰ってくるときの対応を考えないといけない
+//char	*ulltonbase(unsigned long long num, unsigned int base)
+//{
+//	const char	*string_base = "0123456789ABCDEF";
+//	char		*str;
+//	size_t		dig;
 
-	if (base > 16)
-		return (NULL);
-	dig = get_dig_nbase(num, base);
-	str = (char *)ft_calloc((dig + 1), sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	while (dig > 0)
-	{
-		str[--dig] = string_base[num % base];
-		num /= base;
-	}
-	return (str);
-}
+//	if (base > 16)
+//		return (NULL);
+//	dig = get_dig_nbase(num, base);
+//	str = (char *)ft_calloc((dig + 1), sizeof(char));
+//	if (str == NULL)
+//		return (NULL);
+//	while (dig > 0)
+//	{
+//		str[--dig] = string_base[num % base];
+//		num /= base;
+//	}
+//	return (str);
+//}
 
 //帰りがコピーしたカウントを返すft_strlcat
 size_t	strlcat_ret_catlen(char *dest, const char *src, size_t size)

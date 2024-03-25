@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/19 22:26:56 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/26 04:01:16 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*create_tmpfile_path(void)
 	num = 0;
 	while (num < ULLONG_MAX)
 	{
-		path = join_and_free_str2("/tmp/", ulltonbase(num++, 16));
+		path = join_and_free_str2("/tmp/", ft_itoa(num++));
 		if (access(path, F_OK) == NOT_EXIST)
 			return (path);
 		free (path);

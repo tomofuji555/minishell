@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 04:58:07 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 04:08:48 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,23 +247,23 @@ static void	add_redir_last(t_redir **head_node, t_redir *new_node)
 	find_last_redir(*head_node)->next = new_node;
 }
 
-static t_bool	has_space_between(t_token *begining)
-{
-	t_token *ptr;
-	t_token *prev;
+//static t_bool	has_space_between(t_token *begining)
+//{
+//	t_token *ptr;
+//	t_token *prev;
 
-	ptr = begining->next;
-	prev = begining;
-	while (ptr && !is_redir_tkn(ptr->kind))
-	{
-		if (is_valuable_tkn(prev->kind) && ptr->kind == TKN_SPACE && \
-			ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
-			return (TRUE);
-		prev = ptr;
-		ptr = ptr->next;
-	}
-	return (FALSE);
-}
+//	ptr = begining->next;
+//	prev = begining;
+//	while (ptr && !is_redir_tkn(ptr->kind))
+//	{
+//		if (is_valuable_tkn(prev->kind) && ptr->kind == TKN_SPACE && \
+//			ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
+//			return (TRUE);
+//		prev = ptr;
+//		ptr = ptr->next;
+//	}
+//	return (FALSE);
+//}
 
 static t_bool	has_quote(t_token *begining)
 {
