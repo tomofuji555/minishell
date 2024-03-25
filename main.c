@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_prompt.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/26 03:53:54 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 07:12:33 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-#include <stdio.h>
 
 __attribute__((destructor))
  static void destructor() {
@@ -60,22 +59,21 @@ void	run_prompt(t_manager *manager)
 	}
 }
 
-//void handle_prompt_sigint(int num)
-//{
-//	printf("\n");
-//	rl_on_new_line();
-//	rl_replace_line("", 0);
-//	rl_redisplay();
-//}
-
-
+void handle_prompt_sigint(int num)
+{
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
 int main(void)
 {
 	t_manager manager;
 
 	manager = initialize();
-	//signal(SIGINT, handle_prompt_sigint);
+	signal(SIGINT, handle_prompt_sigint);
+	//signal(SIGINT, SIGINT);
 	//signal(SIGQUIT, SIG_IGN);
 	run_prompt(&manager);
 	finalize(manager);

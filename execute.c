@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 04:09:12 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 07:56:05 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,17 +209,17 @@ void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager)
 /* --------------------------UNTIL-------------------------- */
 /* --------------------------------------------------------- */
 
-static void wait_child(t_manager *manager)
-{
-	int	status;
+//static void wait_child(t_manager *manager)
+//{
+//	int	status;
 
-	while(manager->fork_count > 0)
-	{
-		if (wait(&status) == manager->last_pid)
-			manager->exit_status = WEXITSTATUS(status);
-		manager->fork_count--;
-	}
-}
+//	while(manager->fork_count > 0)
+//	{
+//		if (wait(&status) == manager->last_pid)
+//			manager->exit_status = WEXITSTATUS(status);
+//		manager->fork_count--;
+//	}
+//}
 
 void	execute(t_tree_node *root, t_manager *manager)
 {

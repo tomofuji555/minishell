@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/26 03:57:27 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 05:26:23 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define EXECUTE_H
 
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "libft/libft.h"
 
 #define	SYS_FAILURE	-1

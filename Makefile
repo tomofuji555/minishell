@@ -6,15 +6,16 @@
 #    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/03/26 04:09:52 by tozeki           ###   ########.fr        #
+#    Updated: 2024/03/26 07:55:43 by tozeki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CC			=	cc
-#CFLAGS		=	-Wall -Wextra -Werror 
-RL_FLAGS	=	-lreadline -L $(brew --prefix readline)/lib -I $(brew --prefix readline)/include
-RL_FLAGS	=	-lreadline
+CFLAGS		=	-Wall -Wextra -Werror 
+RL_LIB_FLAG	=	-L $(shell brew --prefix readline)/lib
+RL_H_FLAG	=	-I $(shell brew --prefix readline)/include
+RL_FLAGS	=	-lreadline  $(RL_LIB_FLAG) $(RL_H_FLAG)
 OBJS		=	_utils_bool.o \
 				_utils_env.o \
 				_utils_free.o \
@@ -30,23 +31,23 @@ OBJS		=	_utils_bool.o \
 				execute.o \
 				run_heredoc.o \
 				main.o
-LIBFTPATH	=	libft/
+LIBFT_PATH	=	libft/
 
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	make all -C $(LIBFTPATH)
-	$(CC) $(CFLAGS) $(RL_FLAGS) $(OBJS) $(LIBFTPATH)libft.a -o $@
+	make all -C $(LIBFT_PATH)
+	$(CC) $(CFLAGS) $(RL_FLAGS) $(OBJS) $(LIBFT_PATH)libft.a -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(RL_H_FLAG) -c $<
 
 clean :
-	make clean -C $(LIBFTPATH)
+	make clean -C $(LIBFT_PATH)
 	rm -f $(OBJS)
 
 fclean : clean
-	make fclean -C $(LIBFTPATH)
+	make fclean -C $(LIBFT_PATH)
 	rm -f $(NAME)
 
 re : fclean all
