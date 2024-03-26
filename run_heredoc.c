@@ -6,13 +6,13 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 04:01:16 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 11:16:10 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	remove_tmpfile(t_tree_node *tnode_head)
+void	rm_heredoc_tmp(t_tree_node *tnode_head)
 {
 	t_tree_node *ptr;
 	t_redir	*redir_ptr;

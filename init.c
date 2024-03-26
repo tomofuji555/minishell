@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/26 04:56:13 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 13:27:46 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,21 @@ static t_env *make_env_list()
 	return (head);
 }
 
+char	*get_current_dir(void)
+{
+	char *buf;
+
+	buf = (char *)ft_xcalloc(PATH_MAX + 1, sizeof(char));
+	getcwd(buf, PATH_MAX + 1);
+	return (buf);
+}
+
 t_manager initialize(void)
 {
 	t_manager manager;
 
 	manager.env_list = make_env_list();
+	manager.current_dir = get_current_dir();
 	manager.exit_status = 0;
 	manager.prev_outfd = STDIN_FILENO;
 	manager.fork_count = 0;
@@ -79,6 +89,7 @@ t_manager initialize(void)
 void	finalize(t_manager manager)
 {
 	free_env_list(manager.env_list);
+	free(manager.current_dir);
 }
 
 //size_t	count_strs_2(char **strs)

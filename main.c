@@ -6,16 +6,18 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/26 07:12:33 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 20:08:10 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-__attribute__((destructor))
- static void destructor() {
-    system("leaks -q minishell");
-}
+//__attribute__((destructor))
+// static void destructor() {
+//    system("leaks -q minishell");
+//}
+
+int	signal_flag = 0;
 
 void	process_line(char *line, t_manager *manager)
 {
@@ -32,7 +34,7 @@ void	process_line(char *line, t_manager *manager)
 	expansion(tnode_head, *manager);
 	try_heredoc(tnode_head, *manager);
 	execute(tnode_head, manager);
-	remove_tmpfile(tnode_head);
+	rm_heredoc_tmp(tnode_head);
 	free_tnode_list(tnode_head);
 }
 
@@ -41,30 +43,33 @@ void	run_prompt(t_manager *manager)
 {
 	char *line;
 
-	while (1)
+	while (!signal_flag)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
 		{
+			//system("leaks -q minishell");
 			printf("NULLが来た\n");
 			break;	
 		}
 		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
-			//printf("line=%s;\n", line);
-			process_line(line, manager);
+			printf("line=%s;\n", line);
+			//process_line(line, manager);
 		}
+		printf("signal_flag=%d;\n", signal_flag);
 		free(line);
 	}
 }
 
-void handle_prompt_sigint(int num)
+void handle_sigint_in_prompt(int num)
 {
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	signal_flag = 128 + num;
 }
 
 int main(void)
@@ -72,9 +77,8 @@ int main(void)
 	t_manager manager;
 
 	manager = initialize();
-	signal(SIGINT, handle_prompt_sigint);
-	//signal(SIGINT, SIGINT);
-	//signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint_in_prompt);
+	signal(SIGQUIT, SIG_IGN);
 	run_prompt(&manager);
 	finalize(manager);
 }

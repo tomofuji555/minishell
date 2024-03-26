@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 03:44:37 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 12:07:06 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,14 +171,14 @@ int main()
 	char *str9 = "echo $HOME$1$@$USER$_KK";
 	char *str10 = "cat << aaa";
 	manager = initialize();
-	t_token *tkn_head = tokenize(str10);
+	t_token *tkn_head = tokenize(str2);
 	if (tkn_head == NULL)
 		return (1);
 	t_tree_node *tnode_head = parse(tkn_head);
 	expansion(tnode_head, manager);
 	try_heredoc(tnode_head, manager);
 	execute(tnode_head, &manager);
-	remove_tmpfile(tnode_head);
+	rm_heredoc_tmp(tnode_head);
 	free_tnode_list(tnode_head);
 	free_env_list(manager.env_list);
 	printf("終了ステータスは%d\n", manager.exit_status);

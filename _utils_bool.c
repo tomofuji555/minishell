@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _bool_utils.c                                      :+:      :+:    :+:   */
+/*   _utils_bool.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 02:44:18 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 11:40:27 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_bool is_quote(char c)
 t_bool is_delim(char c)
 {
 	return (is_ifs(c) || is_quote(c) || c == '<' || c == '>' \
-		|| c == '$' || c == '|' || c == '\0');
+		|| c == '$' || c == '|'); // || c == '\0'
 }
 
 t_bool is_valuable_tkn(enum e_token_kind kind)
@@ -78,7 +78,13 @@ t_bool	is_equal_str(const char *s1, char *s2)
 
 t_bool	is_builtin(char *cmd)
 {
-	return (is_equal_str(cmd, "echo") || is_equal_str(cmd, "cd") || is_equal_str(cmd, "pwd") \
-		|| is_equal_str(cmd, "export") || is_equal_str(cmd, "unset") || is_equal_str(cmd, "env") \
-		|| is_equal_str(cmd, "exit"));
+	return (is_equal_str(cmd, "cd"));
+	//return (is_equal_str(cmd, "echo") || is_equal_str(cmd, "cd") || is_equal_str(cmd, "pwd") \
+	//	|| is_equal_str(cmd, "export") || is_equal_str(cmd, "unset") || is_equal_str(cmd, "env") \
+	//	|| is_equal_str(cmd, "exit"));
+}
+
+t_bool	is_single_builtin(t_tree_node *tnode_ptr)
+{
+	return (tnode_ptr->right == NULL && tnode_ptr->refine_data.cmd_args && is_builtin(tnode_ptr->refine_data.cmd_args[0]));
 }

@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 07:56:05 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 18:04:04 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,11 @@ static void	change_instream(t_redir *redir_head, int prev_outfd)
 {
 	if (redir_head)
 	{
+		
 		if (!can_change_stream_redirect(redir_head, STDIN_FILENO))
+		{
 			exit(1);
+		}
 		if (prev_outfd != STDIN_FILENO)
 			ft_xclose(prev_outfd);
 	}
@@ -197,37 +200,92 @@ void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager)
 		}
 		ptr = ptr->right;
 	}
-	int status;
+}
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
+
+int	do_builtin(char **cmd_args, t_env *env_list)
+{
+	if (is_equal_str(*cmd_args, "cd"))
+		return (do_cd(cmd_args, env_list));
+	//if (!cmd_args)
+	//	return (-1);
+	//if (is_equal_str(*cmd_args, "echo"))
+	//	return (ms_echo(cmd_args));
+	//else if (is_equal_str(*cmd_args, "cd"))
+	//	rerurn (ms_cd(cmd_args, envp));
+	//else if (is_equal_str(*cmd_args, "pwd"))
+	//	return (ms_pwd(envp));
+	//else if (is_equal_str(*cmd_args, "export"))
+	//	return (ms_export(cmd_args, envp));
+	//else if (is_equal_str(*cmd_args, "unset"))
+	//	return (ms_unset(cmd_args, envp));
+	//else if (is_equal_str(*cmd_args, "env"))
+	//	return (ms_env(envp));
+	//else if (is_equal_str(*cmd_args, "exit"))
+	//	return (ms_exit(cmd_args, envp));
+	else
+		return (-1);
+}
+
+t_bool	can_change_iostream_redirect(t_refine_data data)
+{
+	if (data.infile_paths)
+	{
+		if (!can_change_stream_redirect(data.infile_paths, STDIN_FILENO))
+			return (FALSE);
+	}
+	if (data.outfile_paths)
+	{
+		if (!can_change_stream_redirect(data.outfile_paths, STDOUT_FILENO))
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+void do_single_builtin(t_tree_node *root, t_manager *manager)
+{
+	int tmpfd_in;
+	int tmpfd_out;
+
+	tmpfd_in = STDIN_FILENO;
+	tmpfd_out = STDOUT_FILENO;
+	if (can_change_iostream_redirect(root->refine_data))
+		manager->exit_status = do_builtin(root->refine_data.cmd_args, manager->env_list);
+	else
+		manager->exit_status = 1;
+	ft_xdup2(tmpfd_in, STDIN_FILENO);
+	ft_xdup2(tmpfd_out, STDOUT_FILENO);
+}
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
+
+static void wait_child(t_manager *manager)
+{
+	int	status;
+
+	//system("ps");
 	while(manager->fork_count > 0)
 	{
 		if (wait(&status) == manager->last_pid)
 			manager->exit_status = WEXITSTATUS(status);
 		manager->fork_count--;
 	}
+	//system("ps");
 }
-/* --------------------------------------------------------- */
-/* --------------------------UNTIL-------------------------- */
-/* --------------------------------------------------------- */
-
-//static void wait_child(t_manager *manager)
-//{
-//	int	status;
-
-//	while(manager->fork_count > 0)
-//	{
-//		if (wait(&status) == manager->last_pid)
-//			manager->exit_status = WEXITSTATUS(status);
-//		manager->fork_count--;
-//	}
-//}
 
 void	execute(t_tree_node *root, t_manager *manager)
 {
 	int tmpfd_in;
 	
 	tmpfd_in = STDIN_FILENO;
-	exec_cmd_in_child(root, manager);
-	//wait_child(manager);
+	if (is_single_builtin(root))
+		do_single_builtin(root, manager);
+	else
+		exec_cmd_in_child(root, manager);
+	wait_child(manager);
 	manager->prev_outfd = tmpfd_in;
 	manager->last_cmd_flag = FALSE;
 	manager->fork_count = 0;

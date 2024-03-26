@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/26 05:26:23 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/26 18:51:15 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 #define NOT_EXIST	-1
 #define DEFAULT		0
 #define AMBIGUOUS	NULL
+
+extern int	signal_flag;
 
 enum	e_pipefd_direct
 {
@@ -114,6 +116,7 @@ typedef struct s_tree_node
 typedef struct s_manager
 {
 	t_env	*env_list;
+	char	*current_dir;
 	int		exit_status;
 	int		prev_outfd;
 	size_t	fork_count;
@@ -136,6 +139,7 @@ t_bool		is_cmd_node(t_tree_node *ptr);
 t_bool		is_cmd_path(char *first_cmd_arg);
 t_bool		is_equal_str(const char *s1, char *s2);
 t_bool		is_builtin(char *cmd);
+t_bool		is_single_builtin(t_tree_node *tnode_ptr);
 //env_utils.c
 size_t		count_envname(char *dollar_ptr);
 char		*ft_getenv(const char *env_name, t_env *head);
@@ -215,8 +219,12 @@ void	execute(t_tree_node *root, t_manager *manager);
 //~~~~~~~~
 
 //~~~~heredoc start~~~~
-void	remove_tmpfile(t_tree_node *tnode_head);
+void	rm_heredoc_tmp(t_tree_node *tnode_head);
 void	try_heredoc(t_tree_node *tnode_head, t_manager manager);
+//~~~~~~~~
+
+//~~~~cd start~~~~
+int	do_cd(char **cmd_args, t_env *env_list);
 //~~~~~~~~
 
 #endif 
