@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/26 20:08:10 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/27 05:48:01 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,9 @@ void	run_prompt(t_manager *manager)
 		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
-			printf("line=%s;\n", line);
-			//process_line(line, manager);
+			//printf("line=%s;\n", line);
+			process_line(line, manager);
 		}
-		printf("signal_flag=%d;\n", signal_flag);
 		free(line);
 	}
 }

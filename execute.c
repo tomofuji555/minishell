@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 18:04:04 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/27 05:44:34 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,10 +205,10 @@ void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager)
 /* --------------------------UNTIL-------------------------- */
 /* --------------------------------------------------------- */
 
-int	do_builtin(char **cmd_args, t_env *env_list)
+int	do_builtin(char **cmd_args, t_manager *manager)
 {
 	if (is_equal_str(*cmd_args, "cd"))
-		return (do_cd(cmd_args, env_list));
+		return (do_cd(cmd_args, manager));
 	//if (!cmd_args)
 	//	return (-1);
 	//if (is_equal_str(*cmd_args, "echo"))
@@ -252,7 +252,7 @@ void do_single_builtin(t_tree_node *root, t_manager *manager)
 	tmpfd_in = STDIN_FILENO;
 	tmpfd_out = STDOUT_FILENO;
 	if (can_change_iostream_redirect(root->refine_data))
-		manager->exit_status = do_builtin(root->refine_data.cmd_args, manager->env_list);
+		manager->exit_status = do_builtin(root->refine_data.cmd_args, manager);
 	else
 		manager->exit_status = 1;
 	ft_xdup2(tmpfd_in, STDIN_FILENO);

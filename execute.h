@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/26 18:51:15 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/27 05:45:00 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void	try_heredoc(t_tree_node *tnode_head, t_manager manager);
 //~~~~~~~~
 
 //~~~~cd start~~~~
-int	do_cd(char **cmd_args, t_env *env_list);
+int	do_cd(char **cmd_args, t_manager *manager);
 //~~~~~~~~
 
 #endif 
