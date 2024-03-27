@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/27 05:44:34 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:28:20 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,8 @@ static void	change_instream(t_redir *redir_head, int prev_outfd)
 {
 	if (redir_head)
 	{
-		
 		if (!can_change_stream_redirect(redir_head, STDIN_FILENO))
-		{
 			exit(1);
-		}
 		if (prev_outfd != STDIN_FILENO)
 			ft_xclose(prev_outfd);
 	}
@@ -289,6 +286,7 @@ void	execute(t_tree_node *root, t_manager *manager)
 	manager->prev_outfd = tmpfd_in;
 	manager->last_cmd_flag = FALSE;
 	manager->fork_count = 0;
+	signal_flag = 0;
 }
 /* --------------------------------------------------------- */
 /* --------------------------UNTIL-------------------------- */

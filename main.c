@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/27 05:48:01 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/27 20:27:49 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,25 @@ void	run_prompt(t_manager *manager)
 {
 	char *line;
 
-	while (!signal_flag)
+	while (1)
 	{
 		line = readline("minishell$ ");
+		if (signal_flag != 0)
+		{
+			wc("\nシグナル\n");
+			signal_flag = 0;
+		}
 		if (line == NULL)
 		{
 			//system("leaks -q minishell");
 			printf("NULLが来た\n");
-			break;	
+			break;
 		}
 		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
-			//printf("line=%s;\n", line);
-			process_line(line, manager);
+			printf("line=%s;\n", line);
+			// process_line(line, manager);
 		}
 		free(line);
 	}
@@ -64,11 +69,11 @@ void	run_prompt(t_manager *manager)
 
 void handle_sigint_in_prompt(int num)
 {
+	signal_flag = 128 + num;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	signal_flag = 128 + num;
 }
 
 int main(void)

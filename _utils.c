@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _utils.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 03:57:21 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:48:34 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,23 @@ char *join_and_free_str2(char *str1, char *str2)
 //}
 
 
+char *strchr_n_back(char *str, char c, size_t n)
+{
+	size_t	c_count;
+	size_t	len;
+
+	if (n == 0)
+		return (NULL);
+	c_count = 0;
+	len = ft_strlen(str);
+	while (len && n > c_count)
+	{
+		if (str[len - 1] == c)
+			c_count++;
+		len--;
+	}
+	if (n == c_count)
+		return (&(str[len - 1]));
+	return (NULL);
+}
 

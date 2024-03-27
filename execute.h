@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/27 05:45:00 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:48:42 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ char		*substr_from_tkn(t_token *begining, t_token *last);
 //utils.c
 size_t		strlcat_ret_catlen(char *dest, const char *src, size_t size);
 char		*join_and_free_str2(char *str1, char *str2);
+char 		*strchr_n_back(char *str, char c, size_t n);
 //~~~~utils end~~~~
 
 //~~~~ initi start~~~~
