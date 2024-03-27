@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/27 20:27:49 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/27 20:49:39 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,9 @@ void	run_prompt(t_manager *manager)
 	{
 		line = readline("minishell$ ");
 		if (signal_flag != 0)
-		{
-			wc("\nシグナル\n");
-			signal_flag = 0;
-		}
+			manager->exit_status = signal_flag;
 		if (line == NULL)
-		{
-			//system("leaks -q minishell");
-			printf("NULLが来た\n");
 			break;
-		}
 		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
