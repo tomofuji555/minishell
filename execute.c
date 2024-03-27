@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/27 16:28:20 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/27 23:03:07 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,11 +272,29 @@ static void wait_child(t_manager *manager)
 	}
 	//system("ps");
 }
+/* --------------------------------------------------------- */
+/* --------------------------UNTIL-------------------------- */
+/* --------------------------------------------------------- */
+
+void handle_sigint_in_exec(int num)
+{
+	signal_flag = 128 + num;
+	kill(0, SIGINT);
+	
+}
+
+void handle_sigquit_in_exec(int num)
+{
+	signal_flag = 128 + num;
+	kill(0, SIGQUIT);	
+}
 
 void	execute(t_tree_node *root, t_manager *manager)
 {
 	int tmpfd_in;
 	
+	signal(SIGINT, handle_sigint_in_exec);
+	signal(SIGQUIT, handle_sigquit_in_exec);
 	tmpfd_in = STDIN_FILENO;
 	if (is_single_builtin(root))
 		do_single_builtin(root, manager);

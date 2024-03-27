@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/27 20:49:39 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/27 23:05:47 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	process_line(char *line, t_manager *manager)
 	tnode_head = parse(token_head);
 	expansion(tnode_head, *manager);
 	try_heredoc(tnode_head, *manager);
-	execute(tnode_head, manager);
+	if (signal_flag == 0)
+		execute(tnode_head, manager);
 	rm_heredoc_tmp(tnode_head);
 	free_tnode_list(tnode_head);
 }
@@ -45,9 +46,14 @@ void	run_prompt(t_manager *manager)
 
 	while (1)
 	{
+		signal(SIGINT, handle_sigint_in_prompt);
+		signal(SIGQUIT, SIG_IGN);
 		line = readline("minishell$ ");
 		if (signal_flag != 0)
+		{
 			manager->exit_status = signal_flag;
+			signal_flag = 0;
+		}
 		if (line == NULL)
 			break;
 		else if (strcmp(line, "") != 0)
@@ -74,8 +80,6 @@ int main(void)
 	t_manager manager;
 
 	manager = initialize();
-	signal(SIGINT, handle_sigint_in_prompt);
-	signal(SIGQUIT, SIG_IGN);
 	run_prompt(&manager);
 	finalize(manager);
 }
