@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/27 23:03:07 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 02:49:54 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager)
 		if (is_cmd_node(ptr))
 		{
 			manager->last_pid = fork_and_exec_cmd(ptr->refine_data, manager, is_last_cmd(ptr));
+			
 			manager->fork_count++;
 		}
 		ptr = ptr->right;
@@ -276,35 +277,35 @@ static void wait_child(t_manager *manager)
 /* --------------------------UNTIL-------------------------- */
 /* --------------------------------------------------------- */
 
-void handle_sigint_in_exec(int num)
-{
-	signal_flag = 128 + num;
-	kill(0, SIGINT);
-	
-}
+// void handle_sigint_in_exec(int num)
+// {
+// 	signal_flag = 128 + num;
+// 	kill(0, SIGINT);	
+// }
 
-void handle_sigquit_in_exec(int num)
-{
-	signal_flag = 128 + num;
-	kill(0, SIGQUIT);	
-}
+// void handle_sigquit_in_exec(int num)
+// {
+// 	signal_flag = 128 + num;
+// 	kill(0, SIGQUIT);	
+// }
 
 void	execute(t_tree_node *root, t_manager *manager)
 {
 	int tmpfd_in;
 	
-	signal(SIGINT, handle_sigint_in_exec);
-	signal(SIGQUIT, handle_sigquit_in_exec);
+	// signal(SIGINT, handle_sigint_in_exec);
+	// signal(SIGQUIT, handle_sigquit_in_exec);
 	tmpfd_in = STDIN_FILENO;
 	if (is_single_builtin(root))
 		do_single_builtin(root, manager);
 	else
+	{
 		exec_cmd_in_child(root, manager);
-	wait_child(manager);
+		wait_child(manager);
+	}
 	manager->prev_outfd = tmpfd_in;
 	manager->last_cmd_flag = FALSE;
 	manager->fork_count = 0;
-	signal_flag = 0;
 }
 /* --------------------------------------------------------- */
 /* --------------------------UNTIL-------------------------- */

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/27 23:05:47 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 01:15:35 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 //}
 
 int	signal_flag = 0;
+
+void handle_sigint_in_prompt(int num)
+{
+	signal_flag = 128 + num;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
 void	process_line(char *line, t_manager *manager)
 {
@@ -59,20 +68,11 @@ void	run_prompt(t_manager *manager)
 		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
-			printf("line=%s;\n", line);
-			// process_line(line, manager);
+			// printf("line=%s;\n", line);
+			process_line(line, manager);
 		}
 		free(line);
 	}
-}
-
-void handle_sigint_in_prompt(int num)
-{
-	signal_flag = 128 + num;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
 }
 
 int main(void)

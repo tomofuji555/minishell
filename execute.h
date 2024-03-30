@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/27 16:48:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 06:22:50 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_manager
 {
 	t_env	*env_list;
 	char	*current_dir;
+	pid_t	*child_pids;
 	int		exit_status;
 	int		prev_outfd;
 	size_t	fork_count;
@@ -226,6 +227,7 @@ void	try_heredoc(t_tree_node *tnode_head, t_manager manager);
 
 //~~~~cd start~~~~
 int	do_cd(char **cmd_args, t_manager *manager);
+char *expand_path(char *oldpath, char *newpath);
 //~~~~~~~~
 
 #endif 

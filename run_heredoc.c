@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/27 22:48:53 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 02:49:17 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind, t_manager 
 	fd = open(path, O_WRONLY | O_CREAT, S_IRWXU);
 	if (fd == SYS_FAILURE)
 		perror_and_exit("open", 1);
-	while (signal_flag == 0)
+	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL)
@@ -89,22 +89,23 @@ static char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind, t_manager 
 	return (path);
 }
 
-void handle_sigint_in_heredoc(int num)
-{
-	signal_flag = 128 + num;
-}
+// void handle_sigint_in_heredoc(int num)
+// {
+// 	signal_flag = 128 + num;
+// 	close(STDIN_FILENO);
+// }
 
 void	try_heredoc(t_tree_node *tnode_head, t_manager manager)
 {
 	t_tree_node *ptr;
 	t_redir	*redir_ptr;
 
-	signal(SIGINT, handle_sigint_in_heredoc);
+	// signal(SIGINT, handle_sigint_in_heredoc);
 	ptr = tnode_head;
-	while (ptr != NULL && signal_flag == 0)
+	while (ptr != NULL)
 	{
 		redir_ptr = ptr->refine_data.infile_paths;
-		while (redir_ptr != NULL && signal_flag == 0)
+		while (redir_ptr != NULL)
 		{
 			if (redir_ptr->kind == REDIR_HEREDOC || \
 				redir_ptr->kind == REDIR_HEREDOC_NO_EXPAND)
