@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/31 01:15:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 19:41:51 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	run_prompt(t_manager *manager)
 
 	while (1)
 	{
+		signal_flag = 0;
 		signal(SIGINT, handle_sigint_in_prompt);
 		signal(SIGQUIT, SIG_IGN);
 		line = readline("minishell$ ");

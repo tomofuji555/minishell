@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _libftwrap_utils.c                                 :+:      :+:    :+:   */
+/*   _utils_libftwrap.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/08 01:08:52 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/03/31 17:32:36 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ void	perror_arg2(char *err_target, char *err_str)
 	ft_putstr_fd(err_target, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putendl_fd(err_str, STDERR_FILENO);
+}
+
+void	perror_arg3(char *s1, char *s2, char *s3)
+{
+	perror_arg2(s1, s2);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(s3, STDERR_FILENO);
 }
 
 void perror_and_exit(char *err_target, int exit_status)

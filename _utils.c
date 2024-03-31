@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/27 16:48:34 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 13:34:59 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@
 //	}
 //	return (str);
 //}
+
+size_t	count_strs(char **strs)
+{
+	size_t i;
+
+	i = 1;
+	while (strs[i] != NULL)
+		i++;
+	return (i);
+}
 
 //帰りがコピーしたカウントを返すft_strlcat
 size_t	strlcat_ret_catlen(char *dest, const char *src, size_t size)

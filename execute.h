@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/31 06:22:50 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 18:41:15 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void		free_base_data(t_base_data base_data);
 void		free_tnode_list(t_tree_node *head);
 //libftwrap_utils.c
 void		perror_arg2(char *errtarget, char *errstr);
+void		perror_arg3(char *s1, char *s2, char *s3);
 void		perror_arg2_and_exit(char *errtarget, char *errstr, int exit_status);
 void		perror_and_exit(char *err_title, int exit_status);
 char		*ft_xstrdup(const char *s1);
@@ -192,6 +193,7 @@ char		*substr_from_tkn(t_token *begining, t_token *last);
 size_t		strlcat_ret_catlen(char *dest, const char *src, size_t size);
 char		*join_and_free_str2(char *str1, char *str2);
 char 		*strchr_n_back(char *str, char c, size_t n);
+size_t		count_strs(char **strs);
 //~~~~utils end~~~~
 
 //~~~~ initi start~~~~
@@ -229,5 +231,7 @@ void	try_heredoc(t_tree_node *tnode_head, t_manager manager);
 int	do_cd(char **cmd_args, t_manager *manager);
 char *expand_path(char *oldpath, char *newpath);
 //~~~~~~~~
+
+t_bool	is_longlong_over(const char *str, long long *ans_num);
 
 #endif 

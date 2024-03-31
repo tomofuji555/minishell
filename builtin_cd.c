@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/31 06:26:59 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 17:33:23 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,16 +182,6 @@ char *expand_path(char *destpath, char *nowpath)
 	return (new_path);
 }
 
-size_t	count_strs(char **strs)
-{
-	size_t i;
-
-	i = 1;
-	while (strs[i] != NULL)
-		i++;
-	return (i);
-}
-
 int	do_cd(char **cmd_args, t_manager *manager)
 {
 	char *full_path;
@@ -207,15 +197,16 @@ int	do_cd(char **cmd_args, t_manager *manager)
 		;//cd $HOMEと同じ動き
 	else if (is_equal_str(cmd_args[1], "-"))
 		;//cd $OLDPWDと同じ動き
-	else
-	{
-		full_path = expand_path(cmd_args[1], manager->current_dir);
-		if (chdir(full_path) == SYS_FAILURE)
-		{
-			perror("cd");
-			return (1);
-		}
-	}
-	update_pwd(manager, cmd_args[1]);
+	else if (is_equal_str(cmd_args[1], ""))
+	full_path = expand_path(cmd_args[1], manager->current_dir);
+	// else
+	// {
+	// 	if (chdir(full_path) == SYS_FAILURE)
+	// 	{
+	// 		perror("cd");
+	// 		return (1);
+	// 	}
+	// }
+	// update_pwd(manager, cmd_args[1]);
 	return (0);
 }

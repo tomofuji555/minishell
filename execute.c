@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/31 02:49:54 by toshi            ###   ########.fr       */
+/*   Updated: 2024/03/31 12:25:22 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,37 +264,34 @@ static void wait_child(t_manager *manager)
 {
 	int	status;
 
-	//system("ps");
 	while(manager->fork_count > 0)
 	{
 		if (wait(&status) == manager->last_pid)
 			manager->exit_status = WEXITSTATUS(status);
 		manager->fork_count--;
 	}
-	//system("ps");
 }
 /* --------------------------------------------------------- */
 /* --------------------------UNTIL-------------------------- */
 /* --------------------------------------------------------- */
 
-// void handle_sigint_in_exec(int num)
-// {
-// 	signal_flag = 128 + num;
-// 	kill(0, SIGINT);	
-// }
+void handle_sigint_in_exec(int num)
+{
+	signal_flag = 128 + num;
+	ft_putchar_fd('\n', STDERR_FILENO);
+}
 
-// void handle_sigquit_in_exec(int num)
-// {
-// 	signal_flag = 128 + num;
-// 	kill(0, SIGQUIT);	
-// }
+void handle_sigquit_in_exec(int num)
+{
+	signal_flag = 128 + num;
+}
 
 void	execute(t_tree_node *root, t_manager *manager)
 {
 	int tmpfd_in;
 	
-	// signal(SIGINT, handle_sigint_in_exec);
-	// signal(SIGQUIT, handle_sigquit_in_exec);
+	signal(SIGINT, handle_sigint_in_exec);
+	signal(SIGQUIT, handle_sigquit_in_exec);
 	tmpfd_in = STDIN_FILENO;
 	if (is_single_builtin(root))
 		do_single_builtin(root, manager);
