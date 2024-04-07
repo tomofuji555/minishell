@@ -6,11 +6,13 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/31 07:36:56 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 17:36:01 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+int	signal_flag = 0;
 
 // __attribute__((destructor))
 // static void destructor() {
@@ -156,53 +158,57 @@
 // 	free(filename);
 // }
 
-//cdのテスト
-int main(int argc, char **argv)
-{
-	char *full_path;
-	
-	// if (argc != 2)
-	// {
-	// 	perror_arg2("cd","too many arguments");
-	// 	return (1);
-	// }
-	// full_path = expand_path(argv[1], argv[2]);
-	expand_path(argv[1], argv[2]);
-	// if (chdir(argv[1]) == -1)
-	// {
-	// 	perror("cd");
-	// 	return (1);
-	// }
-	// update_pwd(manager, argv[1]);
-	return (0);
-}
-
-// int main()
+// //cdのテスト
+// int main(int argc, char **argv)
 // {
-// 	t_manager manager;
+// 	char *full_path;
 	
-// 	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev |head -n 5";
-// 	char *str2 = "cat | cat |ls ";
-// 	char *str3 = "<./a cat <./b|>./c cat ";
-// 	char *str4 = "<a>c cat <b";
-// 	char *str5 = "ls | rev | aaa";
-// 	char *str6 = " << aaa cat | cat |  rev > x";
-// 	char *str7 = " <  	x  cat | cat ";
-// 	char *str8 = "aaa | cat | ls";
-// 	char *str9 = "echo $HOME$1$@$USER$_KK";
-// 	char *str10 = "cat << aaa";
-// 	manager = initialize();
-// 	t_token *tkn_head = tokenize(str2);
-// 	if (tkn_head == NULL)
+// 	if (argc != 2 + 1)
+// 	{
+// 		perror_arg2("cd","error");
 // 		return (1);
-// 	t_tree_node *tnode_head = parse(tkn_head);
-// 	expansion(tnode_head, manager);
-// 	try_heredoc(tnode_head, manager);
-// 	execute(tnode_head, &manager);
-// 	rm_heredoc_tmp(tnode_head);
-// 	free_tnode_list(tnode_head);
-// 	free_env_list(manager.env_list);
-// 	printf("終了ステータスは%d\n", manager.exit_status);
+// 	}
+// 	// full_path = expand_path(argv[1], argv[2]);
+// 	expand_path(argv[1], argv[2]);
+// 	// if (chdir(argv[1]) == -1)
+// 	// {
+// 	// 	perror("cd");
+// 	// 	return (1);
+// 	// }
+// 	// update_pwd(manager, argv[1]);
+// 	return (0);
 // }
+
+int main()
+{
+	t_manager manager;
+	
+	char *str1 = "ls |cat -e | rev | cat -e | rev | cat |cat -e | rev | cat -e | cat | cat | cat | cat | rev | rev |head -n 5";
+	char *str2 = "cat | cat |ls ";
+	char *str3 = "<./a cat <./b|>./c cat ";
+	char *str4 = "<a>c cat <b";
+	char *str5 = "ls | rev | aaa";
+	char *str6 = " << aaa cat | cat |  rev > x";
+	char *str7 = " <  	x  cat | cat ";
+	char *str8 = "aaa | cat | ls";
+	char *str9 = "echo $HOME$1$@$USER$_KK";
+	char *str10 = "cat << aaa";
+	char *str11 = "ls >$?\"kkk$? kkk$lll\"   ";
+	char *str12 = "ls >$?\"kkk$? kkk\"   ";
+	manager = initialize();
+	t_token *tkn_head = tokenize(str12);
+	if (tkn_head == NULL)
+		return (1);
+	t_tree_node *tnode_head = parse(tkn_head);
+	expansion(tnode_head, &manager);
+	print_exec_of_tnode_list(tnode_head);
+	try_heredoc(tnode_head, &manager);
+	if (signal_flag == 0)
+		execute(tnode_head, &manager);
+	rm_heredoc_tmp(tnode_head);
+	free_tnode_list(tnode_head);
+	printf("終了ステータスは%d\n", ft_atoi(manager.exit_status));
+	finalize(manager);
+}
 
 

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/31 18:41:15 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 17:26:28 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,13 @@ typedef struct s_manager
 {
 	t_env	*env_list;
 	char	*current_dir;
-	pid_t	*child_pids;
-	int		exit_status;
+	char	*exit_status;
 	int		prev_outfd;
+	int		tmp_fd;
 	size_t	fork_count;
 	pid_t	last_pid;
 	t_bool	last_cmd_flag;
+	pid_t	*child_pids;
 }	t_manager;
 
 //~~~~utils start~~~~
@@ -143,8 +144,8 @@ t_bool		is_builtin(char *cmd);
 t_bool		is_single_builtin(t_tree_node *tnode_ptr);
 //env_utils.c
 size_t		count_envname(char *dollar_ptr);
-char		*ft_getenv(const char *env_name, t_env *head);
-char		*getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager manager);
+char		*ft_getenv(const char *env_name, t_manager *manager);
+char		*getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager *manager);
 //free_utils.c
 void		free_multi_strs(char **strs);
 void		free_tkn(t_token *tkn);
@@ -194,6 +195,7 @@ size_t		strlcat_ret_catlen(char *dest, const char *src, size_t size);
 char		*join_and_free_str2(char *str1, char *str2);
 char 		*strchr_n_back(char *str, char c, size_t n);
 size_t		count_strs(char **strs);
+void	update_exit_status(t_manager *manger, int num);
 //~~~~utils end~~~~
 
 //~~~~ initi start~~~~
@@ -206,6 +208,7 @@ t_token		*tokenize(char *line_ptr);
 
 t_token		*make_new_tkn(char *begining, ssize_t count, enum e_token_kind kind);
 ssize_t		count_untill_ifs_last(char *begining);
+ssize_t		count_untill_dollar_last(char *begining);
 //~~~~~~~~
 
 //~~~~ parse start~~~~
@@ -213,8 +216,8 @@ t_tree_node *parse(t_token *tkn_ptr);
 //~~~~~~~~
 
 //~~~~expansion start~~~~
-void	expansion(t_tree_node *ptr, t_manager manager);
-char	*expand_env_in_dquote(char *str, t_manager manager);
+void	expansion(t_tree_node *ptr, t_manager *manager);
+char	*expand_env_in_dquote(char *str, t_manager *manager);
 //~~~~~~~~
 
 //~~~~execute start~~~~
@@ -224,7 +227,7 @@ void	execute(t_tree_node *root, t_manager *manager);
 
 //~~~~heredoc start~~~~
 void	rm_heredoc_tmp(t_tree_node *tnode_head);
-void	try_heredoc(t_tree_node *tnode_head, t_manager manager);
+void	try_heredoc(t_tree_node *tnode_head, t_manager *manager);
 //~~~~~~~~
 
 //~~~~cd start~~~~

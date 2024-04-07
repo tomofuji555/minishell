@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 14:38:30 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/31 16:58:31 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 12:07:06 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 int main(int argc, char **argv)
 {
-	char num = (char)atoi(argv[1]);
-	unsigned char subnum = (unsigned char)num;
-	printf("%d %u\n", num, subnum);
+	int num = atoi(argv[1]);
+	char c_num = (char)num;
+	unsigned char uc_num = (unsigned char)num;
+	printf("int=%d; char=%d; uchar=%u\n", num, c_num, uc_num);
 }

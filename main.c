@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/31 19:41:51 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 16:58:35 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,19 @@ void	process_line(char *line, t_manager *manager)
 	token_head = tokenize(line);
 	if (token_head == NULL)
 	{
-		manager->exit_status = 1;
+		update_exit_status(manager, 1);
 		return ; //errorを履くのはtokenize,ここに入るのは、エラーと""のとき
 	}
 	tnode_head = parse(token_head);
-	expansion(tnode_head, *manager);
-	try_heredoc(tnode_head, *manager);
+	expansion(tnode_head, manager);
+	manager->tmp_fd = dup(STDIN_FILENO); //xdupを作成する必要あり
+	try_heredoc(tnode_head, manager);
 	if (signal_flag == 0)
 		execute(tnode_head, manager);
+	ft_xdup2(manager->tmp_fd, STDIN_FILENO);
+	manager->prev_outfd = STDIN_FILENO;
+	manager->last_cmd_flag = FALSE;
+	manager->fork_count = 0;
 	rm_heredoc_tmp(tnode_head);
 	free_tnode_list(tnode_head);
 }
@@ -61,7 +66,7 @@ void	run_prompt(t_manager *manager)
 		line = readline("minishell$ ");
 		if (signal_flag != 0)
 		{
-			manager->exit_status = signal_flag;
+			update_exit_status(manager, signal_flag);
 			signal_flag = 0;
 		}
 		if (line == NULL)

@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/03/31 10:11:33 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/07 14:43:36 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJS		=	_utils_bool.o \
 				execute.o \
 				run_heredoc.o \
 				builtin_cd.o \
-				main.o
+				main_test.o
 LIBFT_PATH	=	libft/
 
 all : $(NAME)

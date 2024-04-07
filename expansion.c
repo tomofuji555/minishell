@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 04:08:48 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/07 17:36:32 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-static size_t _strlen_env_expanded(char *str, t_manager manager)
+static size_t _strlen_env_expanded(char *str, t_manager *manager)
 {
 	size_t len;
 	char *env_val;
@@ -36,7 +36,7 @@ static size_t _strlen_env_expanded(char *str, t_manager manager)
 	return (len);
 }
 
-static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager manager)
+static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager *manager)
 {
 	size_t dest_i;
 	char *env_val;
@@ -62,7 +62,7 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager
 }
 
 //文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
-char	*expand_env_in_dquote(char *str, t_manager manager)
+char	*expand_env_in_dquote(char *str, t_manager *manager)
 {
 	size_t expanded_len;
 	char *expanded_str;
@@ -73,8 +73,6 @@ char	*expand_env_in_dquote(char *str, t_manager manager)
 		return (NULL);
 	}
 	expanded_len = _strlen_env_expanded(str, manager);
-	if (expanded_len  == ft_strlen(str))
-		return (str);
 	expanded_str = (char *)ft_xmalloc(sizeof(char) * (expanded_len + 1));
 	_strlcat_env_expanded(expanded_str, str, (expanded_len + 1), manager);
 	free(str);
@@ -124,12 +122,12 @@ static t_token *tokenize_space_or_text(char *env_val)
 	return (head);
 }
 
-static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token *prev, t_manager manager)
+static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token *prev, t_manager *manager)
 {
 	t_token *expanded_head;
 	t_token *next_ptr;
 
-	expanded_head = tokenize_space_or_text(ft_getenv(env_tkn->val + sizeof(char), manager.env_list));
+	expanded_head = tokenize_space_or_text(ft_getenv(env_tkn->val + sizeof(char), manager));
 	next_ptr = env_tkn->next;
 	if (expanded_head == NULL)
 	{
@@ -155,7 +153,7 @@ static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token
 
 //引数を**型にしないと反映されない
 //syntaxは保証されている前提で実装
-void	expansion_tkn_list(t_token **tkn_head, t_manager manager)
+void	expansion_tkn_list(t_token **tkn_head, t_manager *manager)
 {
 	t_token *tkn_ptr;
 
@@ -339,7 +337,7 @@ static t_redir	*make_redir_list(t_token *tkn_ptr)
 /* --------------------------UNTIL-------------------------- */
 /* --------------------------------------------------------- */
 
-void	expansion(t_tree_node *ptr, t_manager manager)
+void	expansion(t_tree_node *ptr, t_manager *manager)
 {
 	while(ptr != NULL)
 	{

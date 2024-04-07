@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/31 13:34:59 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 11:54:17 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,11 @@ char *strchr_n_back(char *str, char c, size_t n)
 	if (n == c_count)
 		return (&(str[len - 1]));
 	return (NULL);
+}
+
+void update_exit_status(t_manager *manger, int num) //xitoaにする必要がある
+{
+	free(manger->exit_status);
+	manger->exit_status = ft_itoa(num);
 }
 

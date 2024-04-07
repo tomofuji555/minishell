@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:06:56 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/26 03:15:20 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/07 15:53:19 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ t_bool	try_do_builtin_and_eixt()
 //	return (data);
 //}
 
-void	execute(t_tree_node *root, t_manager *manager)
-{
-	//if (root->left == NULL && root->right == NULL)
-	//if (!root->right && root->refine_data.cmd_args && is_builtin(root->refine_data.cmd_args[0]))
-	//	do_single_builtin(root->refine_data, &manager);
-	//else
-		exec_cmd_in_child(root, manager);
-}
+// void	execute(t_tree_node *root, t_manager *manager)
+// {
+// 	//if (root->left == NULL && root->right == NULL)
+// 	//if (!root->right && root->refine_data.cmd_args && is_builtin(root->refine_data.cmd_args[0]))
+// 	//	do_single_builtin(root->refine_data, &manager);
+// 	//else
+// 		exec_cmd_in_child(root, manager);
+// }
 
 //exec_in_while(t_tree_node *root)
 //{

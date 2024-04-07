@@ -6,11 +6,18 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/31 19:39:15 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 16:20:59 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+//ctrl+cで終了した時、見つからないファイルを消そうとしてxunlinkがエラーし、exitする可能性があるため、accessを噛ませることにした
+void	remove_file(char *path)
+{
+	if (access(path, F_OK) == EXIST) //ft_strnstr(path, "/tmp/", 5) && 
+		ft_xunlink(path);
+}
 
 void	rm_heredoc_tmp(t_tree_node *tnode_head)
 {
@@ -25,7 +32,7 @@ void	rm_heredoc_tmp(t_tree_node *tnode_head)
 		{
 			if (redir_ptr->kind == REDIR_HEREDOC || \
 				redir_ptr->kind == REDIR_HEREDOC_NO_EXPAND)
-				ft_xunlink(redir_ptr->val); //ctrl+cで終了した時、見つからないファイルを消そうとしてエラーし、exitする可能性あり
+				remove_file(redir_ptr->val);
 			redir_ptr = redir_ptr->next;
 		}
 		ptr = ptr->right;
@@ -52,7 +59,7 @@ static char	*create_tmpfile_path(void)
 
 //kindがREDIR_HEREDOC_NO_EXPANDでなければEXPAND
 //putし、そのlineをfree
-static void output_fd_and_free_line(int fd, char *line, enum e_redir_kind heredoc_kind, t_manager manager)
+static void output_fd_and_free_line(int fd, char *line, enum e_redir_kind heredoc_kind, t_manager *manager)
 {
 	if (heredoc_kind == REDIR_HEREDOC)
 		line = expand_env_in_dquote(line, manager);
@@ -62,7 +69,7 @@ static void output_fd_and_free_line(int fd, char *line, enum e_redir_kind heredo
 
 //heredocで書き込んだファイルのpathを返す
 //delimのfreeは無し->delimをfreeしないとリークする
-static char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind, t_manager manager)
+static char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind, t_manager *manager)
 {
 	char	*line;
 	char	*path;
@@ -95,7 +102,7 @@ void handle_sigint_in_heredoc(int num)
 	ft_xclose(STDIN_FILENO);
 }
 
-void	try_heredoc(t_tree_node *tnode_head, t_manager manager)
+void	try_heredoc(t_tree_node *tnode_head, t_manager *manager)
 {
 	t_tree_node *ptr;
 	t_redir	*redir_ptr;

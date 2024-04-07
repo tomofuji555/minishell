@@ -6,19 +6,19 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/31 12:25:22 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 16:16:37 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-static char	*make_cmd_path(char *cmd_name, t_env *env_list)
+static char	*make_cmd_path(char *cmd_name, t_manager *manager)
 {
 	char	**path_list;
 	char	*cmd_path;
 	size_t	i;
 
-	path_list = ft_xsplit(ft_getenv("PATH", env_list), ':');
+	path_list = ft_xsplit(ft_getenv("PATH", manager), ':');
 	i = 0;
 	while (path_list[i] != NULL)
 	{
@@ -36,7 +36,7 @@ static char	*make_cmd_path(char *cmd_name, t_env *env_list)
 	return (NULL);
 }
 
-static void	exec_external_cmd(char **cmd_args, t_env *env_list)
+static void	exec_external_cmd(char **cmd_args, t_manager *manager)
 {
 	char		*cmd_path;
 
@@ -45,13 +45,13 @@ static void	exec_external_cmd(char **cmd_args, t_env *env_list)
 	if (is_cmd_path(cmd_args[0]))
 	{
 		if (access(cmd_args[0], F_OK) != EXIST)
-			perror_arg2_and_exit(cmd_args[0], "No such file or directory", 127);	
-		ft_xexecve(cmd_args[0], cmd_args, env_list);
+			perror_arg2_and_exit(cmd_args[0], "No such file or directory", 127);
+		ft_xexecve(cmd_args[0], cmd_args, manager->env_list);
 	}
-	cmd_path = make_cmd_path(cmd_args[0], env_list);
+	cmd_path = make_cmd_path(cmd_args[0], manager);
 	if (cmd_path == NULL)
 		perror_arg2_and_exit(cmd_args[0], "command not found", 127);
-	ft_xexecve(cmd_path, cmd_args, env_list);
+	ft_xexecve(cmd_path, cmd_args, manager->env_list);
 }
 /* --------------------------------------------------------- */
 /* --------------------------UNTIL-------------------------- */
@@ -62,16 +62,6 @@ static int open_redir_path(t_redir *node)
 {
 	int fd;
 
-	//if(is_equal_str(node->val, "") || ft_strchr(node->val, ' '))
-	//{
-	//	perror_arg2(node->val, "ambiguous redirect");
-	//	return (SYS_FAILURE);
-	//}
-	if (node->kind == AMBIGUOUS_REDIR)
-	{
-		perror_arg2(node->val, "ambiguous redirect");
-		return (SYS_FAILURE);
-	}
 	if (node->kind == REDIR_OUT_FILE)
 		fd = open(node->val, O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
 	else if (node->kind == REDIR_APPEND_FILE)
@@ -82,6 +72,16 @@ static int open_redir_path(t_redir *node)
 		perror(node->val); //No such file or directory / Permission denied を勝手に吐いてくれる
 	return (fd);
 }
+	// if (node->kind == AMBIGUOUS_REDIR)
+	// {
+	// 	perror_arg2(node->val, "ambiguous redirect");
+	// 	return (SYS_FAILURE);
+	// }
+	//if(is_equal_str(node->val, "") || ft_strchr(node->val, ' '))
+	//{
+	//	perror_arg2(node->val, "ambiguous redirect");
+	//	return (SYS_FAILURE);
+	//}
 
 static int find_last_fd(t_redir *redir_ptr)
 {
@@ -179,7 +179,7 @@ static pid_t fork_and_exec_cmd(t_refine_data data, t_manager *manager, t_bool la
 		change_instream(data.infile_paths, manager->prev_outfd);
 		change_outstream(data.outfile_paths, pipefd[W], last_cmd_flag);
 		//if (!try_do_builtin_and_eixt(data.cmd_args, manager))
-		exec_external_cmd(data.cmd_args, manager->env_list);
+		exec_external_cmd(data.cmd_args, manager);
 	}
 	ft_xclose(pipefd[W]);
 	update_prev_outfd(manager, pipefd[R], last_cmd_flag);
@@ -250,9 +250,9 @@ void do_single_builtin(t_tree_node *root, t_manager *manager)
 	tmpfd_in = STDIN_FILENO;
 	tmpfd_out = STDOUT_FILENO;
 	if (can_change_iostream_redirect(root->refine_data))
-		manager->exit_status = do_builtin(root->refine_data.cmd_args, manager);
+		update_exit_status(manager, do_builtin(root->refine_data.cmd_args, manager));
 	else
-		manager->exit_status = 1;
+		update_exit_status(manager, 1);
 	ft_xdup2(tmpfd_in, STDIN_FILENO);
 	ft_xdup2(tmpfd_out, STDOUT_FILENO);
 }
@@ -267,7 +267,12 @@ static void wait_child(t_manager *manager)
 	while(manager->fork_count > 0)
 	{
 		if (wait(&status) == manager->last_pid)
-			manager->exit_status = WEXITSTATUS(status);
+		{
+			if (WIFEXITED(status))
+				update_exit_status(manager, WEXITSTATUS(status));
+			else if (WIFSIGNALED(status))
+				update_exit_status(manager, signal_flag);
+		}
 		manager->fork_count--;
 	}
 }
@@ -281,6 +286,7 @@ void handle_sigint_in_exec(int num)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
+//cat | cat と cat | ls で出力が違う 
 void handle_sigquit_in_exec(int num)
 {
 	signal_flag = 128 + num;
@@ -292,7 +298,7 @@ void	execute(t_tree_node *root, t_manager *manager)
 	
 	signal(SIGINT, handle_sigint_in_exec);
 	signal(SIGQUIT, handle_sigquit_in_exec);
-	tmpfd_in = STDIN_FILENO;
+	// tmpfd_in = STDIN_FILENO;
 	if (is_single_builtin(root))
 		do_single_builtin(root, manager);
 	else
@@ -300,9 +306,9 @@ void	execute(t_tree_node *root, t_manager *manager)
 		exec_cmd_in_child(root, manager);
 		wait_child(manager);
 	}
-	manager->prev_outfd = tmpfd_in;
-	manager->last_cmd_flag = FALSE;
-	manager->fork_count = 0;
+	// manager->prev_outfd = STDIN_FILENO;
+	// manager->last_cmd_flag = FALSE;
+	// manager->fork_count = 0;
 }
 /* --------------------------------------------------------- */
 /* --------------------------UNTIL-------------------------- */
