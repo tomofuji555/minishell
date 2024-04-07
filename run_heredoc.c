@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/07 16:20:59 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 19:56:30 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,15 @@ static void output_fd_and_free_line(int fd, char *line, enum e_redir_kind heredo
 	free(line);
 }
 
+void	perror_eof_in_heredoc(t_manager *manager, char *delim)
+{
+	ft_putstr_fd("warning: here-document at line ", STDERR_FILENO);
+	ft_putnbr_fd(manager->heredoc_line, STDERR_FILENO);
+	ft_putstr_fd(" delimited by end-of-file (wanted \'", STDERR_FILENO);
+	ft_putstr_fd(delim, STDERR_FILENO);
+	ft_putstr_fd("\')\n", STDERR_FILENO);
+}
+
 //heredocで書き込んだファイルのpathを返す
 //delimのfreeは無し->delimをfreeしないとリークする
 static char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind, t_manager *manager)
@@ -82,8 +91,12 @@ static char	*run_heredoc(char *delim, enum e_redir_kind heredoc_kind, t_manager 
 	while (signal_flag == 0)
 	{
 		line = readline("> ");
+		manager->heredoc_line++;
 		if (line == NULL)
+		{
+			perror_eof_in_heredoc(manager, delim);
 			break ;
+		}
 		if (is_equal_str(line, delim))
 		{
 			free(line);

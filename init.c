@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/07 17:34:01 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 19:40:27 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_manager initialize(void)
 	manager.prev_outfd = STDIN_FILENO;
 	manager.fork_count = 0;
 	manager.last_cmd_flag = FALSE;
+	manager.heredoc_line = 0;
 	return (manager);
 }
 

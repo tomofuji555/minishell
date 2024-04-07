@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/27 17:22:29 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 21:14:32 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ static void	print_base_data(t_tree_node *ptr)
 	}
 }
 
-static void	print_refine_data(t_tree_node	*ptr)
+void	print_refine_data(t_tree_node	*ptr)
 {
 	
 	printf("<<refine_data>>\n");

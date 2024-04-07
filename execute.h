@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/07 17:26:28 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 21:39:19 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <dirent.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
@@ -124,6 +125,7 @@ typedef struct s_manager
 	pid_t	last_pid;
 	t_bool	last_cmd_flag;
 	pid_t	*child_pids;
+	int		heredoc_line;
 }	t_manager;
 
 //~~~~utils start~~~~
@@ -172,6 +174,8 @@ void		print_cmd_args(char **strs);
 void		print_redir_list(t_redir *head);
 void		print_init_of_tnode_list(t_tree_node *tnode_ptr);
 void		print_exec_of_tnode_list(t_tree_node *tnode_ptr);
+
+void	print_refine_data(t_tree_node	*ptr);
 //syswrap_utils.c
 void		ft_free(void **ptr);
 void		*ft_xmalloc(size_t size);

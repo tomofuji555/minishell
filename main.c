@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/07 16:58:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 22:23:32 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ void	process_line(char *line, t_manager *manager)
 	try_heredoc(tnode_head, manager);
 	if (signal_flag == 0)
 		execute(tnode_head, manager);
+	else
+		update_exit_status(manager, signal_flag);
 	ft_xdup2(manager->tmp_fd, STDIN_FILENO);
 	manager->prev_outfd = STDIN_FILENO;
 	manager->last_cmd_flag = FALSE;
 	manager->fork_count = 0;
 	rm_heredoc_tmp(tnode_head);
 	free_tnode_list(tnode_head);
+	// signal_flag = 0; //mainでやっている
 }
 
 #include <string.h>
@@ -74,7 +77,6 @@ void	run_prompt(t_manager *manager)
 		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
-			// printf("line=%s;\n", line);
 			process_line(line, manager);
 		}
 		free(line);

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/07 16:16:37 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/07 21:52:40 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*make_cmd_path(char *cmd_name, t_manager *manager)
 	while (path_list[i] != NULL)
 	{
 		cmd_path = join_and_free_str2(path_list[i], ft_xstrjoin("/", cmd_name));
-		if (access(cmd_path, F_OK) == EXIST)
+		if (access(cmd_path, F_OK) == EXIST && !opendir(cmd_path))
 		{
 			free_multi_strs(path_list);
 			return (cmd_path);
@@ -41,7 +41,9 @@ static void	exec_external_cmd(char **cmd_args, t_manager *manager)
 	char		*cmd_path;
 
 	if (cmd_args == NULL)
+	{
 		exit (0);
+	}
 	if (is_cmd_path(cmd_args[0]))
 	{
 		if (access(cmd_args[0], F_OK) != EXIST)
@@ -205,25 +207,25 @@ void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager)
 
 int	do_builtin(char **cmd_args, t_manager *manager)
 {
-	if (is_equal_str(*cmd_args, "cd"))
-		return (do_cd(cmd_args, manager));
-	//if (!cmd_args)
-	//	return (-1);
-	//if (is_equal_str(*cmd_args, "echo"))
-	//	return (ms_echo(cmd_args));
-	//else if (is_equal_str(*cmd_args, "cd"))
-	//	rerurn (ms_cd(cmd_args, envp));
-	//else if (is_equal_str(*cmd_args, "pwd"))
-	//	return (ms_pwd(envp));
-	//else if (is_equal_str(*cmd_args, "export"))
-	//	return (ms_export(cmd_args, envp));
-	//else if (is_equal_str(*cmd_args, "unset"))
-	//	return (ms_unset(cmd_args, envp));
-	//else if (is_equal_str(*cmd_args, "env"))
-	//	return (ms_env(envp));
-	//else if (is_equal_str(*cmd_args, "exit"))
-	//	return (ms_exit(cmd_args, envp));
-	else
+	// if (is_equal_str(*cmd_args, "cd"))
+	// 	return (do_cd(cmd_args, manager));
+	// //if (!cmd_args)
+	// //	return (-1);
+	// //if (is_equal_str(*cmd_args, "echo"))
+	// //	return (ms_echo(cmd_args));
+	// //else if (is_equal_str(*cmd_args, "cd"))
+	// //	rerurn (ms_cd(cmd_args, envp));
+	// //else if (is_equal_str(*cmd_args, "pwd"))
+	// //	return (ms_pwd(envp));
+	// //else if (is_equal_str(*cmd_args, "export"))
+	// //	return (ms_export(cmd_args, envp));
+	// //else if (is_equal_str(*cmd_args, "unset"))
+	// //	return (ms_unset(cmd_args, envp));
+	// //else if (is_equal_str(*cmd_args, "env"))
+	// //	return (ms_env(envp));
+	// //else if (is_equal_str(*cmd_args, "exit"))
+	// //	return (ms_exit(cmd_args, envp));
+	// else
 		return (-1);
 }
 
@@ -290,6 +292,7 @@ void handle_sigint_in_exec(int num)
 void handle_sigquit_in_exec(int num)
 {
 	signal_flag = 128 + num;
+	ft_putendl_fd("Quit: 3", STDERR_FILENO);
 }
 
 void	execute(t_tree_node *root, t_manager *manager)
