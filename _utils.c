@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/07 11:54:17 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 12:18:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,15 @@ char *join_and_free_str2(char *str1, char *str2)
 
 	joined_str = ft_xstrjoin(str1, str2);
 	free(str2);
+	return (joined_str);
+}
+
+char *join_and_free_str1(char *str1, char *str2)
+{
+	char *joined_str;
+
+	joined_str = ft_xstrjoin(str1, str2);
+	free(str1);
 	return (joined_str);
 }
 

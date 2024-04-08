@@ -6,16 +6,16 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/07 22:23:32 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 14:07:59 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-//__attribute__((destructor))
+// __attribute__((destructor))
 // static void destructor() {
 //    system("leaks -q minishell");
-//}
+// }
 
 int	signal_flag = 0;
 
@@ -41,7 +41,7 @@ void	process_line(char *line, t_manager *manager)
 	}
 	tnode_head = parse(token_head);
 	expansion(tnode_head, manager);
-	manager->tmp_fd = dup(STDIN_FILENO); //xdupを作成する必要あり
+	manager->tmp_fd = ft_xdup(STDIN_FILENO); //xdupを作成する必要あり
 	try_heredoc(tnode_head, manager);
 	if (signal_flag == 0)
 		execute(tnode_head, manager);
@@ -89,5 +89,5 @@ int main(void)
 
 	manager = initialize();
 	run_prompt(&manager);
-	finalize(manager);
+	finalize(&manager);
 }

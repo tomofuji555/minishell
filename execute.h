@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/07 21:39:19 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 13:00:08 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,12 @@ typedef struct s_manager
 	t_env	*env_list;
 	char	*current_dir;
 	char	*exit_status;
-	int		prev_outfd;
 	int		tmp_fd;
+	int		heredoc_line;
+	int		prev_outfd;
 	size_t	fork_count;
 	pid_t	last_pid;
 	t_bool	last_cmd_flag;
-	pid_t	*child_pids;
-	int		heredoc_line;
 }	t_manager;
 
 //~~~~utils start~~~~
@@ -174,13 +173,12 @@ void		print_cmd_args(char **strs);
 void		print_redir_list(t_redir *head);
 void		print_init_of_tnode_list(t_tree_node *tnode_ptr);
 void		print_exec_of_tnode_list(t_tree_node *tnode_ptr);
-
-void	print_refine_data(t_tree_node	*ptr);
 //syswrap_utils.c
 void		ft_free(void **ptr);
 void		*ft_xmalloc(size_t size);
 void		*ft_xrealloc(void *ptr, size_t size);
 void		*ft_xcalloc(size_t count, size_t size);
+int			ft_xdup(int copied_fd);
 int			ft_xdup2(int copied_fd, int dest_fd);
 void		ft_xclose(int fd);
 void		ft_xpipe(int *pipefd);
@@ -196,6 +194,7 @@ void		remove_tkn(t_token **head, t_token *ptr, t_token *prev);
 char		*substr_from_tkn(t_token *begining, t_token *last);
 //utils.c
 size_t		strlcat_ret_catlen(char *dest, const char *src, size_t size);
+char		*join_and_free_str1(char *str1, char *str2);
 char		*join_and_free_str2(char *str1, char *str2);
 char 		*strchr_n_back(char *str, char c, size_t n);
 size_t		count_strs(char **strs);
@@ -204,7 +203,7 @@ void	update_exit_status(t_manager *manger, int num);
 
 //~~~~ initi start~~~~
 t_manager initialize(void);
-void	finalize(t_manager manager);
+void	finalize(t_manager *manager);
 //~~~~~~~~
 
 //~~~~ tokenize start~~~~
@@ -240,5 +239,8 @@ char *expand_path(char *oldpath, char *newpath);
 //~~~~~~~~
 
 t_bool	is_longlong_over(const char *str, long long *ans_num);
+
+
+void	free_redir_node_list(t_redir *head);
 
 #endif 

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/07 19:40:27 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 12:44:27 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ t_manager initialize(void)
 	return (manager);
 }
 
-void	finalize(t_manager manager)
+void	finalize(t_manager *manager)
 {
-	free_env_list(manager.env_list);
-	free(manager.current_dir);
-	free(manager.exit_status);
+	free_env_list(manager->env_list);
+	free(manager->current_dir);
+	free(manager->exit_status);
 }
 
 //size_t	count_strs_2(char **strs)

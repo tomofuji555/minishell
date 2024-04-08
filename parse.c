@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 04:08:06 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:51:16 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,14 @@ static void	del_space_afrer_redir(t_token **tkn_head)
 		ptr = ptr->next;
 	}
 }
+			
 
-//next_ptrは事前に持つ。NULL埋め切りされるため、後で取得できない
+/// @brief リダイレクトとそのvalueのtoken列をリダイレクト専用のリストのheadに送る。
+/// last->nextがNULL埋めされるため、next_ptrは事前に持つ。
+/// @param redir_tkns_head 送り先のリダイレクト用tokenリストのhead
+/// @param cmd_tkns_head 送り元のコマンド用tokenリストのhead
+/// @param first 送る最初のtoken。first->nextがNULLでないことは事前のsyntax_error_checkで補償されている
+/// @return 送ったtoken列の次のtoken_ptrを送る
 t_token	*separate_and_append_redir_tkns(t_token **redir_tkns_head, t_token **cmd_tkns_head, t_token *first)
 {
 	t_token *last;

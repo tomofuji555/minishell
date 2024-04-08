@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _utils_bool.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 11:40:27 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/08 11:33:48 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_bool	is_cmd_node(t_tree_node *ptr)
 
 t_bool	is_cmd_path(char *first_cmd_arg)
 {
+	// return (access(first_cmd_arg, F_OK) == EXIST && !opendir(first_cmd_arg))
 	return (ft_strchr(first_cmd_arg, '/') != 0);
 }
 

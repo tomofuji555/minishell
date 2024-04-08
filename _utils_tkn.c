@@ -3,22 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   _utils_tkn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/26 03:20:23 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:52:25 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-//ここのNULLリターンは必要か審議
 t_token	*find_last_tkn(t_token *head)
 {
 	t_token *ptr;
 
-	if (head == NULL)
-		return (NULL);
 	ptr = head;
 	while(ptr->next != NULL)
 		ptr = ptr->next;
@@ -30,8 +27,6 @@ t_token *find_last_valuable_tkn(t_token *head)
 {
 	t_token *ptr;
 
-	if (head == NULL)
-		return (NULL);
 	ptr = head;
 	while(ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
 		ptr = ptr->next;

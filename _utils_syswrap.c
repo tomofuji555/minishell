@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _utils_syswrap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/26 03:50:07 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/08 15:31:52 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ int ft_xdup2(int copied_fd, int dest_fd)
 {
 	if (dup2(copied_fd, dest_fd) == SYS_FAILURE)
 		perror_and_exit("dup2", 1);
+	return (dest_fd);
+}
+
+int ft_xdup(int copied_fd)
+{
+	int dest_fd;
+
+	dest_fd = dup(copied_fd);
+	if (dest_fd == SYS_FAILURE)
+		perror_and_exit("dup", 1);
 	return (dest_fd);
 }
 

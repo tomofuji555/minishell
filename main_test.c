@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/07 17:36:01 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 12:43:24 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int main()
 	rm_heredoc_tmp(tnode_head);
 	free_tnode_list(tnode_head);
 	printf("終了ステータスは%d\n", ft_atoi(manager.exit_status));
-	finalize(manager);
+	finalize(&manager);
 }
 
 

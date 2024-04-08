@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/07 21:52:40 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 15:54:51 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,26 @@ static char	*make_cmd_path(char *cmd_name, t_manager *manager)
 	char	*cmd_path;
 	size_t	i;
 
-	path_list = ft_xsplit(ft_getenv("PATH", manager), ':');
-	i = 0;
-	while (path_list[i] != NULL)
+	path_list = ft_xsplit(ft_getenv("PATH", manager) , ':');
+	if (path_list != NULL)
 	{
-		cmd_path = join_and_free_str2(path_list[i], ft_xstrjoin("/", cmd_name));
-		if (access(cmd_path, F_OK) == EXIST && !opendir(cmd_path))
+		i = 0;
+		while (path_list[i] != NULL)
 		{
-			free_multi_strs(path_list);
-			return (cmd_path);
+			cmd_path = join_and_free_str2(path_list[i], ft_xstrjoin("/", cmd_name));
+			if (access(cmd_path, F_OK) == EXIST && !opendir(cmd_path))
+			{
+				free_multi_strs(path_list);
+				return (cmd_path);
+			}
+			else
+				free(cmd_path);
+			i++;
 		}
-		else
-			free(cmd_path);
-		i++;
+		free_multi_strs(path_list);
 	}
-	free_multi_strs(path_list);
+	if (access(cmd_name, F_OK) == EXIST && !opendir(cmd_name))
+		return (cmd_name);
 	return (NULL);
 }
 
@@ -180,8 +185,9 @@ static pid_t fork_and_exec_cmd(t_refine_data data, t_manager *manager, t_bool la
 		ft_xclose(pipefd[R]);
 		change_instream(data.infile_paths, manager->prev_outfd);
 		change_outstream(data.outfile_paths, pipefd[W], last_cmd_flag);
-		//if (!try_do_builtin_and_eixt(data.cmd_args, manager))
+		// if (!try_do_builtin_and_eixt(data.cmd_args, manager))
 		exec_external_cmd(data.cmd_args, manager);
+		exit(0);
 	}
 	ft_xclose(pipefd[W]);
 	update_prev_outfd(manager, pipefd[R], last_cmd_flag);
