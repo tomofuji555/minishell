@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 15:54:51 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 17:44:51 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	exec_external_cmd(char **cmd_args, t_manager *manager)
 	{
 		if (access(cmd_args[0], F_OK) != EXIST)
 			perror_arg2_and_exit(cmd_args[0], "No such file or directory", 127);
+		//../ ->No such file or directory 126 に修正
 		ft_xexecve(cmd_args[0], cmd_args, manager->env_list);
 	}
 	cmd_path = make_cmd_path(cmd_args[0], manager);
@@ -213,8 +214,8 @@ void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager)
 
 int	do_builtin(char **cmd_args, t_manager *manager)
 {
-	// if (is_equal_str(*cmd_args, "cd"))
-	// 	return (do_cd(cmd_args, manager));
+	if (is_equal_str(*cmd_args, "cd"))
+		return (do_cd(cmd_args, manager));
 	// //if (!cmd_args)
 	// //	return (-1);
 	// //if (is_equal_str(*cmd_args, "echo"))

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/08 15:31:52 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 17:40:17 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ void ft_xexecve(char *cmd_path, char **cmd_args, t_env *env_list)
 	char **envp;
 
 	envp = make_envp(env_list);
-	if (execve(cmd_path, cmd_args, envp) == SYS_FAILURE)
+	if (access(cmd_path, X_OK) == SYS_FAILURE)
 		perror_and_exit(cmd_args[0], 126);
+	if (execve(cmd_path, cmd_args, envp) == SYS_FAILURE)
+		perror_and_exit(cmd_args[0], 1);
 }

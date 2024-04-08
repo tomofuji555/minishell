@@ -6,17 +6,11 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/03/31 17:33:23 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 19:49:41 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-
-void	update_pwd(t_manager *manager, char *full_path)
-{
-	free(manager->current_dir);
-	manager->current_dir = full_path;
-}
 
 typedef struct s_path
 {
@@ -41,7 +35,6 @@ void	free_pnode(t_path *pnode)
 
 void	free_path_list(t_path *head)
 {
-
 	t_path *next_ptr;
 	t_path *ptr;
 
@@ -58,14 +51,14 @@ void	free_path_list(t_path *head)
 	free_pnode(ptr);
 }
 
-t_path	*make_new(char *first, char *last, t_bool flag)
+t_path	*make_new(char *first, char *last, t_bool no_slash_flag)
 {
 	char	*tmp_val;
 	t_path *new;
 
 	new = (t_path *)malloc(sizeof(t_path));
 	tmp_val = ft_xsubstr(first, 0, (size_t)(last - first + 1));
-	if (flag)
+	if (no_slash_flag)
 	{
 		new->val = ft_xstrjoin(tmp_val, "/") ;
 		free(tmp_val);
@@ -100,56 +93,58 @@ t_path *make_path_list(char *ptr)
 {
 	t_path	*new;
 	t_path	*head;
-	t_bool	flag;
+	t_bool	no_slash_flag;
 	char *last;
 
 	head = NULL;
-	flag = FALSE;
+	no_slash_flag = FALSE;
 	while (*ptr != '\0')
 	{
 		last = ft_strchr(ptr, '/');
 		if (last == NULL)
 		{
 			last = ft_strchr(ptr, '\0') - sizeof(char);
-			flag = TRUE;
+			no_slash_flag = TRUE;
 		}
-		new = make_new(ptr, last, flag);
+		new = make_new(ptr, last, no_slash_flag);
 		add_new_last(&head, new);
 		ptr = last + sizeof(char);
 	}
 	return (head);
 }
 
-char *build_path(t_path *first, char *current_dir)
+/// @brief ptr->valによって、current_pathを整形し直して、その複製を返す。渡した先で旧current_pathのfreeが必要
+/// @return	../->current_dirの後ろから２番目の/までを抜き出し返す。見つからなかったらrootまで来てるため、/を返す
+///	./->今のcurrent_pathを返す
+///	/->/を返す
+/// 文字列/->current_pathとjoinして返す 
+char *add_path(t_path *ptr, char *current_path)
 {
 	char *last_ptr;
 	
-	if (is_equal_str(first->val, "./"))
-		return (ft_xstrdup(current_dir)); //cuurent_dirを返す
-	else if (is_equal_str(first->val, "/"))
-		return (ft_xstrdup("/"));//スラッシュを返す
-	else if (is_equal_str(first->val, "../"))
+	if (is_equal_str(ptr->val, "./"))
+		return (ft_xstrdup(current_path));
+	else if (is_equal_str(ptr->val, "/"))
+		return (ft_xstrdup("/"));
+	else if (is_equal_str(ptr->val, "../"))
 	{
-		last_ptr = strchr_n_back(current_dir, '/', 2);
+		last_ptr = strchr_n_back(current_path, '/', 2);
 		if (last_ptr == NULL)
 			return (ft_xstrdup("/"));
-		return (ft_xsubstr(current_dir, 0, (size_t)(last_ptr + sizeof(char) - current_dir + 1))); //current_dirの最後から２個目のスラッシュまでを抜き出し返す
+		return (ft_xsubstr(current_path, 0, (size_t)(last_ptr + sizeof(char) - current_path + 1))); 
 	}
 	else
-	{
-		return (ft_xstrjoin(current_dir, first->val));
-		// return (join_and_free_str2(current_dir, ft_xstrjoin("/", first->val))); //current_dir+(文字列)を返す
-	}
+		return (ft_xstrjoin(current_path, ptr->val));
 }
+// return (join_and_free_str2(current_dir, ft_xstrjoin("/", first->val))); //current_dir+(文字列)を返す
 
-char	*make_new_path(t_path *head, char *current_dir)
+char	*make_absolute_path_helper(t_path *head, char *current_dir)
 {
 	t_path	*ptr;
 	char	*full_path;
 	char	*tmp_path;
 
-	
-	full_path = build_path(head, current_dir);
+	full_path = add_path(head, current_dir);
 	ptr	= head->next;
 	while (ptr != NULL)
 	{
@@ -157,8 +152,9 @@ char	*make_new_path(t_path *head, char *current_dir)
 			;
 		else
 		{
+			// printf("fullpath=%s;\n", full_path);
 			tmp_path = full_path;
-			full_path = build_path(ptr, full_path);
+			full_path = add_path(ptr, full_path);
 			free(tmp_path);
 		}
 		ptr = ptr->next;
@@ -166,47 +162,66 @@ char	*make_new_path(t_path *head, char *current_dir)
 	return (full_path);
 }
 
-char *expand_path(char *destpath, char *nowpath)
+char *make_absolute_path(char *dest_path, char *current_dir)
 {
-	char	*new_path;
-	t_path	*dest_head;
-	char	*nowpath_sla;
+	t_path	*dest_path_list;
+	char	*current_dir_sla;
+	char	*absolute_path;
 	
-	nowpath_sla = ft_xstrjoin(nowpath, "/");
-	dest_head = make_path_list(destpath);
-	print_path_list(dest_head);
-	new_path = make_new_path(dest_head, nowpath_sla); //freeする必要あり
-	free_path_list(dest_head);
-	free(nowpath_sla);
-	printf("%s;\n", new_path);
-	return (new_path);
+	dest_path_list = make_path_list(dest_path);
+	// print_path_list(dest_path_list);
+	current_dir_sla = ft_xstrjoin(current_dir, "/");
+	absolute_path = make_absolute_path_helper(dest_path_list, current_dir_sla);
+	free_path_list(dest_path_list);
+	free(current_dir_sla);
+	return (absolute_path);
+}
+
+void	update_current_dir(t_manager *manager, char *path)
+{
+	free(manager->current_dir);
+	manager->current_dir = ft_xsubstr(path, 0, ft_strlen(path) - 1);
 }
 
 int	do_cd(char **cmd_args, t_manager *manager)
 {
-	char *full_path;
-	size_t argc;
+	char	*path;
+	size_t	argc;
 
 	argc = count_strs(cmd_args);
-	if (argc > 2)
+	if (argc != 2)
 	{
 		perror_arg2("cd","too many arguments");
 		return (1);
 	}
-	if (argc == 1)
-		;//cd $HOMEと同じ動き
-	else if (is_equal_str(cmd_args[1], "-"))
-		;//cd $OLDPWDと同じ動き
-	else if (is_equal_str(cmd_args[1], ""))
-	full_path = expand_path(cmd_args[1], manager->current_dir);
-	// else
+	path = make_absolute_path(cmd_args[1], manager->current_dir); //このpathはfree必須
+	if (chdir(path) == SYS_FAILURE)
+	{
+		ft_putstr_fd("cd: ", STDERR_FILENO);
+		perror(cmd_args[1]);
+		return (1);
+	}
+	update_current_dir(manager, path);
+	free(path);
+	// system("leaks -q minishell");
+	return (0);
+}
+	// if (argc == 1)
 	// {
-	// 	if (chdir(full_path) == SYS_FAILURE)
+	// 	path = ft_getenv("HOME", manager);
+	// 	if (path == NULL)
 	// 	{
-	// 		perror("cd");
+	// 		perror_arg2("cd", "HOME not set");
 	// 		return (1);
 	// 	}
 	// }
-	// update_pwd(manager, cmd_args[1]);
-	return (0);
-}
+	// else if (is_equal_str(cmd_args[1], "-"))
+	// {
+	// 	path = ft_getenv("OLDPWD", manager);
+	// 	if (path == NULL)
+	// 	{
+	// 		perror_arg2("cd", "OLDPWD not set");
+	// 		return (1);
+	// 	}
+	// }
+	// else
