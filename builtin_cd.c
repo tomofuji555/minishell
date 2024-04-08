@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/08 19:49:41 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 22:09:05 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,8 @@ char *make_absolute_path(char *dest_path, char *current_dir)
 	char	*current_dir_sla;
 	char	*absolute_path;
 	
+	if (is_equal_str(dest_path, ""))
+		return (ft_xstrjoin(current_dir, "/"));
 	dest_path_list = make_path_list(dest_path);
 	// print_path_list(dest_path_list);
 	current_dir_sla = ft_xstrjoin(current_dir, "/");
@@ -195,6 +197,7 @@ int	do_cd(char **cmd_args, t_manager *manager)
 		return (1);
 	}
 	path = make_absolute_path(cmd_args[1], manager->current_dir); //このpathはfree必須
+	wc(path);
 	if (chdir(path) == SYS_FAILURE)
 	{
 		ft_putstr_fd("cd: ", STDERR_FILENO);
