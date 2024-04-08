@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/08 13:00:08 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 20:31:56 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,9 +238,9 @@ int	do_cd(char **cmd_args, t_manager *manager);
 char *expand_path(char *oldpath, char *newpath);
 //~~~~~~~~
 
+//~~~~exit start~~~~
 t_bool	is_longlong_over(const char *str, long long *ans_num);
-
-
-void	free_redir_node_list(t_redir *head);
+int do_exit(char **cmd_args, t_manager *manager);
+//~~~~~~~~
 
 #endif 
