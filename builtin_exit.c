@@ -6,17 +6,18 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 13:24:13 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/07 12:15:12 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 21:02:31 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <execute.h>
-
+#include "execute.h"
 
 t_bool	is_numstr(char *ptr)
 {
 	if (*ptr == '\0')
 		return (FALSE);
+	if (*ptr == '+' || *ptr == '-')
+		ptr++;
 	while (*ptr != '\0')
 	{
 		if (!ft_isdigit(*ptr))
@@ -44,6 +45,6 @@ int do_exit(char **cmd_args, t_manager *manager)
 		perror_arg2("exit", "too many arguments");
 		return (1);
 	}
-	dprintf(STDERR_FILENO, "exitstatus=%u", (unsigned char)num);
+	dprintf(STDERR_FILENO, "exitstatus=%u;\n", (unsigned char)num);
 	exit ((unsigned char)num);
 }

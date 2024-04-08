@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/08 15:35:29 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 21:04:25 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	perror_arg2(char *err_target, char *err_str)
 
 void	perror_arg3(char *s1, char *s2, char *s3)
 {
-	perror_arg2(s1, s2);
+	ft_putstr_fd(s1, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(s2, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putendl_fd(s3, STDERR_FILENO);
 }

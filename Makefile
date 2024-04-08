@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/07 18:29:23 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/08 20:55:39 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJS		=	_utils_bool.o \
 				_utils_syswrap.o \
 				_utils_tkn.o \
 				_utils.o \
+				is_longlong_over.o \
 				init.o \
 				tokenize.o \
 				parse.o \
@@ -31,6 +32,7 @@ OBJS		=	_utils_bool.o \
 				execute.o \
 				run_heredoc.o \
 				builtin_cd.o \
+				builtin_exit.o \
 				main.o
 LIBFT_PATH	=	libft/
 
