@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 20:30:57 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 21:50:54 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ static int open_redir_path(t_redir *node)
 	int fd;
 
 	if (node->kind == REDIR_OUT_FILE)
-		fd = open(node->val, O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
+		fd = open(node->val, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else if (node->kind == REDIR_APPEND_FILE)
-		fd = open(node->val, O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
+		fd = open(node->val, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	else
 		fd = open(node->val, O_RDONLY);
 	if (fd == SYS_FAILURE)
