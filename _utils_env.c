@@ -6,11 +6,26 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/07 17:26:36 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:04:03 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+t_env	*search_env(char *name, t_env *env_list)
+{
+	t_env	*ptr;
+	t_env	*new;
+	
+	ptr = env_list;
+	while (ptr != NULL)
+	{
+		if (is_equal_str(ptr->key, name))
+			return (ptr);
+		ptr = ptr->next;
+	}
+	return (NULL);
+}
 
 size_t	count_envname(char *dollar_ptr)
 {

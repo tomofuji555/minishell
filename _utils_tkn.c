@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 15:52:25 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/09 18:33:18 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_token *find_last_valuable_tkn(t_token *head)
 
 // targetにheadが来ていたら、NULLが帰ってくる
 // targetはlist内にないとクラッシュする
+// headがNULLの場合もクラッシュする
 t_token *search_prev_tkn(t_token *head, t_token *target)
 {
 	t_token *ptr;

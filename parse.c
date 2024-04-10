@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 15:51:16 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 23:02:35 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_token	*separate_and_append_redir_tkns(t_token **redir_tkns_head, t_token **cmd
 	return (next_ptr);
 }
 
-//base_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする
+//init_data.cmd_tknsからリダイレクト対象のnodeをredir_tkns_headにpushする
 static t_token *make_redir_tkns_list(t_token **cmd_tkns_head, t_bool (*is_func)(enum e_token_kind))
 {
 	t_token *redir_tkns_head;
@@ -82,10 +82,10 @@ static void	move_to_redir_tkns(t_tree_node *tnode_head)
 	tnode_ptr = tnode_head;
 	while(tnode_ptr != NULL)
 	{
-		tnode_ptr->base_data.infile_tokens = make_redir_tkns_list\
-			(&tnode_ptr->base_data.cmd_tokens, is_in_redir_tkn);
-		tnode_ptr->base_data.outfile_tokens = make_redir_tkns_list\
-			(&tnode_ptr->base_data.cmd_tokens, is_out_redir_tkn);
+		tnode_ptr->init_data.infile_tokens = make_redir_tkns_list\
+			(&tnode_ptr->init_data.cmd_tokens, is_in_redir_tkn);
+		tnode_ptr->init_data.outfile_tokens = make_redir_tkns_list\
+			(&tnode_ptr->init_data.cmd_tokens, is_out_redir_tkn);
 		tnode_ptr = tnode_ptr->right;
 	}
 }
@@ -102,8 +102,8 @@ static void	split_last_tkn(t_tree_node *tnode_ptr)
 
 	while(tnode_ptr->right != NULL)
 	{	
-		tkn_ptr = tnode_ptr->base_data.cmd_tokens;
-		tkn_next_head = tnode_ptr->right->base_data.cmd_tokens;
+		tkn_ptr = tnode_ptr->init_data.cmd_tokens;
+		tkn_next_head = tnode_ptr->right->init_data.cmd_tokens;
 		while(tkn_ptr->next != tkn_next_head)
 			tkn_ptr = tkn_ptr->next;
 		tkn_ptr->next = NULL;
@@ -137,7 +137,7 @@ static t_tree_node *make_new_tnode(t_token *tkn_begining)
 	t_tree_node *new;
 
 	new = (t_tree_node *)ft_xcalloc(1, sizeof(t_tree_node));
-	new->base_data.cmd_tokens = tkn_begining;
+	new->init_data.cmd_tokens = tkn_begining;
 	return (new);
 }
 

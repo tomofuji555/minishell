@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 20:57:13 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/10 21:25:32 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_bool is_first_cmd(t_tree_node *ptr)
 
 t_bool	is_cmd_node(t_tree_node *ptr)
 {
-	return (ptr->refine_data.cmd_args || ptr->refine_data.infile_paths || ptr->refine_data.outfile_paths);
+	return (ptr->adv_data.cmd_args || ptr->adv_data.infile_paths || ptr->adv_data.outfile_paths);
 	//return (ptr->left == NULL && ptr->right == NULL); //木構造
 }
 
@@ -79,13 +79,14 @@ t_bool	is_equal_str(const char *s1, char *s2)
 
 t_bool	is_builtin(char *cmd)
 {
-	return (is_equal_str(cmd, "cd"))|| is_equal_str(cmd, "exit");
+	return (is_equal_str(cmd, "cd")|| is_equal_str(cmd, "exit") || is_equal_str(cmd, "env")
+		|| is_equal_str(cmd, "export") || is_equal_str(cmd, "unset"));
 	//return (is_equal_str(cmd, "echo") || is_equal_str(cmd, "cd") || is_equal_str(cmd, "pwd") \
-	//	|| is_equal_str(cmd, "export") || is_equal_str(cmd, "unset") || is_equal_str(cmd, "env") \
+	//	||    \
 	//	);
 }
 
 t_bool	is_single_builtin(t_tree_node *tnode_ptr)
 {
-	return (tnode_ptr->right == NULL && tnode_ptr->refine_data.cmd_args && is_builtin(tnode_ptr->refine_data.cmd_args[0]));
+	return (tnode_ptr->right == NULL && tnode_ptr->adv_data.cmd_args && is_builtin(tnode_ptr->adv_data.cmd_args[0]));
 }

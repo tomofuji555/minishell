@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 21:50:54 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/10 21:26:45 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ static void	update_prev_outfd(t_manager *manager, int pipefd_in, t_bool last_cmd
 		manager->prev_outfd = pipefd_in;
 }
 
-static pid_t fork_and_exec_cmd(t_refine_data data, t_manager *manager, t_bool last_cmd_flag)
+static pid_t fork_and_exec_cmd(t_adv_data data, t_manager *manager, t_bool last_cmd_flag)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -200,7 +200,7 @@ void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager)
 	{
 		if (is_cmd_node(ptr))
 		{
-			manager->last_pid = fork_and_exec_cmd(ptr->refine_data, manager, is_last_cmd(ptr));
+			manager->last_pid = fork_and_exec_cmd(ptr->adv_data, manager, is_last_cmd(ptr));
 			
 			manager->fork_count++;
 		}
@@ -217,6 +217,12 @@ int	do_builtin(char **cmd_args, t_manager *manager)
 		return (do_cd(cmd_args, manager));
 	else if (is_equal_str(*cmd_args, "exit"))
 		return (do_exit(cmd_args, manager));
+	else if (is_equal_str(*cmd_args, "export"))
+		return (do_export(cmd_args, manager));
+	else if (is_equal_str(*cmd_args, "env"))
+		return (do_env(cmd_args, manager));
+	else if (is_equal_str(*cmd_args, "unset"))
+		return (do_unset(cmd_args, manager));
 	// //if (!cmd_args)
 	// //	return (-1);
 	// //if (is_equal_str(*cmd_args, "echo"))
@@ -225,17 +231,11 @@ int	do_builtin(char **cmd_args, t_manager *manager)
 	// //	rerurn (ms_cd(cmd_args, envp));
 	// //else if (is_equal_str(*cmd_args, "pwd"))
 	// //	return (ms_pwd(envp));
-	// //else if (is_equal_str(*cmd_args, "export"))
-	// //	return (ms_export(cmd_args, envp));
-	// //else if (is_equal_str(*cmd_args, "unset"))
-	// //	return (ms_unset(cmd_args, envp));
-	// //else if (is_equal_str(*cmd_args, "env"))
-	// //	return (ms_env(envp));
 	// else
 		return (-1);
 }
 
-t_bool	can_change_iostream_redirect(t_refine_data data)
+t_bool	can_change_iostream_redirect(t_adv_data data)
 {
 	if (data.infile_paths)
 	{
@@ -257,8 +257,8 @@ void do_single_builtin(t_tree_node *root, t_manager *manager)
 
 	tmpfd_in = STDIN_FILENO;
 	tmpfd_out = STDOUT_FILENO;
-	if (can_change_iostream_redirect(root->refine_data))
-		update_exit_status(manager, do_builtin(root->refine_data.cmd_args, manager));
+	if (can_change_iostream_redirect(root->adv_data))
+		update_exit_status(manager, do_builtin(root->adv_data.cmd_args, manager));
 	else
 		update_exit_status(manager, 1);
 	ft_xdup2(tmpfd_in, STDIN_FILENO);

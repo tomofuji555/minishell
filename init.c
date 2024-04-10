@@ -6,27 +6,31 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/08 12:44:27 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/09 17:41:59 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"execute.h"
 
 //envに＝がある前提で作成している
-static t_env *make_new_enode(char *envvar)
+t_env *make_new_env(char *envvar)
 {
+	char 	*sep_ptr;
 	t_env	*new;
 
+	sep_ptr = ft_strchr(envvar, '=');
 	new = (t_env *)ft_xmalloc(sizeof(t_env));
-	new->original = ft_xstrdup(envvar);
-	new->key = ft_xsubstr(envvar, 0, (size_t)(ft_strchr(envvar, '=') - envvar));
-	new->val = ft_xsubstr(ft_strchr(envvar, '=') + sizeof(char), 0, (size_t)(ft_strchr(envvar, '\0') - ft_strchr(envvar, '=') - 1));
-	new->printed_flag = FALSE;
+	new->key = ft_substr(envvar, 0, (size_t)(sep_ptr - envvar));
+	new->val = ft_substr(sep_ptr, 1, (size_t)(ft_strchr(envvar, '\0') - sep_ptr - sizeof(char)));
 	new->next = NULL;
+	//
+	new->printed_flag = FALSE;
+	new->original = ft_xstrdup(envvar);
+	//
 	return (new);
 }
 
-static t_env *find_last_enode(t_env *head)
+static t_env *find_last_env(t_env *head)
 {
 	t_env	*ptr;
 
@@ -36,14 +40,14 @@ static t_env *find_last_enode(t_env *head)
 	return (ptr);
 }
 
-static void add_enode_last(t_env **head, t_env *new)
+void add_env_last(t_env **head, t_env *new)
 {
 	if (*head == NULL)
 	{
 		*head = new;
 		return ;
 	}
-	find_last_enode(*head)->next = new;
+	find_last_env(*head)->next = new;
 }
 
 static t_env *make_env_list()
@@ -57,8 +61,8 @@ static t_env *make_env_list()
 	i = 0;
 	while(environ[i] != NULL)
 	{
-		new = make_new_enode(environ[i]);
-		add_enode_last(&head, new);
+		new = make_new_env(environ[i]);
+		add_env_last(&head, new);
 		i++;
 	}
 	return (head);

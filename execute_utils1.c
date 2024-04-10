@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:06:56 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/07 15:53:19 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 23:02:53 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 //		return (-1);
 //}
 
-//t_bool	can_change_iostream_redirect(t_refine_data data)
+//t_bool	can_change_iostream_redirect(t_adv_data data)
 //{
 //	if (data.infile_paths)
 //	{
@@ -55,7 +55,7 @@
 //	return (TRUE);
 //}
 
-//void do_single_builtin(t_refine_data data, t_manager *manager)
+//void do_single_builtin(t_adv_data data, t_manager *manager)
 //{
 //	int tmpfd_in;
 //	int tmpfd_out;
@@ -98,8 +98,8 @@ t_bool	try_do_builtin_and_eixt()
 // void	execute(t_tree_node *root, t_manager *manager)
 // {
 // 	//if (root->left == NULL && root->right == NULL)
-// 	//if (!root->right && root->refine_data.cmd_args && is_builtin(root->refine_data.cmd_args[0]))
-// 	//	do_single_builtin(root->refine_data, &manager);
+// 	//if (!root->right && root->adv_data.cmd_args && is_builtin(root->adv_data.cmd_args[0]))
+// 	//	do_single_builtin(root->adv_data, &manager);
 // 	//else
 // 		exec_cmd_in_child(root, manager);
 // }

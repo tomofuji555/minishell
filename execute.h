@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/08 20:55:04 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/10 21:26:18 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,24 +91,24 @@ typedef struct s_env
 	struct s_env		*next;
 }	t_env;
 
-typedef struct s_base_data
+typedef struct s_init_data
 {
 	t_token				*cmd_tokens;
 	t_token				*infile_tokens;
 	t_token				*outfile_tokens;
-}	t_base_data;
+}	t_init_data;
 
-typedef struct s_refine_data
+typedef struct s_adv_data
 {
 	char				**cmd_args;
 	t_redir				*infile_paths;
 	t_redir				*outfile_paths;
-}	t_refine_data;
+}	t_adv_data;
 
 typedef struct s_tree_node
 {
-	t_base_data			base_data;
-	t_refine_data		refine_data;
+	t_init_data			init_data;
+	t_adv_data			adv_data;
 	struct s_tree_node	*prev;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
@@ -145,14 +145,16 @@ t_bool		is_builtin(char *cmd);
 t_bool		is_single_builtin(t_tree_node *tnode_ptr);
 //env_utils.c
 size_t		count_envname(char *dollar_ptr);
+t_env		*search_env(char *name, t_env *env_list);
 char		*ft_getenv(const char *env_name, t_manager *manager);
 char		*getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager *manager);
 //free_utils.c
 void		free_multi_strs(char **strs);
 void		free_tkn(t_token *tkn);
 void		free_tkn_list(t_token *head);
+void		free_env_node(t_env *env_node);
 void		free_env_list(t_env *env_list);
-void		free_base_data(t_base_data base_data);
+void		free_init_data(t_init_data init_data);
 void		free_tnode_list(t_tree_node *head);
 //libftwrap_utils.c
 void		perror_arg2(char *errtarget, char *errstr);
@@ -202,6 +204,7 @@ void	update_exit_status(t_manager *manger, int num);
 //~~~~utils end~~~~
 
 //~~~~ initi start~~~~
+t_env *make_new_env(char *envvar);
 t_manager initialize(void);
 void	finalize(t_manager *manager);
 //~~~~~~~~
@@ -242,5 +245,13 @@ char *expand_path(char *oldpath, char *newpath);
 t_bool	is_longlong_over(const char *str, int *ans_num);
 int do_exit(char **cmd_args, t_manager *manager);
 //~~~~~~~~
+
+
+int	do_export(char **cmd_args, t_manager *manager);
+void add_env_last(t_env **head, t_env *new);
+
+int do_env(char **cmd_args, t_manager *manager);
+
+int	do_unset(char **cmd_args, t_manager *manager);
 
 #endif 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _free_utils.c                                      :+:      :+:    :+:   */
+/*   _utils_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:12:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 06:22:21 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/08 23:02:53 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,24 +99,24 @@ void	free_redir_node_list(t_redir *head)
 	free_redir_node(ptr);
 }
 
-void	free_base_data(t_base_data base_data)
+void	free_init_data(t_init_data init_data)
 {
-	if (base_data.cmd_tokens)
-		free_tkn_list(base_data.cmd_tokens);
-	if (base_data.infile_tokens)
-		free_tkn_list(base_data.infile_tokens);
-	if (base_data.outfile_tokens)
-		free_tkn_list(base_data.outfile_tokens);
+	if (init_data.cmd_tokens)
+		free_tkn_list(init_data.cmd_tokens);
+	if (init_data.infile_tokens)
+		free_tkn_list(init_data.infile_tokens);
+	if (init_data.outfile_tokens)
+		free_tkn_list(init_data.outfile_tokens);
 }
 
-void	free_refine_data_and_tnode(t_tree_node 	*tnode)
+void	free_adv_data_and_tnode(t_tree_node 	*tnode)
 {
-	if (tnode->refine_data.cmd_args)
-		free_multi_strs(tnode->refine_data.cmd_args);
-	if (tnode->refine_data.infile_paths)
-		free_redir_node_list(tnode->refine_data.infile_paths);	
-	if (tnode->refine_data.outfile_paths)
-		free_redir_node_list(tnode->refine_data.outfile_paths);
+	if (tnode->adv_data.cmd_args)
+		free_multi_strs(tnode->adv_data.cmd_args);
+	if (tnode->adv_data.infile_paths)
+		free_redir_node_list(tnode->adv_data.infile_paths);	
+	if (tnode->adv_data.outfile_paths)
+		free_redir_node_list(tnode->adv_data.outfile_paths);
 	free(tnode);
 }
 
@@ -131,9 +131,9 @@ void	free_tnode_list(t_tree_node *head)
 	next_ptr = head->right;
 	while(next_ptr != NULL)
 	{
-		free_refine_data_and_tnode(ptr);
+		free_adv_data_and_tnode(ptr);
 		ptr = next_ptr;
 		next_ptr = next_ptr->right;
 	}
-	free_refine_data_and_tnode(ptr);
+	free_adv_data_and_tnode(ptr);
 }

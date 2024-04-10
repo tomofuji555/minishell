@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/07 21:14:32 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/10 21:53:29 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,44 +109,44 @@ void print_redir_list(t_redir *head)
 	}
 }
 
-static void	print_base_data(t_tree_node *ptr)
+static void	print_init_data(t_tree_node *ptr)
 {
-	printf("<<base_data>>\n");
-	if (ptr->base_data.cmd_tokens != NULL)
+	printf("<<init_data>>\n");
+	if (ptr->init_data.cmd_tokens != NULL)
 	{
 		printf("<cmd>\n");
-		print_tkn_list(ptr->base_data.cmd_tokens);
+		print_tkn_list(ptr->init_data.cmd_tokens);
 	}
-	if (ptr->base_data.infile_tokens != NULL)
+	if (ptr->init_data.infile_tokens != NULL)
 	{
 		printf("<infile>\n");
-		print_tkn_list(ptr->base_data.infile_tokens);
+		print_tkn_list(ptr->init_data.infile_tokens);
 	}
-	if (ptr->base_data.outfile_tokens != NULL)
+	if (ptr->init_data.outfile_tokens != NULL)
 	{
 		printf("<outfile>\n");
-		print_tkn_list(ptr->base_data.outfile_tokens);
+		print_tkn_list(ptr->init_data.outfile_tokens);
 	}
 }
 
-void	print_refine_data(t_tree_node	*ptr)
+void	print_adv_data(t_tree_node	*ptr)
 {
 	
-	printf("<<refine_data>>\n");
-	if (ptr->refine_data.cmd_args)
+	printf("<<adv_data>>\n");
+	if (ptr->adv_data.cmd_args)
 	{
 		printf("<cmd>\n");
-		print_cmd_args(ptr->refine_data.cmd_args);
+		print_cmd_args(ptr->adv_data.cmd_args);
 	}
-	if (ptr->refine_data.infile_paths)
+	if (ptr->adv_data.infile_paths)
 	{
 		printf("<infile>\n");
-		print_redir_list(ptr->refine_data.infile_paths);
+		print_redir_list(ptr->adv_data.infile_paths);
 	}
-	if (ptr->refine_data.outfile_paths)
+	if (ptr->adv_data.outfile_paths)
 	{
 		printf("<outfile>\n");
-		print_redir_list(ptr->refine_data.outfile_paths);
+		print_redir_list(ptr->adv_data.outfile_paths);
 	}
 }
 
@@ -158,7 +158,7 @@ void	print_init_of_tnode_list(t_tree_node *tnode_ptr)
 	while(tnode_ptr != NULL)
 	{
 		printf("--------node_No==%zd--------\n", i++);
-		print_base_data(tnode_ptr);
+		print_init_data(tnode_ptr);
 		tnode_ptr = tnode_ptr->right;
 	}
 }
@@ -172,11 +172,11 @@ void	print_exec_of_tnode_list(t_tree_node *tnode_ptr)
 	{
 		printf("--------node_No==%zd--------\n", i++);
 		if (is_cmd_node(tnode_ptr))
-			print_refine_data(tnode_ptr);
+			print_adv_data(tnode_ptr);
 		else
 		{
 			printf("<<pipe>>\n");
-			//print_refine_data(tnode_ptr);
+			//print_adv_data(tnode_ptr);
 		}
 		tnode_ptr = tnode_ptr->right;
 	}
@@ -190,8 +190,8 @@ void	print_exec_of_tnode_list(t_tree_node *tnode_ptr)
 //	while(tnode_ptr != NULL)
 //	{
 //		printf("--------node_No==%zd--------\n", i++);
-//		print_base_data(tnode_ptr);
-//		print_refine_data(tnode_ptr);
+//		print_init_data(tnode_ptr);
+//		print_adv_data(tnode_ptr);
 //		tnode_ptr = tnode_ptr->right;
 //	}
 //}
@@ -204,8 +204,8 @@ void	print_exec_of_tnode_list(t_tree_node *tnode_ptr)
 //	while(tnode_ptr != NULL)
 //	{
 //		printf("--------node_No==%zd--------\n", i++);
-//		print_base_data(tnode_ptr);
-//		//print_refine_data(tnode_ptr);
+//		print_init_data(tnode_ptr);
+//		//print_adv_data(tnode_ptr);
 //		tnode_ptr = tnode_ptr->right;
 //	}
 //}

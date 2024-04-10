@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 15:52:18 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/08 23:02:53 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,13 +341,13 @@ void	expansion(t_tree_node *ptr, t_manager *manager)
 {
 	while(ptr != NULL)
 	{
-		expansion_tkn_list(&ptr->base_data.cmd_tokens, manager);
-		expansion_tkn_list(&ptr->base_data.infile_tokens, manager);
-		expansion_tkn_list(&ptr->base_data.outfile_tokens, manager);
-		ptr->refine_data.cmd_args = make_cmd_args(ptr->base_data.cmd_tokens);
-		ptr->refine_data.infile_paths = make_redir_list(ptr->base_data.infile_tokens);
-		ptr->refine_data.outfile_paths = make_redir_list(ptr->base_data.outfile_tokens);
-		free_base_data(ptr->base_data);
+		expansion_tkn_list(&ptr->init_data.cmd_tokens, manager);
+		expansion_tkn_list(&ptr->init_data.infile_tokens, manager);
+		expansion_tkn_list(&ptr->init_data.outfile_tokens, manager);
+		ptr->adv_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
+		ptr->adv_data.infile_paths = make_redir_list(ptr->init_data.infile_tokens);
+		ptr->adv_data.outfile_paths = make_redir_list(ptr->init_data.outfile_tokens);
+		free_init_data(ptr->init_data);
 		ptr = ptr->right;
 	}
 }
