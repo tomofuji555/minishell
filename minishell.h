@@ -6,14 +6,23 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/03/19 21:51:15 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 17:40:05 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <dirent.h>
+# include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "libft/libft.h"
 
 typedef enum e_bool
 {
@@ -30,7 +39,7 @@ enum e_token_kind
 	TKN_ENV				= 4,
 	TKN_PIPE			= 5,
 	TKN_IN_FILE			= 6,
-	TKN_HERE_DOC		= 7,
+	TKN_HEREDOC		= 7,
 	TKN_OUT_FILE		= 8,
 	TKN_APPEND_FILE		= 9,
 };
@@ -44,10 +53,11 @@ typedef struct s_token
 
 enum e_redir_kind
 {
-	REDIR_IN_FILE		= 6,
-	REDIR_HERE_DOC		= 7,
-	REDIR_OUT_FILE		= 8,
-	REDIR_APPEND_FILE	= 9,
+	REDIR_IN_FILE,
+	REDIR_HEREDOC,
+	REDIR_HEREDOC_NO_EXPAND,
+	REDIR_OUT_FILE,
+	REDIR_APPEND_FILE,
 };
 
 typedef struct s_redir
@@ -57,36 +67,30 @@ typedef struct s_redir
 	struct s_redir		*next;
 }	t_redir;
 
-typedef struct s_env
-{
-	char				*original;
-	char				*key;
-	char				*val;
-	t_bool				printed_flag;
-	struct s_env		*next;
-}	t_env;
-
-typedef struct s_init_arg_data
+typedef struct s_init_data
 {
 	t_token				*cmd_tokens;
 	t_token				*infile_tokens;
 	t_token				*outfile_tokens;
-}	t_init_arg_data;
+}	t_init_data;
 
-typedef struct s_exec_arg_data
+typedef struct s_adv_data
 {
 	char				**cmd_args;
 	t_redir				*infile_paths;
 	t_redir				*outfile_paths;
-}	t_exec_arg_data;
+}	t_adv_data;
 
 typedef struct s_tree_node
 {
-	t_init_arg_data		init_arg_data;
-	t_exec_arg_data		exec_arg_data;
+	t_init_data		init_data;
+	t_adv_data		adv_data;
 	struct s_tree_node	*prev;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
 }	t_tree_node;
+
+void print_tkn_list(t_token *ptr);
+void	print_init_data(t_tree_node *ptr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:48 by username          #+#    #+#             */
-/*   Updated: 2024/03/23 17:48:44 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 17:26:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	split_by_pipe(t_tree_node **tree, t_token **head, ssize_t count)
 	{
 		last_pipe = find_last_pipe (*head, count);
 		(*tree)->right = rs_tree_node (head, last_pipe, is_root, prev_tree);
-		(*tree)->init_arg_data.cmd_tokens = \
+		(*tree)->init_data.cmd_tokens = \
 		put_pipe_token (head, last_pipe, count);
 		(*tree)->left = ls_tree_node (head, prev_tree);
 		(*tree)->prev = prev_node (prev_tree);

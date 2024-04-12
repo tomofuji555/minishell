@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   left_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <username@student.your42netw      +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:40:15 by username          #+#    #+#             */
-/*   Updated: 2024/03/22 16:40:17 by username         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:26:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ t_tree_node *prev_node)
 	ls_node = (t_tree_node *)malloc(sizeof(t_tree_node));
 	if (ls_node == NULL)
 		return (NULL);
-	ls_node->init_arg_data.cmd_tokens = NULL;
+	ls_node->init_data.cmd_tokens = NULL;
 	if (last_pipe == NULL)
 	{
-		ls_node->init_arg_data.cmd_tokens = *head;
+		ls_node->init_data.cmd_tokens = *head;
 		*head = NULL;
 	}
-	ls_node->init_arg_data.outfile_tokens = NULL;
-	ls_node->init_arg_data.infile_tokens = NULL;
+	ls_node->init_data.outfile_tokens = NULL;
+	ls_node->init_data.infile_tokens = NULL;
 	ls_node->prev = prev_node;
 	ls_node->left = NULL;
 	ls_node->right = NULL;

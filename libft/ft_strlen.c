@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:33:46 by tozeki            #+#    #+#             */
-/*   Updated: 2024/01/15 23:56:31 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 17:13:48 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int main(void)
-{
-	char *str = "";
+// int main(void)
+// {
+// 	char *str = "";
 
-	printf("%zu", ft_strlen(str));
+// 	printf("%zu", ft_strlen(str));
 
-	return (0);
+// 	return (0);
 
-}
+// }

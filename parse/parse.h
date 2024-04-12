@@ -3,34 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <username@student.your42netw      +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:36:24 by username          #+#    #+#             */
-/*   Updated: 2024/03/18 16:36:33 by username         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:00:30 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-# include <stdbool.h>
-# include <stdio.h>
 # include "../minishell.h"
-
-//typedef enum s_bool
-//{
-//	FALSE	= 0,
-//	TRUE	= 1
-//}	t_bool;
-
-//typedef struct	s_tree_node
-//{
-//	t_init_arg_data		init_arg_data;
-//	t_exec_arg_data		exec_arg_data;
-//	struct s_tree_node	*prev;
-//	struct s_tree_node	*left;
-//	struct s_tree_node	*right;
-//}	t_tree_node;
 
 void		split_by_pipe(t_tree_node **tree, t_token **head, ssize_t count);
 ssize_t		count_pipe(t_token *head);
@@ -53,5 +36,7 @@ t_token		*next_cmd(t_token *current);
 bool		is_syntax_error_pipe(t_token **head, t_token *current);
 bool		is_syntax_error_redirect(t_token **head, t_token *current);
 void		syntax_check(t_token **head);
+
+t_tree_node	*parse_wrap(t_token *token_head);
 
 #endif

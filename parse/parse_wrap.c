@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_token.c                                      :+:      :+:    :+:   */
+/*   parse_wrap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/25 19:50:11 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/12 17:34:09 by toshi            ###   ########.fr       */
+/*   Created: 2024/04/12 16:20:50 by toshi             #+#    #+#             */
+/*   Updated: 2024/04/12 17:41:52 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenize.h"
+#include "parse.h"
 
-ssize_t	input_token(t_token **head, char *line)
+t_tree_node	*parse_wrap(t_token *token_head)
 {
-	char	*start;
-	int		kind;
+	t_tree_node *head;
 
-	start = line;
-	while (*line != '\0' && *line == '<' && line - start <= 1)
-		line++;
-	if (*start == '<' && *(start + 1) == '<')
-		kind = TKN_HEREDOC;
-	else
-		kind = TKN_IN_FILE;
-	token_list (head, start, line - start, kind);
-	return (line - start);
+	head = NULL;
+	split_by_pipe(&head, &token_head, count_pipe(token_head));
+	return (head);
 }

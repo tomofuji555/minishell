@@ -1,0 +1,9 @@
+{
+	"files.associations": {
+		"execute.h": "c",
+		"sstream": "c",
+		"tokenize.h": "c",
+		"minishell.h": "c",
+		"dirent.h": "c"
+	}
+}

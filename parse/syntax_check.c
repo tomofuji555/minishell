@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <username@student.your42netw      +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:39:52 by username          #+#    #+#             */
-/*   Updated: 2024/03/22 16:39:53 by username         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:34:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ bool	is_syntax_error_pipe(t_token **head, t_token *current)
 		}
 		if (next->kind == TKN_PIPE \
 			|| next->kind == TKN_IN_FILE \
-			|| next->kind == TKN_HERE_DOC \
+			|| next->kind == TKN_HEREDOC \
 			|| next->kind == TKN_OUT_FILE \
 			|| next->kind == TKN_APPEND_FILE)
 		{
@@ -73,7 +73,7 @@ bool	is_syntax_error_redirect(t_token **head, t_token *current)
 	t_token	*next;
 
 	if (current->kind == TKN_IN_FILE || current->kind == TKN_OUT_FILE \
-		|| current->kind == TKN_HERE_DOC || current->kind == TKN_APPEND_FILE)
+		|| current->kind == TKN_HEREDOC || current->kind == TKN_APPEND_FILE)
 	{
 		next = next_cmd (current);
 		if (next == NULL)
@@ -83,7 +83,7 @@ bool	is_syntax_error_redirect(t_token **head, t_token *current)
 		}
 		if (next->kind == TKN_PIPE \
 			|| next->kind == TKN_IN_FILE \
-			|| next->kind == TKN_HERE_DOC \
+			|| next->kind == TKN_HEREDOC \
 			|| next->kind == TKN_OUT_FILE \
 			|| next->kind == TKN_APPEND_FILE)
 		{
@@ -126,7 +126,7 @@ void	syntax_check(t_token **head)
 //		}
 //		if (next_cmd->kind == TKN_OUT_FILE
 //			|| next_cmd->kind == TKN_IN_FILE
-//			|| next_cmd->kind == TKN_HERE_DOC
+//			|| next_cmd->kind == TKN_HEREDOC
 //			|| next_cmd->kind == TKN_OUT_FILE
 //			|| next_cmd->kind == TKN_APPEND_FILE)
 //		{

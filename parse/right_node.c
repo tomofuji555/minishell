@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   right_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <username@student.your42netw      +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:41:13 by username          #+#    #+#             */
-/*   Updated: 2024/03/22 16:41:53 by username         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:26:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ t_bool is_first, t_tree_node *prev_node)
 	rs_node = (t_tree_node *)malloc(sizeof (t_tree_node));
 	if (rs_node == NULL)
 		return (NULL);
-	rs_node->init_arg_data.cmd_tokens = cmd_of_rs (head, last_pipe, is_first);
-	rs_node->init_arg_data.infile_tokens = NULL;
-	rs_node->init_arg_data.outfile_tokens = NULL;
+	rs_node->init_data.cmd_tokens = cmd_of_rs (head, last_pipe, is_first);
+	rs_node->init_data.infile_tokens = NULL;
+	rs_node->init_data.outfile_tokens = NULL;
 	rs_node->prev = prev_node;
 	rs_node->left = NULL;
 	rs_node->right = NULL;
