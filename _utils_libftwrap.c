@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/08 21:04:25 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:30:49 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,16 @@ char	**ft_xsplit(const char *s, char c)
 	if (s == NULL)
 		return (NULL);
 	len_i = get_split_len(s, c) + 1;
-	//strs = (char **)ft_xcalloc(sizeof(char *) * (get_split_len(s, c) + 1));
-	strs = (char **)ft_xmalloc(sizeof(char *) * len_i); //ft_xcallocが原因　xmalloc/callocならいける
+	strs = (char **)ft_xmalloc(sizeof(char *) * len_i);
 	return (insert_strs(s, c, strs));
+}
+
+char	*ft_xitoa(int n)
+{
+	char	*str;
+	
+	str = ft_itoa(n);
+	if (str == NULL)
+		perror_and_exit("malloc", 1);
+	return (str);
 }

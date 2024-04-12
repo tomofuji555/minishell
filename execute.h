@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/10 21:26:18 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:37:30 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_bool		is_single_builtin(t_tree_node *tnode_ptr);
 //env_utils.c
 size_t		count_envname(char *dollar_ptr);
 t_env		*search_env(char *name, t_env *env_list);
-char		*ft_getenv(const char *env_name, t_manager *manager);
+char		*ms_getenv(const char *env_name, t_manager *manager);
 char		*getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager *manager);
 //free_utils.c
 void		free_multi_strs(char **strs);
@@ -166,6 +166,7 @@ char		*ft_xstrtrim(const char *s1, const char *set);
 char		*ft_xsubstr(const char *s, unsigned int start, size_t len);
 char		*ft_xstrjoin(const char *s1, const char *s2);
 char		**ft_xsplit(const char *s, char c);
+char		*ft_xitoa(int n);
 //print_utils.c
 void		wc(char *str);
 void		print_to_last(char *begining, char *last);
@@ -249,6 +250,7 @@ int do_exit(char **cmd_args, t_manager *manager);
 
 int	do_export(char **cmd_args, t_manager *manager);
 void add_env_last(t_env **head, t_env *new);
+void	upsert_env(t_manager *manager, char *str);
 
 int do_env(char **cmd_args, t_manager *manager);
 

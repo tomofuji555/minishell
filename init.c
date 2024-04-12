@@ -6,26 +6,26 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/09 17:41:59 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:38:23 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"execute.h"
 
 //envに＝がある前提で作成している
-t_env *make_new_env(char *envvar)
+t_env *make_new_env(char *envstr)
 {
 	char 	*sep_ptr;
 	t_env	*new;
 
-	sep_ptr = ft_strchr(envvar, '=');
+	sep_ptr = ft_strchr(envstr, '=');
 	new = (t_env *)ft_xmalloc(sizeof(t_env));
-	new->key = ft_substr(envvar, 0, (size_t)(sep_ptr - envvar));
-	new->val = ft_substr(sep_ptr, 1, (size_t)(ft_strchr(envvar, '\0') - sep_ptr - sizeof(char)));
+	new->key = ft_xsubstr(envstr, 0, (size_t)(sep_ptr - envstr));
+	new->val = ft_xsubstr(sep_ptr, 1, (size_t)(ft_strchr(envstr, '\0') - sep_ptr - 1));
 	new->next = NULL;
 	//
 	new->printed_flag = FALSE;
-	new->original = ft_xstrdup(envvar);
+	new->original = ft_xstrdup(envstr);
 	//
 	return (new);
 }
@@ -83,7 +83,7 @@ t_manager initialize(void)
 
 	manager.env_list = make_env_list();
 	manager.current_dir = get_current_dir();
-	manager.exit_status = ft_itoa(20);
+	manager.exit_status = ft_xitoa(0);
 	manager.prev_outfd = STDIN_FILENO;
 	manager.fork_count = 0;
 	manager.last_cmd_flag = FALSE;

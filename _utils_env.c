@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/10 14:04:03 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:34:19 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ size_t	count_envname(char *dollar_ptr)
 }
 
 ////envに必ず=がある前提で実装している
-//char	*ft_getenv(const char *env_name)
+//char	*ms_getenv(const char *env_name)
 //{
 //	extern char	**environ;
 //	char		*key;
@@ -66,7 +66,7 @@ size_t	count_envname(char *dollar_ptr)
 //	return (NULL);
 //}
 
-char *ft_getenv(const char *env_name, t_manager *manager)
+char *ms_getenv(const char *env_name, t_manager *manager)
 {
 	t_env	*ptr;
 
@@ -88,7 +88,7 @@ char *getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager *manager)
 	char *env_val;
 
 	env_name = ft_xsubstr(++dollar_ptr, 0, env_name_len);
-	env_val = ft_getenv(env_name, manager);
+	env_val = ms_getenv(env_name, manager);
 	free(env_name);
 	return (env_val);
 }

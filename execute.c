@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/10 21:26:45 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:34:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*make_cmd_path(char *cmd_name, t_manager *manager)
 	char	*cmd_path;
 	size_t	i;
 
-	path_list = ft_xsplit(ft_getenv("PATH", manager) , ':');
+	path_list = ft_xsplit(ms_getenv("PATH", manager) , ':');
 	if (path_list != NULL)
 	{
 		i = 0;
@@ -47,7 +47,7 @@ static void	exec_external_cmd(char **cmd_args, t_manager *manager)
 
 	if (cmd_args == NULL)
 		exit (0);
-	if (is_cmd_path(cmd_args[0]))
+	if (ft_strchr(cmd_args[0], '/') != NULL)
 	{
 		if (opendir(cmd_args[0]))
 			perror_arg2_and_exit(cmd_args[0], "Is a directory", 126);

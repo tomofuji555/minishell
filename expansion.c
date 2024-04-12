@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 23:02:53 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:34:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ static t_token	*expand_env_of_tkn(t_token **dest_head, t_token *env_tkn, t_token
 	t_token *expanded_head;
 	t_token *next_ptr;
 
-	expanded_head = tokenize_space_or_text(ft_getenv(env_tkn->val + sizeof(char), manager));
+	expanded_head = tokenize_space_or_text(ms_getenv(env_tkn->val + sizeof(char), manager));
 	next_ptr = env_tkn->next;
 	if (expanded_head == NULL)
 	{

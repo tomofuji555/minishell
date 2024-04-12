@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/10 16:11:22 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:15:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,15 @@ int	signal_flag = 0;
 // 	// }
 // 	// update_pwd(manager, argv[1]);
 // 	return (0);
+// }
+
+
+// //str_n_back用テスト
+// int main(int argc , char **argv)
+// {
+// 	if (argc < 4)
+// 		return (1);
+// 	printf("%s;\n", strchr_n_back(argv[1], argv[2][0], ft_atoi(argv[3])));
 // }
 
 // int main()

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/08 22:19:17 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:34:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_path	*make_new(char *first, char *last, t_bool no_slash_flag)
 	tmp_val = ft_xsubstr(first, 0, (size_t)(last - first + 1));
 	if (no_slash_flag)
 	{
-		new->val = ft_xstrjoin(tmp_val, "/") ;
+		new->val = ft_xstrjoin(tmp_val, "/");
 		free(tmp_val);
 	}
 	else
@@ -94,7 +94,7 @@ t_path *make_path_list(char *ptr)
 	t_path	*new;
 	t_path	*head;
 	t_bool	no_slash_flag;
-	char *last;
+	char	*last;
 
 	head = NULL;
 	no_slash_flag = FALSE;
@@ -118,7 +118,7 @@ t_path *make_path_list(char *ptr)
 ///	./->今のcurrent_pathを返す
 ///	/->/を返す
 /// 文字列/->current_pathとjoinして返す 
-char *add_path(t_path *ptr, char *current_path)
+char *make_path(t_path *ptr, char *current_path)
 {
 	char *last_ptr;
 	
@@ -131,30 +131,26 @@ char *add_path(t_path *ptr, char *current_path)
 		last_ptr = strchr_n_back(current_path, '/', 2);
 		if (last_ptr == NULL)
 			return (ft_xstrdup("/"));
-		return (ft_xsubstr(current_path, 0, (size_t)(last_ptr + sizeof(char) - current_path + 1))); 
+		return (ft_xsubstr(current_path, 0, (size_t)(last_ptr - current_path + 1)));
 	}
 	else
 		return (ft_xstrjoin(current_path, ptr->val));
 }
-// return (join_and_free_str2(current_dir, ft_xstrjoin("/", first->val))); //current_dir+(文字列)を返す
 
-char	*make_absolute_path_helper(t_path *head, char *current_dir)
+char	*make_absolute_path_helper(t_path *head, char *current_dir_sla)
 {
 	t_path	*ptr;
 	char	*full_path;
 	char	*tmp_path;
 
-	full_path = add_path(head, current_dir);
+	full_path = make_path(head, current_dir_sla);
 	ptr	= head->next;
 	while (ptr != NULL)
 	{
-		if (is_equal_str(ptr->val, "/") || is_equal_str(ptr->val, "./"))
-			;
-		else
+		if (!(is_equal_str(ptr->val, "/") || is_equal_str(ptr->val, "./")))
 		{
-			// printf("fullpath=%s;\n", full_path);
 			tmp_path = full_path;
-			full_path = add_path(ptr, full_path);
+			full_path = make_path(ptr, full_path);
 			free(tmp_path);
 		}
 		ptr = ptr->next;
@@ -162,27 +158,33 @@ char	*make_absolute_path_helper(t_path *head, char *current_dir)
 	return (full_path);
 }
 
-char *make_absolute_path(char *dest_path, char *current_dir)
+char *make_absolute_path(char *arg_path, char *current_dir)
 {
-	t_path	*dest_path_list;
+	t_path	*arg_path_list;
 	char	*current_dir_sla;
 	char	*absolute_path;
 	
-	if (is_equal_str(dest_path, ""))
+	if (is_equal_str(arg_path, ""))
 		return (ft_xstrjoin(current_dir, "/"));
-	dest_path_list = make_path_list(dest_path);
-	// print_path_list(dest_path_list);
+	arg_path_list = make_path_list(arg_path);
 	current_dir_sla = ft_xstrjoin(current_dir, "/");
-	absolute_path = make_absolute_path_helper(dest_path_list, current_dir_sla);
-	free_path_list(dest_path_list);
+	absolute_path = make_absolute_path_helper(arg_path_list, current_dir_sla);
+	free_path_list(arg_path_list);
 	free(current_dir_sla);
 	return (absolute_path);
 }
 
 void	update_current_dir(t_manager *manager, char *path)
 {
+	char *new_current_dir;
+	char *new_pwd;
+
 	free(manager->current_dir);
-	manager->current_dir = ft_xsubstr(path, 0, ft_strlen(path) - 1);
+	new_current_dir = ft_xsubstr(path, 0, ft_strlen(path) - 1);
+	manager->current_dir = new_current_dir;
+	new_pwd = ft_xstrjoin("PWD=", new_current_dir);
+	upsert_env(manager, new_pwd);
+	free(new_pwd);
 }
 
 int	do_cd(char **cmd_args, t_manager *manager)
@@ -205,12 +207,12 @@ int	do_cd(char **cmd_args, t_manager *manager)
 	}
 	update_current_dir(manager, path);
 	free(path);
-	// system("leaks -q minishell");
+	system("leaks -q minishell");
 	return (0);
 }
 	// if (argc == 1)
 	// {
-	// 	path = ft_getenv("HOME", manager);
+	// 	path = ms_getenv("HOME", manager);
 	// 	if (path == NULL)
 	// 	{
 	// 		perror_arg2("cd", "HOME not set");
@@ -219,7 +221,7 @@ int	do_cd(char **cmd_args, t_manager *manager)
 	// }
 	// else if (is_equal_str(cmd_args[1], "-"))
 	// {
-	// 	path = ft_getenv("OLDPWD", manager);
+	// 	path = ms_getenv("OLDPWD", manager);
 	// 	if (path == NULL)
 	// 	{
 	// 		perror_arg2("cd", "OLDPWD not set");

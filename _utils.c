@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 12:18:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 14:37:40 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,16 @@ char *strchr_n_back(char *str, char c, size_t n)
 		return (NULL);
 	c_count = 0;
 	len = ft_strlen(str);
-	while (len && n > c_count)
+	while (1)
 	{
-		if (str[len - 1] == c)
+		if (str[len] == c)
 			c_count++;
+		if (len == 0 || n == c_count)
+			break ;
 		len--;
 	}
 	if (n == c_count)
-		return (&(str[len - 1]));
+		return (&(str[len]));
 	return (NULL);
 }
 
