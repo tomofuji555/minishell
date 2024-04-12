@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 15:34:19 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:42:26 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ size_t	count_envname(char *dollar_ptr)
 	// while(ptr[i] != '\0' && ft_isalnum(ptr[i]))
 	// 	i++;
 	// return (i);
-	return (count_untill_dollar_last(dollar_ptr) - 1);
+	return (count_dollar_last(dollar_ptr) - 1);
 }
 
 ////envに必ず=がある前提で実装している

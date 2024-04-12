@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/03/08 04:44:49 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/12 15:42:26 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-ssize_t	count_untill_text_last(char *begining)
+ssize_t	count_text_last(char *begining)
 {
 	ssize_t	i;
 
@@ -22,7 +22,7 @@ ssize_t	count_untill_text_last(char *begining)
 	return (i);
 }
 
-ssize_t	count_untill_ifs_last(char *begining)
+ssize_t	count_ifs_last(char *begining)
 {
 	ssize_t	i;
 
@@ -32,7 +32,7 @@ ssize_t	count_untill_ifs_last(char *begining)
 	return (i);
 }
 
-ssize_t	count_untill_redir_last(char *begining)
+ssize_t	count_redir_last(char *begining)
 {
 	if (begining[0] == begining[1])
 		return (2);
@@ -41,7 +41,7 @@ ssize_t	count_untill_redir_last(char *begining)
 }
 
 //閉じクォートが来ないで文末に来た場合、-1を返す
-ssize_t	count_untill_quote_last(char *begining)
+ssize_t	count_quote_last(char *begining)
 {
 	ssize_t	i;
 
@@ -54,7 +54,7 @@ ssize_t	count_untill_quote_last(char *begining)
 }
 
 //$"---"のパターンのみクォート内の文字数を数える
-ssize_t	count_untill_dollar_last(char *begining)
+ssize_t	count_dollar_last(char *begining)
 {
 	char *next;
 
@@ -62,26 +62,26 @@ ssize_t	count_untill_dollar_last(char *begining)
 	if (*next == '?' || *next == '$')
 		return (2);
 	if (is_quote(*next))
-		return (1 + count_untill_quote_last(next));
+		return (1 + count_quote_last(next));
 	if (*next == '\0' || is_delim(*next))
 		return (1);
-	return (1 + count_untill_text_last(next));
+	return (1 + count_text_last(next));
 }
 
-static ssize_t count_untill_last(char *begining)
+static ssize_t count_last(char *begining)
 {
 	if (*begining == '$')
-		return (count_untill_dollar_last(begining));
+		return (count_dollar_last(begining));
 	else if (*begining == '\"' || *begining == '\'')
-		return (count_untill_quote_last(begining));
+		return (count_quote_last(begining));
 	else if (*begining == '>' || *begining == '<')
-		return (count_untill_redir_last(begining));
+		return (count_redir_last(begining));
 	else if (*begining == '|')
 		return (1);
 	else if(is_ifs(*begining))
-		return (count_untill_ifs_last(begining));
+		return (count_ifs_last(begining));
 	else
-		return (count_untill_text_last(begining));
+		return (count_text_last(begining));
 }
 /* --------------------------------------------------------- */
 /* --------------------------UNTIL-------------------------- */
@@ -176,7 +176,7 @@ t_token *tokenize(char *line_ptr)
 	head = NULL;
 	while (*line_ptr)
 	{
-		count = count_untill_last(line_ptr);
+		count = count_last(line_ptr);
 		if (count == -1)
 		{
 			free_tkn_list(head);

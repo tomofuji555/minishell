@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/12 15:37:30 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:42:26 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,8 +214,8 @@ void	finalize(t_manager *manager);
 t_token		*tokenize(char *line_ptr);
 
 t_token		*make_new_tkn(char *begining, ssize_t count, enum e_token_kind kind);
-ssize_t		count_untill_ifs_last(char *begining);
-ssize_t		count_untill_dollar_last(char *begining);
+ssize_t		count_ifs_last(char *begining);
+ssize_t		count_dollar_last(char *begining);
 //~~~~~~~~
 
 //~~~~ parse start~~~~

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 15:34:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:42:26 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void set_kind_and_count(char *begining, enum e_token_kind *kind, ssize_t 
 	if (is_ifs(*begining))
 	{
 		*kind = TKN_SPACE;
-		*count = count_untill_ifs_last(begining);
+		*count = count_ifs_last(begining);
 	}
 	else
 	{
