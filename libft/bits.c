@@ -38,10 +38,10 @@ void print_bits(unsigned char octet)
 	}
 }
 
-int main()
-{
-	unsigned char ch;
+// int main()
+// {
+// 	unsigned char ch;
 
-	ch = 255;
-	print_bits(ch);
-}
+// 	ch = 255;
+// 	print_bits(ch);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   itonbase.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:53:30 by tozeki            #+#    #+#             */
-/*   Updated: 2023/03/25 21:31:08 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/13 19:56:38 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	*ft_calloc(size_t count, size_t size);
 void	*ft_bzero(void *buf, size_t n);
 void	*ft_memset(void *buf, int ch, size_t n);
 
-int main (void)
-{
-	int n = -96552;
-	int base = 16;
-	printf("\n%s\n", itonbase(n, base));
-	return (1);
-}
+// int main (void)
+// {
+// 	int n = -96552;
+// 	int base = 16;
+// 	printf("\n%s\n", itonbase(n, base));
+// 	return (1);
+// }
 
 char *itonbase(int num, unsigned int base)
 {

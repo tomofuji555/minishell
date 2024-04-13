@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/13 17:42:44 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/13 19:55:08 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,33 +17,26 @@ RL_LIB_FLAG	:=	-L $(shell brew --prefix readline)/lib
 RL_H_FLAG	:=	-I $(shell brew --prefix readline)/include
 RL_FLAGS	:=	-lreadline  $(RL_LIB_FLAG) $(RL_H_FLAG)
 LIBFT_PATH	:=	libft/
-TOKENIZE_PATH :=	token/
-PARSE_PATHS	:=	parse/
-PATHS		:=	$(LIBFT_PATH) $(TOKENIZE_PATH) $(PARSE_PATHS) ./
-ALL_SRCS	:=	$(foreach path, $(PATHS), $(path)*.c)
-SRCS		:=	test_main.o \
-				test_free.o \
-				test_print.o 
-OBJS		:=	$(LIBFT_PATH)*.a $(TOKENIZE_PATH)*.o $(PARSE_PATHS)*.o ./*.o
+LIBFT_A		:=	$(LIBFT_PATH)/libft.a
+SRC_PATHS	:=	$(LIBFT_PATH) token/ parse/ ./
+SRCS		:=	$(foreach path, $(SRC_PATHS), $(wildcard $(path)*.c))
+OBJS		:=	$(SRCS: .c=.o)
 
 all : $(NAME)
 
 $(NAME): $(SRCS)
 	make all -C $(LIBFT_PATH)
-	make all -C $(TOKENIZE_PATH)
-	make all -C $(PARSE_PATHS)
-	$(CC) $(CFLAGS) $(RL_FLAGS) $(OBJS) -o $@
+	$(CC) $(CFLAGS) $(RL_FLAGS) $(OBJS) $(LIBFT_A) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(RL_H_FLAG) -c $<	
 
 clean :
-	make clean -C libft/
-	make clean -C parse/
-	make clean -C token/
+	make clean -C $(LIBFT_PATH)
 	rm -f $(OBJS)
 
 fclean : clean
+	make fclean -C $(LIBFT_PATH)
 	rm -f $(NAME)
 
 re : fclean all
