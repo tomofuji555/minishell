@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/12 23:27:16 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/13 17:42:44 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ PARSE_PATHS	:=	parse/
 PATHS		:=	$(LIBFT_PATH) $(TOKENIZE_PATH) $(PARSE_PATHS) ./
 ALL_SRCS	:=	$(foreach path, $(PATHS), $(path)*.c)
 SRCS		:=	test_main.o \
+				test_free.o \
 				test_print.o 
 OBJS		:=	$(LIBFT_PATH)*.a $(TOKENIZE_PATH)*.o $(PARSE_PATHS)*.o ./*.o
 

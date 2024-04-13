@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:20:50 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/13 10:48:43 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/13 18:59:44 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,35 @@
 
 t_tree_node	*parse_wrap(t_token *token_head)
 {
-	t_tree_node *head;
+	t_tree_node	*tree_head;
+	ssize_t		count;
 
-	head = (t_tree_node *)calloc(sizeof(t_tree_node), 1);
-	split_by_pipe(&head, &token_head, count_pipe(token_head));
-	return (head);
+	tree_head = (t_tree_node *)calloc(sizeof(t_tree_node), 1); //注意
+	count = count_pipe(token_head);
+	if (count == 0)
+		tree_head->init_data.cmd_tokens = token_head;
+	else
+		split_by_pipe (&tree_head, &token_head, count);
+	return (tree_head);
 }
+
+// void    parse(t_token **head)
+// {
+//         t_tree_node     node;
+//         ssize_t         count;
+
+//         node = (t_tree_node) malloc (sizeof (t_tree_node));
+//         count = count_pipe (head);
+//         if (count == 0)
+//         {
+//                 node->right = NULL;
+//                 node->init_arg_data.cmd_tokens =head;
+//                 *head = NULL;
+//                 node->init_arg_data.infile_tokens = NULL;
+//                 node->init_arg_data.outfile_tokens = NULL;
+//                 node->left = NULL;
+//                 node->prev = NULL;
+//         }
+//         else
+//                 split_by_pipe (&tree, head, count);
+// }

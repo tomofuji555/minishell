@@ -6,13 +6,18 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:25:58 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/13 17:22:00 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/13 19:06:36 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse/parse.h"
 #include "token/tokenize.h"
 #include "minishell.h"
+
+// __attribute__((destructor))
+// static void destructor() {
+//    system("leaks -q minishell");
+// }
 
 void	print_tree(t_tree_node *root)
 {
@@ -39,24 +44,21 @@ void	print_tree(t_tree_node *root)
 	}
 }
 
-void	print_tree(t_tree_node *root)
+void	free_tree(t_tree_node *root)
 {
-	t_tree_node *ptr;
-	size_t		i;
+	t_tree_node	*ptr;	
+	t_tree_node	*prev;
 
 	ptr = root;
 	while (ptr->left != NULL)
 		ptr = ptr->left;
-	wc("left");
-	print_init_data(ptr);
-	while (ptr != NULL)		//prevがちゃんとつながっているかのテスト
+	while (ptr != NULL)
 	{
+		prev = ptr->prev;
 		if (ptr->right != NULL)
-		{
-			wc("right");
-			print_init_data(ptr->right);
-		}
-		ptr = ptr->prev;
+			free_init_data_and_tnode(ptr->right);
+		free_init_data_and_tnode(ptr);
+		ptr = prev;
 	}
 }
 
@@ -72,8 +74,10 @@ void	process_line(char *line)
 		return ;
 	}
 	// print_tkn_list(token_head);
+	// free_tkn_list(token_head);
 	tree_head = parse_wrap(token_head);
-	print_tree(tree_head);
+	// print_tree(tree_head);
+	free_tree(tree_head);
 }
 
 #include <string.h>

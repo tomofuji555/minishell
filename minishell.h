@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/13 14:35:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/13 17:49:02 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,8 @@ typedef struct s_tree_node
 void print_tkn_list(t_token *ptr);
 void	print_init_data(t_tree_node *ptr);
 void	wc(char *str);
+
+void	free_init_data_and_tnode(t_tree_node *ptr);
+void	free_tkn_list(t_token *head);
 
 #endif
