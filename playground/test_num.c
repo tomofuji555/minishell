@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   test_num.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/17 16:33:46 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/13 23:31:55 by toshi            ###   ########.fr       */
+/*   Created: 2024/03/31 14:38:30 by toshi             #+#    #+#             */
+/*   Updated: 2024/04/07 12:07:06 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "stdio.h"
+#include "stdlib.h"
+#include "limits.h"
 
-size_t	ft_strlen(const char *s)
+int main(int argc, char **argv)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	int num = atoi(argv[1]);
+	char c_num = (char)num;
+	unsigned char uc_num = (unsigned char)num;
+	printf("int=%d; char=%d; uchar=%u\n", num, c_num, uc_num);
 }
-
-// int main(void)
-// {
-// 	char *str = "";
-
-// 	printf("%zu", ft_strlen(str));
-
-// 	return (0);
-
-// }

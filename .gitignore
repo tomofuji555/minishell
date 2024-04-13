@@ -1,4 +1,7 @@
 .DS_Store
+*.txt
+.vscode/
+a.out
 minishell
 
 # Prerequisites

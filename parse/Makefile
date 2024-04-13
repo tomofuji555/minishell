@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/12 18:39:43 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/13 23:29:06 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,11 @@ OBJS_PATH =../objs
 all : $(OBJS)
 
 clean :
+	make clean -C $(LIBFT_PATH)
 	rm -f $(OBJS)
 
 fclean : clean
+	make fclean -C $(LIBFT_PATH)
 	rm -f $(NAME)
 
 re : fclean all

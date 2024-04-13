@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/17 16:33:46 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/13 23:31:55 by toshi            ###   ########.fr       */
+/*   Created: 2024/04/10 16:03:08 by toshi             #+#    #+#             */
+/*   Updated: 2024/04/10 16:04:06 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "execute.h"
 
-size_t	ft_strlen(const char *s)
+int do_env(char **cmd_args, t_manager *manager)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	print_env_list(manager->env_list);
+	return (0);
 }
-
-// int main(void)
-// {
-// 	char *str = "";
-
-// 	printf("%zu", ft_strlen(str));
-
-// 	return (0);
-
-// }

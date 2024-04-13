@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/17 16:33:46 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/13 23:31:55 by toshi            ###   ########.fr       */
+/*   Created: 2024/04/10 15:55:19 by toshi             #+#    #+#             */
+/*   Updated: 2024/04/10 15:59:27 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "execute.h"
 
-size_t	ft_strlen(const char *s)
+int do_pwd(char **cmd_arg, t_manager *manager)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	printf("%s\n", manager->current_dir);
+	return (0);
 }
-
-// int main(void)
-// {
-// 	char *str = "";
-
-// 	printf("%zu", ft_strlen(str));
-
-// 	return (0);
-
-// }
