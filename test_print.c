@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 17:37:40 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/13 15:18:02 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,13 @@ void print_redir_list(t_redir *head)
 
 void	print_init_data(t_tree_node *ptr)
 {
-	printf("<<init_data>>\n");
+	// static int i = 0;
+
+	// i++;
+	// printf("<<init_data  %d>>\n", i);
 	if (ptr->init_data.cmd_tokens != NULL)
 	{
-		printf("<cmd>\n");
+		// printf("<cmd>\n");
 		print_tkn_list(ptr->init_data.cmd_tokens);
 	}
 	if (ptr->init_data.infile_tokens != NULL)

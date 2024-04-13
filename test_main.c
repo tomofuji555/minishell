@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:25:58 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 18:47:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/13 17:22:00 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,41 @@ void	print_tree(t_tree_node *root)
 
 	ptr = root;
 	while (ptr->left != NULL)
-		ptr = ptr->left;
-	i = 0;
-	printf("------------ i=%zd ------------\n", i++);
-	print_init_data(ptr);
-	while (ptr != NULL)
 	{
-		printf("------------ i=%zd ------------\n", i++);
+		// if (ptr->right != NULL)    //木構造がちゃんと構成されているかのテスト
+		// 	print_init_data(ptr->right);
+		ptr = ptr->left;
+	}
+	wc("left");
+	print_init_data(ptr);
+	while (ptr != NULL)		//prevがちゃんとつながっているかのテスト
+	{
 		if (ptr->right != NULL)
-			print_init_data(ptr);
+		{
+			wc("right");
+			print_init_data(ptr->right);
+		}
+		ptr = ptr->prev;
+	}
+}
+
+void	print_tree(t_tree_node *root)
+{
+	t_tree_node *ptr;
+	size_t		i;
+
+	ptr = root;
+	while (ptr->left != NULL)
+		ptr = ptr->left;
+	wc("left");
+	print_init_data(ptr);
+	while (ptr != NULL)		//prevがちゃんとつながっているかのテスト
+	{
+		if (ptr->right != NULL)
+		{
+			wc("right");
+			print_init_data(ptr->right);
+		}
 		ptr = ptr->prev;
 	}
 }
@@ -45,9 +71,9 @@ void	process_line(char *line)
 		ft_putendl_fd("error", STDERR_FILENO);
 		return ;
 	}
-	print_tkn_list(token_head);
+	// print_tkn_list(token_head);
 	tree_head = parse_wrap(token_head);
-	// print_tree(tree_head);
+	print_tree(tree_head);
 }
 
 #include <string.h>
@@ -68,3 +94,4 @@ int	main()
 		free(line);
 	}
 }
+

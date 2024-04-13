@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:48 by username          #+#    #+#             */
-/*   Updated: 2024/04/12 17:26:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/13 16:59:08 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,24 @@
 void	split_by_pipe(t_tree_node **tree, t_token **head, ssize_t count)
 {
 	t_tree_node	*tree_head;
-	t_tree_node	*prev_tree;
+	// t_tree_node	*prev_tree;
 	t_bool		is_root;
 	t_token		*last_pipe;
 
 	tree_head = *tree;
 	is_root = TRUE;
-	prev_tree = NULL;
+	// prev_tree = NULL;
+	(*tree)->prev = NULL;
 	while (count)
 	{
 		last_pipe = find_last_pipe (*head, count);
-		(*tree)->right = rs_tree_node (head, last_pipe, is_root, prev_tree);
+		(*tree)->right = rs_tree_node (head, last_pipe, is_root, *tree);
 		(*tree)->init_data.cmd_tokens = \
 		put_pipe_token (head, last_pipe, count);
-		(*tree)->left = ls_tree_node (head, prev_tree);
-		(*tree)->prev = prev_node (prev_tree);
+		(*tree)->left = ls_tree_node (head, *tree);
+		// (*tree)->prev = prev_node (prev_tree);
 		is_root = FALSE;
-		prev_tree = *tree;
+		// prev_tree = *tree;
 		*tree = (*tree)->left;
 		count = count_pipe (*head);
 	}
