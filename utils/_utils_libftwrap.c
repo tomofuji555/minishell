@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/14 12:40:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 16:28:08 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "../minishell.h"
+#include "../utils/utils.h"
 
 void	perror_arg2(char *err_target, char *err_str)
 {

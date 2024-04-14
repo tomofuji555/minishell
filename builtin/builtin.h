@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 00:16:16 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 13:04:07 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 17:53:46 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 
 #include "../minishell.h"
 
-//~~~~cd start~~~~
-int	do_cd(char **cmd_args, t_manager *manager);
-char *expand_path(char *oldpath, char *newpath);
+typedef struct s_path
+{
+	char				*val;
+	struct s_path		*next;
+}	t_path;
+
+//~~~~ cd ~~~~
+int		do_cd(char **cmd_args, t_manager *manager);
+char	*make_full_path(char *arg_path, char *current_dir);
+t_path	*make_path_list(char *path_ptr);
+void	print_path_list(t_path *ptr);
 //~~~~~~~~
 
 //~~~~exit start~~~~
