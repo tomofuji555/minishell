@@ -6,11 +6,11 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:45:02 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/10 15:56:31 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 12:39:05 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "builtin.h"
 
 t_bool	is_opt(char *str, char opt)
 {

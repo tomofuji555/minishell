@@ -6,11 +6,16 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/08 14:07:59 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:12:48 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "minishell.h"
+#include "utils/utils.h"
+#include "token_tozeki/tokenize.h"
+#include "parse_tozeki/parse.h"
+#include "expansion/expansion.h"
+#include "execute/execute.h"
 
 // __attribute__((destructor))
 // static void destructor() {

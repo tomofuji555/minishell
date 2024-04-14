@@ -1,131 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.h                                          :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/12 15:42:26 by toshi            ###   ########.fr       */
+/*   Created: 2024/04/14 12:07:59 by toshi             #+#    #+#             */
+/*   Updated: 2024/04/14 12:08:45 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#ifndef UTILS_H
+# define UTILS_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <dirent.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft/libft.h"
-
-#define	SYS_FAILURE	-1
-#define	CHILD		0
-#define EXIST		0
-#define NOT_EXIST	-1
-#define DEFAULT		0
-#define AMBIGUOUS	NULL
-
-extern int	signal_flag;
-
-enum	e_pipefd_direct
-{
-	R	= 0,
-	W	= 1
-};
-
-typedef enum e_bool
-{
-	FALSE	= 0,
-	TRUE	= 1
-}	t_bool;
-
-enum e_token_kind
-{
-	TKN_SPACE,
-	TKN_TEXT,
-	TKN_S_QUOTE,
-	TKN_D_QUOTE,
-	TKN_ENV,
-	TKN_PIPE,
-	TKN_IN_FILE,
-	TKN_HEREDOC,
-	TKN_OUT_FILE,
-	TKN_APPEND_FILE,
-};
-
-enum e_redir_kind
-{
-	AMBIGUOUS_REDIR,
-	REDIR_IN_FILE,
-	REDIR_HEREDOC,
-	REDIR_HEREDOC_NO_EXPAND,
-	REDIR_OUT_FILE,
-	REDIR_APPEND_FILE
-};
-
-typedef struct s_token
-{
-	enum e_token_kind	kind;
-	char				*val;
-	struct s_token		*next;
-}	t_token;
-
-typedef struct s_redir
-{
-	enum e_redir_kind	kind;
-	char				*val;
-	struct s_redir		*next;
-}	t_redir;
-
-typedef struct s_env
-{
-	char				*original;
-	char				*key;
-	char				*val;
-	t_bool				printed_flag;
-	struct s_env		*next;
-}	t_env;
-
-typedef struct s_init_data
-{
-	t_token				*cmd_tokens;
-	t_token				*infile_tokens;
-	t_token				*outfile_tokens;
-}	t_init_data;
-
-typedef struct s_adv_data
-{
-	char				**cmd_args;
-	t_redir				*infile_paths;
-	t_redir				*outfile_paths;
-}	t_adv_data;
-
-typedef struct s_tree_node
-{
-	t_init_data			init_data;
-	t_adv_data			adv_data;
-	struct s_tree_node	*prev;
-	struct s_tree_node	*left;
-	struct s_tree_node	*right;
-}	t_tree_node;
-
-typedef struct s_manager
-{
-	t_env	*env_list;
-	char	*current_dir;
-	char	*exit_status;
-	int		tmp_fd;
-	int		heredoc_line;
-	int		prev_outfd;
-	size_t	fork_count;
-	pid_t	last_pid;
-	t_bool	last_cmd_flag;
-}	t_manager;
+#include "../minishell.h"
 
 //~~~~utils start~~~~
 //bool_utils.c
@@ -203,57 +91,5 @@ char 		*strchr_n_back(char *str, char c, size_t n);
 size_t		count_strs(char **strs);
 void	update_exit_status(t_manager *manger, int num);
 //~~~~utils end~~~~
-
-//~~~~ initi start~~~~
-t_env *make_new_env(char *envvar);
-t_manager initialize(void);
-void	finalize(t_manager *manager);
-//~~~~~~~~
-
-//~~~~ tokenize start~~~~
-t_token		*tokenize(char *line_ptr);
-
-t_token		*make_new_tkn(char *begining, ssize_t count, enum e_token_kind kind);
-ssize_t		count_ifs_last(char *begining);
-ssize_t		count_dollar_last(char *begining);
-//~~~~~~~~
-
-//~~~~ parse start~~~~
-t_tree_node *parse(t_token *tkn_ptr);
-//~~~~~~~~
-
-//~~~~expansion start~~~~
-void	expansion(t_tree_node *ptr, t_manager *manager);
-char	*expand_env_in_dquote(char *str, t_manager *manager);
-//~~~~~~~~
-
-//~~~~execute start~~~~
-void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager);
-void	execute(t_tree_node *root, t_manager *manager);
-//~~~~~~~~
-
-//~~~~heredoc start~~~~
-void	rm_heredoc_tmp(t_tree_node *tnode_head);
-void	try_heredoc(t_tree_node *tnode_head, t_manager *manager);
-//~~~~~~~~
-
-//~~~~cd start~~~~
-int	do_cd(char **cmd_args, t_manager *manager);
-char *expand_path(char *oldpath, char *newpath);
-//~~~~~~~~
-
-//~~~~exit start~~~~
-t_bool	is_longlong_over(const char *str, int *ans_num);
-int do_exit(char **cmd_args, t_manager *manager);
-//~~~~~~~~
-
-
-int	do_export(char **cmd_args, t_manager *manager);
-void add_env_last(t_env **head, t_env *new);
-void	upsert_env(t_manager *manager, char *str);
-
-int do_env(char **cmd_args, t_manager *manager);
-
-int	do_unset(char **cmd_args, t_manager *manager);
 
 #endif 

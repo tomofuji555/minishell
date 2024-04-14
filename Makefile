@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/13 23:18:22 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/14 13:20:44 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,21 @@ CC			:=	cc
 # CFLAGS		:=	-Wall -Wextra -Werror 
 RL_LIB_FLAG	:=	-L $(shell brew --prefix readline)/lib
 RL_H_FLAG	:=	-I $(shell brew --prefix readline)/include
-RL_FLAGS	:=	-lreadline  $(RL_LIB_FLAG) $(RL_H_FLAG)
+RL_FLAGS	:=	-lreadline $(RL_LIB_FLAG) $(RL_H_FLAG)
 LIBFT_PATH	:=	libft/
 LIBFT_A		:=	$(LIBFT_PATH)libft.a
-SRC_PATHS	:=	$(LIBFT_PATH) token/ parse/ ./
+SRC_PATHS	:=	$(LIBFT_PATH) \
+				utils/ \
+				token_tozeki/ \
+				parse_tozeki/ \
+				expansion/ \
+				execute/ \
+				builtin/ \
+				./
 SRCS		:=	$(foreach path, $(SRC_PATHS), $(wildcard $(path)*.c))
-OUT_PATTERN	:=	$(LIBFT_PATH)%
+OUT_PATTERN	:=	$(LIBFT_PATH)% \
+				execute/execute_utils1.c \
+				./main_test.c
 OBJS		:=	$(patsubst %.c, %.o, $(filter-out $(OUT_PATTERN), $(SRCS)))
 
 
@@ -28,7 +37,7 @@ all:	$(NAME)
 
 $(NAME): $(OBJS)
 	make all -C $(LIBFT_PATH)
-	$(CC) $(CFLAGS) $(RL_FLAGS) $(OBJS) $(LIBFT_A) -o $@
+	$(CC) $(CFLAGS) $(RL_FLAGS) $(LIBFT_A) $(OBJS) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(RL_H_FLAG) -c $< -o $@

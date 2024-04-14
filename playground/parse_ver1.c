@@ -6,11 +6,11 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 23:02:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 12:55:11 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "../minishell.h"
 
 //next_ptrは事前に持つ。NULL埋め切りされるため、後で取得できない
 t_token	*push_redir_tkns_aaa(t_token **redir_tkns_head, t_token *first, t_token **cmd_tkns_head)

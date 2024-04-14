@@ -6,11 +6,11 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:12:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 23:02:53 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 12:40:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "utils.h"
 
 void	free_multi_strs(char **strs)
 {

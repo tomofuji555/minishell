@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 23:14:07 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 15:11:57 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:22:04 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "builtin.h"
+#include "../utils/utils.h"
 
 void	upsert_env(t_manager *manager, char *str)
 {

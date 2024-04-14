@@ -6,11 +6,11 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/10 21:25:32 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 12:40:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "utils.h"
 
 t_bool is_ifs(char c)
 {

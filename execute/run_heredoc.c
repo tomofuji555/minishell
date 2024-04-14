@@ -6,11 +6,13 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 23:02:53 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:08:21 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "../utils/utils.h"
+#include "../expansion/expansion.h"
 
 //ctrl+cで終了した時、見つからないファイルを消そうとしてxunlinkがエラーし、exitする可能性があるため、accessを噛ませることにした
 void	remove_file(char *path)

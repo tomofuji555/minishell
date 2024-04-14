@@ -6,11 +6,11 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/01/10 03:41:13 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 12:55:11 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "../minishell.h"
 
 exec_in_dfs(t_tree_node *tree_root)
 {

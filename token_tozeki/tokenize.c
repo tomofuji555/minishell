@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 15:42:26 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:00:06 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "tokenize.h"
+#include "../utils/utils.h"
 
 ssize_t	count_text_last(char *begining)
 {

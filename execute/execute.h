@@ -1,19 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 15:55:19 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/10 15:59:27 by toshi            ###   ########.fr       */
+/*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
+/*   Updated: 2024/04/14 12:28:57 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#ifndef EXECUTE_H
+# define EXECUTE_H
 
-int do_pwd(char **cmd_arg, t_manager *manager)
+#include "../minishell.h"
+
+enum	e_pipefd_direct
 {
-	printf("%s\n", manager->current_dir);
-	return (0);
-}
+	R	= 0,
+	W	= 1
+};
+
+//~~~~execute start~~~~
+void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager);
+void	execute(t_tree_node *root, t_manager *manager);
+//~~~~~~~~
+
+//~~~~heredoc start~~~~
+void	rm_heredoc_tmp(t_tree_node *tnode_head);
+void	try_heredoc(t_tree_node *tnode_head, t_manager *manager);
+//~~~~~~~~
+
+
+
+#endif 

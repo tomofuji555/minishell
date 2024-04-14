@@ -6,11 +6,11 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/10 21:53:29 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 12:59:16 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "utils.h"
 
 void	wc(char *str)
 {
@@ -109,7 +109,7 @@ void print_redir_list(t_redir *head)
 	}
 }
 
-static void	print_init_data(t_tree_node *ptr)
+void	print_init_data(t_tree_node *ptr)
 {
 	printf("<<init_data>>\n");
 	if (ptr->init_data.cmd_tokens != NULL)

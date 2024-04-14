@@ -6,11 +6,13 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 15:42:26 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:01:58 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "expansion.h"
+#include "../utils/utils.h"
+#include "../token_tozeki/tokenize.h"
 
 static size_t _strlen_env_expanded(char *str, t_manager *manager)
 {

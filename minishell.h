@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/13 17:49:02 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 12:36:40 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@
 # include <readline/history.h>
 # include "libft/libft.h"
 
+#define	SYS_FAILURE	-1
+#define	CHILD		0
+#define EXIST		0
+#define NOT_EXIST	-1
+#define DEFAULT		0
+#define AMBIGUOUS	NULL
+
+extern int	signal_flag;
+
 typedef enum e_bool
 {
 	FALSE	= 0,
@@ -32,24 +41,17 @@ typedef enum e_bool
 
 enum e_token_kind
 {
-	TKN_SPACE			= 0,
-	TKN_TEXT			= 1,
-	TKN_S_QUOTE			= 2,
-	TKN_D_QUOTE			= 3,
-	TKN_ENV				= 4,
-	TKN_PIPE			= 5,
-	TKN_IN_FILE			= 6,
-	TKN_HEREDOC		= 7,
-	TKN_OUT_FILE		= 8,
-	TKN_APPEND_FILE		= 9,
+	TKN_SPACE,
+	TKN_TEXT,
+	TKN_S_QUOTE,
+	TKN_D_QUOTE,
+	TKN_ENV,
+	TKN_PIPE,
+	TKN_IN_FILE,
+	TKN_HEREDOC,
+	TKN_OUT_FILE,
+	TKN_APPEND_FILE,
 };
-
-typedef struct s_token
-{
-	enum e_token_kind	kind;
-	char				*val;
-	struct s_token		*next;
-}	t_token;
 
 enum e_redir_kind
 {
@@ -59,6 +61,13 @@ enum e_redir_kind
 	REDIR_OUT_FILE,
 	REDIR_APPEND_FILE,
 };
+
+typedef struct s_token
+{
+	enum e_token_kind	kind;
+	char				*val;
+	struct s_token		*next;
+}	t_token;
 
 typedef struct s_redir
 {
@@ -89,6 +98,36 @@ typedef struct s_tree_node
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
 }	t_tree_node;
+
+typedef struct s_env
+{
+	char				*original;
+	char				*key;
+	char				*val;
+	t_bool				printed_flag;
+	struct s_env		*next;
+}	t_env;
+
+typedef struct s_manager
+{
+	t_env	*env_list;
+	char	*current_dir;
+	char	*exit_status;
+	int		tmp_fd;
+	int		heredoc_line;
+	int		prev_outfd;
+	size_t	fork_count;
+	pid_t	last_pid;
+	t_bool	last_cmd_flag;
+}	t_manager;
+
+
+//~~~~ initi start~~~~
+t_env *make_new_env(char *envvar);
+t_manager initialize(void);
+void	finalize(t_manager *manager);
+void	add_env_last(t_env **head, t_env *new);
+//~~~~~~~~
 
 void print_tkn_list(t_token *ptr);
 void	print_init_data(t_tree_node *ptr);

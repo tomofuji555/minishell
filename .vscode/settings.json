@@ -4,6 +4,8 @@
 		"sstream": "c",
 		"tokenize.h": "c",
 		"minishell.h": "c",
-		"dirent.h": "c"
+		"dirent.h": "c",
+		"expansion.h": "c",
+		"builtin.h": "c"
 	}
 }

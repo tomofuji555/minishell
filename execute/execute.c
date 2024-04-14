@@ -6,11 +6,13 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 15:34:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:03:39 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "../utils/utils.h"
+#include "../builtin/builtin.h"
 
 static char	*make_cmd_path(char *cmd_name, t_manager *manager)
 {

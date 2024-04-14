@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/12 15:42:26 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 12:57:34 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "utils.h"
+#include "../token_tozeki/tokenize.h"
 
 t_env	*search_env(char *name, t_env *env_list)
 {

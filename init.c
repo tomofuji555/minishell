@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/12 15:38:23 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:10:29 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"execute.h"
+#include "minishell.h"
+#include "utils/utils.h"
 
 //envに＝がある前提で作成している
 t_env *make_new_env(char *envstr)

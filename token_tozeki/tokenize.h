@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   tokenize.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 16:03:08 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/10 16:04:06 by toshi            ###   ########.fr       */
+/*   Created: 2024/04/14 12:11:01 by toshi             #+#    #+#             */
+/*   Updated: 2024/04/14 12:11:55 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#ifndef TOKENIZE_H
+# define TOKENIZE_H
 
-int do_env(char **cmd_args, t_manager *manager)
-{
-	print_env_list(manager->env_list);
-	return (0);
-}
+#include "../minishell.h"
+
+//~~~~ tokenize start~~~~
+t_token		*tokenize(char *line_ptr);
+
+t_token		*make_new_tkn(char *begining, ssize_t count, enum e_token_kind kind);
+ssize_t		count_ifs_last(char *begining);
+ssize_t		count_dollar_last(char *begining);
+//~~~~~~~~
+
+
+#endif 

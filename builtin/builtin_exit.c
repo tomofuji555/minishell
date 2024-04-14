@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 13:24:13 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 21:02:31 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:22:34 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "builtin.h"
+#include "../utils/utils.h"
 
 t_bool	is_numstr(char *ptr)
 {

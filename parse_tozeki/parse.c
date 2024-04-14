@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/08 23:02:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 13:00:42 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "parse.h"
+#include "../utils/utils.h"
 
 //redir_tknの次がNULLじゃない前提で実装している
 static void	del_space_afrer_redir(t_token **tkn_head)
