@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 23:14:07 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 18:13:28 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 22:42:00 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	do_export(char **cmd_args, t_manager *manager)
 	argc = count_strs(cmd_args);
 	if (argc == 1)
 	{
-		// print_sorted_env(manager->env_list);
+		print_sorted_env(manager->env_list);
 		return (0);
 	}
 	err_flag = FALSE;

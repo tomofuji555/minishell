@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 12:07:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 18:04:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 22:16:42 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void		ft_xpipe(int *pipefd);
 pid_t		ft_xfork(void);
 int			ft_xunlink(char *pathname);
 void		ft_xexecve(char *cmd_path, char **cmd_args, t_env *env_list);
+
+size_t count_envvar(t_env *env_list);
+char		**make_envp(t_env *env_list);
 //tkn_utils.c
 t_token		*find_last_tkn(t_token *head);
 t_token		*find_last_valuable_tkn(t_token *head);

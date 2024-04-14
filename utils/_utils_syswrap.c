@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/14 12:40:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 23:11:19 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int ft_xunlink(char *pathname)
 	return (0);
 }
 
-static size_t count_envvar(t_env *env_list)
+size_t count_envvar(t_env *env_list)
 {
 	t_env	*ptr;
 	size_t	count;
@@ -113,7 +113,7 @@ static size_t count_envvar(t_env *env_list)
 	return (count);
 }
 
-static char **make_envp(t_env *env_list)
+char **make_envp(t_env *env_list)
 {
 	char	**envp;
 	t_env	*ptr;
@@ -124,7 +124,7 @@ static char **make_envp(t_env *env_list)
 	ptr = env_list;
 	while (ptr != NULL)
 	{
-		envp[i++] = join_and_free_str2(env_list->key, ft_xstrjoin("=", env_list->val));
+		envp[i++] = join_and_free_str2(ptr->key, ft_xstrjoin("=", ptr->val));
 		ptr = ptr->next;
 	}
 	envp[i] = NULL;

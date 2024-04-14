@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 00:16:16 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 17:53:46 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 23:40:26 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,21 @@ t_path	*make_path_list(char *path_ptr);
 void	print_path_list(t_path *ptr);
 //~~~~~~~~
 
-//~~~~exit start~~~~
-t_bool	is_longlong_over(const char *str, int *ans_num);
-int do_exit(char **cmd_args, t_manager *manager);
-//~~~~~~~~
-
-
-int		do_export(char **cmd_args, t_manager *manager);
-void	upsert_env(t_manager *manager, char *str);
+int		do_echo(char **cmd_args);
 
 int		do_env(char **cmd_args, t_manager *manager);
 
+int		do_exit(char **cmd_args, t_manager *manager);
+
+//~~~~export start~~~~
+int		do_export(char **cmd_args, t_manager *manager);
+void	upsert_env(t_manager *manager, char *str);
+void	print_sorted_env(t_env *env_list);
+//~~~~~~~~
+
+int		do_pwd(t_manager *manager);
+
 int		do_unset(char **cmd_args, t_manager *manager);
+
 
 #endif
