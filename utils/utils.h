@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 12:07:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 12:08:45 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 18:04:09 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char		*ft_xitoa(int n);
 void		wc(char *str);
 void		print_to_last(char *begining, char *last);
 void		print_tkn_list(t_token *head);
-void		print_env_list(t_env *head);
+void		print_env_list(t_env *ptr);
 void		print_cmd_args(char **strs);
 void		print_redir_list(t_redir *head);
 void		print_init_of_tnode_list(t_tree_node *tnode_ptr);

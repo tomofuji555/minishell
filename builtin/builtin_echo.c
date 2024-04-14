@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:45:02 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 12:39:05 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 17:59:13 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ int	do_echo(char **cmd_args)
 	i = find_opt_start(cmd_args, &opt_n_flag);
 	while (1)
 	{
-		printf("%s", cmd_args[i++]);
+		ft_putstr_fd(cmd_args[i++], STDOUT_FILENO);
 		if (cmd_args[i] == NULL)
 			break ;
-		printf(" ");
+		ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	if (!opt_n_flag)
-		printf("\n");
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }
 

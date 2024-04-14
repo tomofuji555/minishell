@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 12:59:16 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 18:04:14 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,13 @@ void print_tkn_list(t_token *ptr)
 	}
 }
 
-void	print_env_list(t_env *head)
+void	print_env_list(t_env *ptr)
 {
-	t_env	*ptr;
-
-	ptr = head;
 	while (ptr != NULL)
 	{
-		//printf("%s\n", ptr->original);
-		printf("%s=%s\n", ptr->key, ptr->val);
+		ft_putstr_fd(ptr->key, STDOUT_FILENO);
+		ft_putchar_fd('=', STDOUT_FILENO);
+		ft_putendl_fd(ptr->val, STDOUT_FILENO);
 		ptr = ptr->next;
 	}
 }

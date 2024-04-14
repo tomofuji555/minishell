@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:04:57 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 13:22:11 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/14 18:07:53 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	do_unset(char **cmd_args, t_manager *manager)
 {
 	size_t	argc;
 	size_t	i;
-	t_env	*envvar;
+	t_env	*env_ptr;
 
 	argc = count_strs(cmd_args);
 	if (argc == 1)
@@ -54,9 +54,9 @@ int	do_unset(char **cmd_args, t_manager *manager)
 	i = 1;
 	while (i < argc)
 	{
-		envvar = search_env(cmd_args[i], manager->env_list);
-		if (envvar)
-			remove_env(&(manager->env_list), envvar);
+		env_ptr = search_env(cmd_args[i], manager->env_list);
+		if (env_ptr)
+			remove_env(&(manager->env_list), env_ptr);
 		i++;
 	}
 	return (0);
