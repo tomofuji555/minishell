@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/14 12:28:57 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/15 20:01:42 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ enum	e_pipefd_direct
 //~~~~execute start~~~~
 void	exec_cmd_in_child(t_tree_node *ptr, t_manager *manager);
 void	execute(t_tree_node *root, t_manager *manager);
+
+void do_single_builtin(t_tree_node *root, t_manager *manager);
 //~~~~~~~~
 
 //~~~~heredoc start~~~~
