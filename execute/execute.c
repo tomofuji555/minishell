@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 13:03:39 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/15 02:15:51 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,15 +256,16 @@ void do_single_builtin(t_tree_node *root, t_manager *manager)
 {
 	int tmpfd_in;
 	int tmpfd_out;
+	int status;
 
-	tmpfd_in = STDIN_FILENO;
-	tmpfd_out = STDOUT_FILENO;
+	tmpfd_in = ft_xdup(STDIN_FILENO);
+	tmpfd_out = ft_xdup(STDOUT_FILENO);
+	status = 1;
 	if (can_change_iostream_redirect(root->adv_data))
-		update_exit_status(manager, do_builtin(root->adv_data.cmd_args, manager));
-	else
-		update_exit_status(manager, 1);
+		status = do_builtin(root->adv_data.cmd_args, manager);
+	update_exit_status(manager, status);
 	ft_xdup2(tmpfd_in, STDIN_FILENO);
-	ft_xdup2(tmpfd_out, STDOUT_FILENO);
+	ft_xdup2(tmpfd_out, STDOUT_FILENO);	
 }
 /* --------------------------------------------------------- */
 /* --------------------------UNTIL-------------------------- */
