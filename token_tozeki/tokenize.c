@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 13:00:06 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 01:59:49 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,18 @@ ssize_t	count_quote_last(char *begining)
 ssize_t	count_dollar_last(char *begining)
 {
 	char *next;
+	size_t count;
 
 	next = begining + sizeof(char);
 	if (*next == '?' || *next == '$')
 		return (2);
 	if (is_quote(*next))
-		return (1 + count_quote_last(next));
+	{
+		count = count_quote_last(next);
+		if (count == -1)
+			return (-1);
+		return (1 + count);
+	}
 	if (*next == '\0' || is_delim(*next))
 		return (1);
 	return (1 + count_text_last(next));

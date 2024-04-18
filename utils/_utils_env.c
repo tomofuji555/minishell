@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 12:57:34 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 03:03:33 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ char *ms_getenv(const char *env_name, t_manager *manager)
 	return (NULL);
 }
 
+/// @brief 
+/// @param dollar_ptr 文字列の$のアドレス
+/// @param env_name_len $を含めない環境変数のlength
 char *getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager *manager)
 {
 	char *env_name;

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 12:40:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/18 23:35:12 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ size_t	strlcat_ret_catlen(char *dest, const char *src, size_t size)
 	size_t	i;
 	
 	dest_len = ft_strlen(dest);
-	if (size == 0 || size < dest_len)
+	if (dest_len > size)
 		return (0);
 	i = 0;
-	while(src[i] != '\0' && i + 1 < size)
+	while (src[i] != '\0' && dest_len + i + 1 < size)
 	{
 		dest[dest_len + i] = src[i];
 		i++;

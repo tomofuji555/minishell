@@ -6,11 +6,15 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 12:54:25 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 00:18:42 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "utils/utils.h"
+#include "expansion/expansion.h"
+#include "token_tozeki/tokenize.h"
+#include "parse_tozeki/parse.h"
 
 int	signal_flag = 0;
 
@@ -70,28 +74,29 @@ int	signal_flag = 0;
 // 	free_tnode_list(tnode_head);
 // }
 
-//// expansion_env_of_tknの確認
-//int main()
-//{
-//	t_manager manager;
+// expansion_env_of_tknの確認
+int main()
+{
+	t_manager manager;
 	
-//	char *str1 = "  $AA aaaa";
-//	char *str2 = "cat >  aaa$PWD$\"SSS\">>  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
-//	char *str3 = "$LS'aaa'$'bbb'$LS'sss'";
-//	char *str4 = "$ZZZ>\"$PWD\"$ECHO<<kkk$PPP cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
-//	char *str5 = "ls |$LS$";
-//	char *str6 = "cat >aaa$PWD<bbb$PWD ccc$PWD |$LS$";
-//	manager = init();
-//	t_token *tkn_head = tokenize(str2);
-//	if (tkn_head == NULL)
-//		return (1);
-//	t_tree_node *tnode_head = parse(tkn_head);
-//	printf("---------------------------------------------------------------------------------\n");
-//	expansion(tnode_head, manager);
-//	print_exec_of_tnode_list(tnode_head);
-//	free_env_list(manager.env_list);
-//	free_tnode_list(tnode_head);
-//}
+	char *str1 = "  $AA aaaa";
+	char *str2 = "cat >  aaa$PWD$\"SSS\">>  aaa$PWD$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk |$LS$";
+	char *str3 = "$LS'aaa'$'bbb'$LS'sss'";
+	char *str4 = "$ZZZ>\"$PWD\"$ECHO<<kkk$PPP cat >  aaa$PWD$\"PWD\"  aaa|$LS$";
+	char *str5 = "ls |$LS$";
+	char *str6 = "cat >aaa$PWD<bbb$PWD ccc$PWD |$LS$";
+	char *str7 = "$NO < $NO  >$NO | ls";
+	manager = initialize();
+	t_token *tkn_head = tokenize(str7);
+	if (tkn_head == NULL)
+		return (1);
+	t_tree_node *tnode_head = parse(tkn_head);
+	// printf("---------------------------------------------------------------------------------\n");
+	expansion(tnode_head, &manager);
+	print_exec_of_tnode_list(tnode_head);
+	free_env_list(manager.env_list);
+	free_tnode_list(tnode_head);
+}
 
 // // expansion_env_in_dquote単体の確認
 // int main()
@@ -180,6 +185,22 @@ int	signal_flag = 0;
 // }
 
 
+// //strlcat_ret_catlenテスト
+// int main()
+// {
+// 	size_t len = 5;
+// 	char str[len];
+// 	int i = 0;
+// 	str[i++] = '0';
+// 	str[i++] = '1';
+// 	str[i++] = '2';
+// 	str[i++] = '3';
+// 	str[i++] = '4';
+// 	char *s1 = "abcdef";
+// 	size_t ret = strlcat_ret_catlen(str, s1, len);
+// 	printf("str=%s;, ret=%zd;\n", str, ret);
+// }
+
 // //str_n_back用テスト
 // int main(int argc , char **argv)
 // {
@@ -219,5 +240,3 @@ int	signal_flag = 0;
 // 	printf("終了ステータスは%d\n", ft_atoi(manager.exit_status));
 // 	finalize(&manager);
 // }
-
-

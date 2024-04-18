@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/18 20:09:55 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 00:36:02 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	_process_line(char *line, t_manager *manager)
 	tnode_head = parse(token_head);
 	expansion(tnode_head, manager);
 	manager->tmp_fd = ft_xdup(STDIN_FILENO);
-	execute(tnode_head, manager);
+	print_exec_of_tnode_list(tnode_head);
+	// execute(tnode_head, manager);
 	ft_xdup2(manager->tmp_fd, STDIN_FILENO);
 	free_tnode_list(tnode_head);
 }
