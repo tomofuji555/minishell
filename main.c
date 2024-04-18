@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/14 13:12:48 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/18 20:09:55 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 #include "expansion/expansion.h"
 #include "execute/execute.h"
 
+int	signal_flag = 0;
+
 // __attribute__((destructor))
 // static void destructor() {
 //    system("leaks -q minishell");
 // }
 
-int	signal_flag = 0;
-
-void handle_sigint_in_prompt(int num)
+void _handle_sigint_in_prompt(int num)
 {
 	signal_flag = 128 + num;
 	printf("\n");
@@ -33,7 +33,9 @@ void handle_sigint_in_prompt(int num)
 	rl_redisplay();
 }
 
-void	process_line(char *line, t_manager *manager)
+/// @brief  token_head == NULLに入る時は、quote_errのみ??と""/''/(スペースのみ)は??
+///
+void	_process_line(char *line, t_manager *manager)
 {
 	t_token		*token_head;
 	t_tree_node	*tnode_head;
@@ -42,34 +44,25 @@ void	process_line(char *line, t_manager *manager)
 	if (token_head == NULL)
 	{
 		update_exit_status(manager, 1);
-		return ; //errorを履くのはtokenize,ここに入るのは、エラーと""のとき
+		return ;
 	}
 	tnode_head = parse(token_head);
 	expansion(tnode_head, manager);
-	manager->tmp_fd = ft_xdup(STDIN_FILENO); //xdupを作成する必要あり
-	try_heredoc(tnode_head, manager);
-	if (signal_flag == 0)
-		execute(tnode_head, manager);
-	else
-		update_exit_status(manager, signal_flag);
+	manager->tmp_fd = ft_xdup(STDIN_FILENO);
+	execute(tnode_head, manager);
 	ft_xdup2(manager->tmp_fd, STDIN_FILENO);
-	manager->prev_outfd = STDIN_FILENO;
-	manager->last_cmd_flag = FALSE;
-	manager->fork_count = 0;
-	rm_heredoc_tmp(tnode_head);
 	free_tnode_list(tnode_head);
-	// signal_flag = 0; //mainでやっている
 }
 
 #include <string.h>
-void	run_prompt(t_manager *manager)
+void	_run_prompt(t_manager *manager)
 {
 	char *line;
 
 	while (1)
 	{
 		signal_flag = 0;
-		signal(SIGINT, handle_sigint_in_prompt);
+		signal(SIGINT, _handle_sigint_in_prompt);
 		signal(SIGQUIT, SIG_IGN);
 		line = readline("minishell$ ");
 		if (signal_flag != 0)
@@ -82,7 +75,7 @@ void	run_prompt(t_manager *manager)
 		else if (strcmp(line, "") != 0)
 		{
 			add_history(line);
-			process_line(line, manager);
+			_process_line(line, manager);
 		}
 		free(line);
 	}
@@ -93,6 +86,6 @@ int main(void)
 	t_manager manager;
 
 	manager = initialize();
-	run_prompt(&manager);
+	_run_prompt(&manager);
 	finalize(&manager);
 }

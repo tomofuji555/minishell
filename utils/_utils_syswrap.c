@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/14 23:11:19 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/18 19:33:45 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,6 @@ pid_t ft_xfork(void)
 	if (pid == SYS_FAILURE)
 		perror_and_exit("fork", 1);
 	return (pid);
-}
-
-int ft_xunlink(char *pathname)
-{
-	if (unlink(pathname) == SYS_FAILURE)
-		perror_and_exit("unlink", 1);
-	return (0);
 }
 
 size_t count_envvar(t_env *env_list)

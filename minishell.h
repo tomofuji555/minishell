@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/14 12:36:40 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/18 16:06:22 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ typedef struct s_manager
 	char	*exit_status;
 	int		tmp_fd;
 	int		heredoc_line;
-	int		prev_outfd;
-	size_t	fork_count;
-	pid_t	last_pid;
-	t_bool	last_cmd_flag;
+	// int		prev_outfd;
+	// size_t	fork_count;
+	// pid_t	last_pid;
+	// t_bool	last_cmd_flag;
 }	t_manager;
 
 

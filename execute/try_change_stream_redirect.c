@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   can_change_stream_redirect.c                       :+:      :+:    :+:   */
+/*   try_change_stream_redirect.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:17:33 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/15 20:18:16 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/18 20:36:03 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 #include "../utils/utils.h"
 
-static int open_redir_path(t_redir *node)
+/// @brief openでエラーが起きた時、perrorでエラー文(No such file or directory/Permission denied)を自動に振り分けてくれる
+int _open_redir_path(t_redir *ptr)
 {
 	int fd;
 
-	if (node->kind == REDIR_OUT_FILE)
-		fd = open(node->val, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	else if (node->kind == REDIR_APPEND_FILE)
-		fd = open(node->val, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (ptr->kind == REDIR_OUT_FILE)
+		fd = open(ptr->val, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	else if (ptr->kind == REDIR_APPEND_FILE)
+		fd = open(ptr->val, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	else
-		fd = open(node->val, O_RDONLY);
+		fd = open(ptr->val, O_RDONLY);
 	if (fd == SYS_FAILURE)
-		perror(node->val); //No such file or directory / Permission denied を勝手に吐いてくれる
+		perror(ptr->val);
 	return (fd);
 }
 
-static int find_last_fd(t_redir *redir_ptr)
+static int _find_last_fd(t_redir *redir_ptr)
 {
 	int fd;
 
@@ -37,7 +38,7 @@ static int find_last_fd(t_redir *redir_ptr)
 	{
 		if (fd != DEFAULT)
 			ft_xclose(fd);
-		fd = open_redir_path(redir_ptr);
+		fd = _open_redir_path(redir_ptr);
 		if (fd == SYS_FAILURE)
 			return (fd);
 		redir_ptr = redir_ptr->next;
@@ -45,12 +46,12 @@ static int find_last_fd(t_redir *redir_ptr)
 	return (fd);
 }
 
-//redir_headがNULLじゃない前提で実装
-t_bool	can_change_stream_redirect(t_redir *redir_head, int dest_fd)
+/// @brief redir_headがNULLじゃない前提で実装
+t_bool	try_change_stream_redirect(t_redir *redir_head, int dest_fd)
 {
 	int redir_fd;
 
-	redir_fd = find_last_fd(redir_head);
+	redir_fd = _find_last_fd(redir_head);
 	if (redir_fd == SYS_FAILURE)
 		return (FALSE);
 	ft_xdup2 (redir_fd, dest_fd);

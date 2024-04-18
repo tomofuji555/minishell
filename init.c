@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/14 13:10:29 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/18 16:07:58 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ t_manager initialize(void)
 	manager.env_list = make_env_list();
 	manager.current_dir = get_current_dir();
 	manager.exit_status = ft_xitoa(0);
-	manager.prev_outfd = STDIN_FILENO;
-	manager.fork_count = 0;
-	manager.last_cmd_flag = FALSE;
 	manager.heredoc_line = 0;
+	// manager.prev_outfd = STDIN_FILENO;
+	// manager.fork_count = 0;
+	// manager.last_cmd_flag = FALSE;
 	return (manager);
 }
 

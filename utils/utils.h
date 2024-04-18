@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 12:07:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 22:16:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/18 20:53:06 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int			ft_xdup2(int copied_fd, int dest_fd);
 void		ft_xclose(int fd);
 void		ft_xpipe(int *pipefd);
 pid_t		ft_xfork(void);
-int			ft_xunlink(char *pathname);
 void		ft_xexecve(char *cmd_path, char **cmd_args, t_env *env_list);
 
 size_t count_envvar(t_env *env_list);
