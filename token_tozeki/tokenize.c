@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 20:50:49 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 01:25:49 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,69 +14,7 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-ssize_t	count_text_last(char *begining)
-{
-	ssize_t	i;
-
-	i = 1;
-	while(begining[i] && !is_delim(begining[i]))
-		i++;
-	return (i);
-}
-
-ssize_t	count_ifs_last(char *begining)
-{
-	ssize_t	i;
-
-	i = 1;
-	while(begining[i] && is_ifs(begining[i]))
-		i++;
-	return (i);
-}
-
-ssize_t	count_redir_last(char *begining)
-{
-	if (begining[0] == begining[1])
-		return (2);
-	else
-		return (1);
-}
-
-//閉じクォートが来ないで文末に来た場合、-1を返す
-ssize_t	count_quote_last(char *begining)
-{
-	ssize_t	i;
-
-	i = 1;
-	while(begining[i] && begining[0] != begining[i])
-		i++;
-	if (begining[i] == '\0')
-		return (-1);
-	return (i + 1);
-}
-
-//$"---"のパターンのみクォート内の文字数を数える
-ssize_t	count_dollar_last(char *begining)
-{
-	char *next;
-	size_t count;
-
-	next = begining + sizeof(char);
-	if (*next == '?' || *next == '$')
-		return (2);
-	if (is_quote(*next))
-	{
-		count = count_quote_last(next);
-		if (count == -1)
-			return (-1);
-		return (1 + count);
-	}
-	if (*next == '\0' || is_delim(*next))
-		return (1);
-	return (1 + count_text_last(next));
-}
-
-static ssize_t count_last(char *begining)
+static ssize_t _count_last(char *begining)
 {
 	if (*begining == '$')
 		return (count_dollar_last(begining));
@@ -91,11 +29,8 @@ static ssize_t count_last(char *begining)
 	else
 		return (count_text_last(begining));
 }
-/* --------------------------------------------------------- */
-/* --------------------------UNTIL-------------------------- */
-/* --------------------------------------------------------- */
 
-static enum e_token_kind	save_redir_tkn_kind(char *begining)
+static enum e_token_kind	_save_redir_tkn_kind(char *begining)
 {
 	char *ptr;
 
@@ -117,7 +52,7 @@ static enum e_token_kind	save_redir_tkn_kind(char *begining)
 }
 
 //$の次がヌル終端か、?・$以外の区切り文字ならTKN_TEXT
-static enum e_token_kind	save_env_or_text_kind(char *begining)
+static enum e_token_kind	_save_env_or_text_kind(char *begining)
 {
 	char *ptr;
 
@@ -127,52 +62,22 @@ static enum e_token_kind	save_env_or_text_kind(char *begining)
 	return (TKN_ENV);
 }
 
-static enum e_token_kind	save_tkn_kind(char *begining)
+static enum e_token_kind	_save_tkn_kind(char *begining)
 {
 	if (*begining == '$')
-		return (save_env_or_text_kind(begining));
+		return (_save_env_or_text_kind(begining));
 	else if (*begining == '\'')
 		return (TKN_S_QUOTE);
 	else if (*begining == '\"')
 		return (TKN_D_QUOTE);
 	else if (*begining == '<' || *begining == '>')
-		return (save_redir_tkn_kind(begining));
+		return (_save_redir_tkn_kind(begining));
 	else if (*begining == '|')
 		return (TKN_PIPE);
-	else if(is_ifs(*begining))
+	else if (is_ifs(*begining))
 		return (TKN_SPACE);
 	else
 		return (TKN_TEXT);
-}
-/* --------------------------------------------------------- */
-/* --------------------------UNTIL-------------------------- */
-/* --------------------------------------------------------- */
-
-//lenはクォーテーション内の文字数+1文字分
-static char *_substr_into_quote(char *begining, size_t count)
-{
-	if (*begining == '$')
-	{
-		begining++;
-		count--;
-	}
-	// if (*begining == *(begining + 1))
-	// 	return (ft_xstrdup(""));
-	return (ft_xsubstr(begining, 1, count - 2));
-}
-
-// is_quote(*last)で判断したいのは、クォートトークンか{$""/$''}の形かどうか
-t_token *make_new_tkn(char *begining, ssize_t count, enum e_token_kind kind)
-{
-	t_token	*node;
-	node = (t_token *)malloc(sizeof(t_token));
-	if (is_quote(begining[count - 1]))
-		node->val = _substr_into_quote(begining, (size_t)count);
-	else
-		node->val = ft_xsubstr(begining, 0, (size_t)count);
-	node->kind = kind;
-	node->next = NULL;
-	return (node);
 }
 
 t_token *tokenize(char *line_ptr)
@@ -184,19 +89,16 @@ t_token *tokenize(char *line_ptr)
 	head = NULL;
 	while (*line_ptr)
 	{
-		count = count_last(line_ptr);
+		count = _count_last(line_ptr);
 		if (count == -1)
 		{
 			free_token_list(head);
 			ft_putendl_fd("please close the quotation", STDERR_FILENO);
 			return (NULL);
 		}
-		new = make_new_tkn(line_ptr, count, save_tkn_kind(line_ptr));
+		new = make_new_tkn(line_ptr, count, _save_tkn_kind(line_ptr));
 		add_token_last(&head, new);
 		line_ptr += count;
 	}
 	return (head);
 }
-/* --------------------------------------------------------- */
-/* --------------------------UNTIL-------------------------- */
-/* --------------------------------------------------------- */

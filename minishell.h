@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/19 22:18:12 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 01:23:26 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,7 @@ typedef struct s_manager
 	int		tmp_fd;
 }	t_manager;
 
-
-//~~~~ initi start~~~~
 t_manager	initialize(void);
 void		finalize(t_manager *manager);
-//~~~~~~~~
 
 #endif
