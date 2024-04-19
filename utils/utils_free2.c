@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:01:30 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 17:01:50 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 22:06:46 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	free_env_node(t_env *env_node)
 {
 	free(env_node->key);
 	free(env_node->val);
-	free(env_node->original);
 	free(env_node);
 }
 

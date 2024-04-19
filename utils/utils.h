@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 12:07:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 21:14:47 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 22:13:47 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ char	*ms_getenv(const char *env_name, t_manager *manager);
 t_env	*search_env(char *name, t_env *env_list);
 size_t	count_envvar(t_env *env_list);
 char	**make_envp(t_env *env_list);
+//env_utils2.c
+t_env	*make_new_env(char *envstr);
+void	add_env_last(t_env **head, t_env *new);
 //error_utils.c
 void	perror_arg2(char *s1, char *s2);
 void	perror_arg3(char *s1, char *s2, char *s3);
