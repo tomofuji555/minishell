@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/14 17:24:24 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:10:10 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 
 void	update_current_dir(t_manager *manager, char *path_slash)

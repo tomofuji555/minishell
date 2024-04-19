@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:15:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/18 22:47:55 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 17:25:25 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_token *tokenize_space_or_text(char *env_val)
 	{
 		_set_kind_and_count(env_val, &kind, &count);
 		new = make_new_tkn(env_val, count, kind);
-		add_tkn_last(&head, new);
+		add_token_last(&head, new);
 		env_val += count;
 	}
 	return (head);
@@ -74,8 +74,8 @@ t_token	*expand_env_tkn(t_token **dest_head, t_token *env_tkn, t_token *prev, t_
 			*dest_head = expnad_list;
 		else
 			prev->next = expnad_list;
-		find_last_tkn(expnad_list)->next = next_ptr;
+		find_last_token(expnad_list)->next = next_ptr;
 	}
-	free_tkn(env_tkn);
+	free_token(env_tkn);
 	return (next_ptr);
 }

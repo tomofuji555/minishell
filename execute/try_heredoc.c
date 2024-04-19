@@ -6,15 +6,15 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/18 20:44:19 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:09:08 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "../minishell.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 #include "../expansion/expansion.h"
-
-
 
 static void _handle_sigint_in_heredoc(int num)
 {

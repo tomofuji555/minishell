@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:04:22 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/18 22:14:19 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 17:24:48 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 //	prev = first;
 //	while (ptr && !is_redir_tkn(ptr->kind))
 //	{
-//		if (is_valuable_tkn(prev->kind) && ptr->kind == TKN_SPACE && \
-//			ptr->next != NULL && is_valuable_tkn(ptr->next->kind))
+//		if (is_valuable_token(prev->kind) && ptr->kind == TKN_SPACE && \
+//			ptr->next != NULL && is_valuable_token(ptr->next->kind))
 //			return (TRUE);
 //		prev = ptr;
 //		ptr = ptr->next;

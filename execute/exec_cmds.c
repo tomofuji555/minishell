@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:19:18 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/18 20:38:58 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:00:35 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ t_exec_data _init_exec_data()
 	return (exec);
 }
 
+static t_bool _is_last_cmd(t_tree_node *ptr)
+{
+	return (ptr->right == NULL);
+	//return (ptr->prev == NULL || ptr->prev->prev == NULL);
+}
+
 void	exec_cmds(t_tree_node *ptr, t_manager *manager)
 {
 	t_exec_data exec;
@@ -32,7 +38,7 @@ void	exec_cmds(t_tree_node *ptr, t_manager *manager)
 	{
 		if (is_cmd_node(ptr))
 		{
-			exec.last_cmd_flag = is_last_cmd(ptr);
+			exec.last_cmd_flag = _is_last_cmd(ptr);
 			exec.last_pid = fork_and_exec_cmd(ptr->adv_data, manager, &exec);
 			exec.fork_count++;
 		}

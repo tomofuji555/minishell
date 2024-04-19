@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/18 20:44:59 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:06:45 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_exec_date
 //~~~~execute start~~~~
 //execute.c
 void	execute(t_tree_node *root, t_manager *manager);
+//execute_utils.c
+t_bool	is_single_builtin(t_tree_node *tnode_ptr);
 //exec_cmds.c
 void	exec_cmds(t_tree_node *ptr, t_manager *manager);
 //exec_cmds_utils.c

@@ -10,6 +10,9 @@
 		"__bit_reference": "c",
 		"bitset": "c",
 		"chrono": "c",
-		"unordered_map": "c"
+		"unordered_map": "c",
+		"utils.h": "c",
+		"util.h": "c",
+		"libft.h": "c"
 	}
 }

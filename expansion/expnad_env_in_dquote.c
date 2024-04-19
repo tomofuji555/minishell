@@ -6,12 +6,13 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:26:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 03:07:37 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:04:42 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 #include "../minishell.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 #include "../token_tozeki/tokenize.h"
 
@@ -28,6 +29,23 @@ t_bool is_envname_and_set_len(char *ptr, size_t *envname_len)
 		return (TRUE);
 	}
 	return (FALSE);
+}
+// size_t	count_envname(char *dollar_ptr)
+// {
+// 	return (count_dollar_last(dollar_ptr) - 1);
+// }
+
+/// @param dollar_ptr 文字列の$のアドレス
+/// @param env_name_len $を含めない環境変数のlength
+char *getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager *manager) //exp
+{
+	char *env_name;
+	char *env_val;
+
+	env_name = ft_xsubstr(++dollar_ptr, 0, env_name_len);
+	env_val = ms_getenv(env_name, manager);
+	free(env_name);
+	return (env_val);
 }
 
 static size_t _strlen_env_expanded(char *str, t_manager *manager)

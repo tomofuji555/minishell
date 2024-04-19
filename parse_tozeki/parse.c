@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:44:29 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 13:00:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 17:26:22 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	del_space_afrer_redir(t_token **tkn_head)
 	while(ptr != NULL)
 	{
 		if (prev != NULL && is_redir_tkn(prev->kind) && ptr->kind == TKN_SPACE)
-			remove_tkn(tkn_head, ptr, prev);
+			remove_token(tkn_head, ptr, prev);
 		prev = ptr;
 		ptr = ptr->next;
 	}
@@ -43,14 +43,14 @@ t_token	*separate_and_append_redir_tkns(t_token **redir_tkns_head, t_token **cmd
 	t_token *next_ptr;
 	t_token *prev;
 
-	last = find_last_valuable_tkn(first->next);
+	last = find_last_valuable_token(first->next);
 	next_ptr = last->next;
 	if (*redir_tkns_head == NULL)
 		*redir_tkns_head = first;
 	else
-		find_last_tkn(*redir_tkns_head)->next = first;
+		find_last_token(*redir_tkns_head)->next = first;
 	last->next = NULL;
-	prev = search_prev_tkn(*cmd_tkns_head, first);
+	prev = search_prev_token(*cmd_tkns_head, first);
 	if (prev == NULL)
 		*cmd_tkns_head = next_ptr;
 	else

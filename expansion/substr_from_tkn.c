@@ -6,12 +6,13 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:15:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 01:16:50 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:05:07 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 #include "../minishell.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 
 static size_t	_strlen_from_tkn(t_token *begining, t_token *last)

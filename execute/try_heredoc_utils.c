@@ -6,12 +6,13 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 19:13:08 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/18 20:44:01 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:09:31 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 #include "../minishell.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 #include "../expansion/expansion.h"
 

@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:55:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 23:31:02 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:11:49 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 
 void	sort_envp(char **envp, size_t count)

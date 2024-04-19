@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:39:44 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 17:52:14 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:10:38 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 
 void	print_path_list(t_path *ptr)

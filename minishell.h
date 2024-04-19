@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/18 16:06:22 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:16:28 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft/libft.h"
 
 #define	SYS_FAILURE	-1
 #define	CHILD		0
@@ -128,12 +127,5 @@ t_manager initialize(void);
 void	finalize(t_manager *manager);
 void	add_env_last(t_env **head, t_env *new);
 //~~~~~~~~
-
-void print_tkn_list(t_token *ptr);
-void	print_init_data(t_tree_node *ptr);
-void	wc(char *str);
-
-void	free_init_data_and_tnode(t_tree_node *ptr);
-void	free_tkn_list(t_token *head);
 
 #endif

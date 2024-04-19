@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/18 20:08:31 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:06:05 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 
 void _handle_sigint_in_exec(int num)

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:05:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/18 22:49:50 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 17:24:48 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static size_t count_arg_strs(t_token *tkn_ptr)
 	i = 0;
 	while (tkn_ptr != NULL)
 	{
-		if (is_valuable_tkn(tkn_ptr->kind))
+		if (is_valuable_token(tkn_ptr->kind))
 		{
 			i++;
-			tkn_ptr = find_last_valuable_tkn(tkn_ptr);
+			tkn_ptr = find_last_valuable_token(tkn_ptr);
 		}
 		tkn_ptr = tkn_ptr->next;
 	}
@@ -46,9 +46,9 @@ char **make_cmd_args(t_token *tkn_ptr)
 	i = 0;
 	while(tkn_ptr != NULL)
 	{
-		if (is_valuable_tkn(tkn_ptr->kind))
+		if (is_valuable_token(tkn_ptr->kind))
 		{
-			last = find_last_valuable_tkn(tkn_ptr);
+			last = find_last_valuable_token(tkn_ptr);
 			cmd_args[i++] = substr_from_tkn(tkn_ptr, last);
 			tkn_ptr = last;
 		}

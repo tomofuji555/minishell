@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 00:18:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 17:11:44 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	signal_flag = 0;
 //	char *str8 = "bgakbga$_aganlanan_gnalga_nangal$$anglannal";
 // 	t_token *head = tokenize(str8);
 //	del_space_afrer_redir(&head);
-// 	print_tkn_list(head);
-// 	free_tkn_list(head);
+// 	print_token_list(head);
+// 	free_token_list(head);
 // }
 
 // // push_redirの確認
@@ -68,7 +68,7 @@ int	signal_flag = 0;
 // {
 // 	char *str1 = "cat >  aaa$PED$\"PWD\"  aaa| cat>\"$PWD\"$ECHO <<kkk | aaa<<gaga>>glnagal";
 // 	t_token *tkn_head = tokenize(str1);
-// 	print_tkn_list(tkn_head);
+// 	print_token_list(tkn_head);
 // 	t_tree_node *tnode_head = parse(tkn_head);
 // 	print_init_of_tnode_list(tnode_head);
 // 	free_tnode_list(tnode_head);
@@ -93,7 +93,7 @@ int main()
 	t_tree_node *tnode_head = parse(tkn_head);
 	// printf("---------------------------------------------------------------------------------\n");
 	expansion(tnode_head, &manager);
-	print_exec_of_tnode_list(tnode_head);
+	print_adv_of_tnode_list(tnode_head);
 	free_env_list(manager.env_list);
 	free_tnode_list(tnode_head);
 }
@@ -231,7 +231,7 @@ int main()
 // 		return (1);
 // 	t_tree_node *tnode_head = parse(tkn_head);
 // 	expansion(tnode_head, &manager);
-// 	print_exec_of_tnode_list(tnode_head);
+// 	print_adv_of_tnode_list(tnode_head);
 // 	try_heredoc(tnode_head, &manager);
 // 	if (signal_flag == 0)
 // 		execute(tnode_head, &manager);

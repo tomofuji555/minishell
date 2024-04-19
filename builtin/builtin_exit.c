@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 13:24:13 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 21:40:49 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:11:23 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 
 char *find_start_and_sign(char *ptr, int *sign)

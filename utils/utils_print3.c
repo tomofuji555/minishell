@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   utils_print3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 15:55:19 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 21:11:57 by toshi            ###   ########.fr       */
+/*   Created: 2024/04/19 17:13:15 by toshi             #+#    #+#             */
+/*   Updated: 2024/04/19 20:45:27 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "utils.h"
 #include "../libft/libft.h"
 
-int	do_pwd(t_manager *manager)
+void	print_env_list(t_env *ptr)
 {
-	ft_putendl_fd(manager->current_dir, STDOUT_FILENO);
-	return (0);
+	while (ptr != NULL)
+	{
+		ft_putstr_fd(ptr->key, STDOUT_FILENO);
+		ft_putchar_fd('=', STDOUT_FILENO);
+		ft_putendl_fd(ptr->val, STDOUT_FILENO);
+		ptr = ptr->next;
+	}
 }

@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:06:02 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/18 18:18:30 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 21:05:54 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 
 static char *_search_cmd_path(char *cmd_name, char **path_list)

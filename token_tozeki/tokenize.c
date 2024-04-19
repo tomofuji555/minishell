@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:33:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 01:59:49 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 20:50:49 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenize.h"
+#include "../libft/libft.h"
 #include "../utils/utils.h"
 
 ssize_t	count_text_last(char *begining)
@@ -186,12 +187,12 @@ t_token *tokenize(char *line_ptr)
 		count = count_last(line_ptr);
 		if (count == -1)
 		{
-			free_tkn_list(head);
+			free_token_list(head);
 			ft_putendl_fd("please close the quotation", STDERR_FILENO);
 			return (NULL);
 		}
 		new = make_new_tkn(line_ptr, count, save_tkn_kind(line_ptr));
-		add_tkn_last(&head, new);
+		add_token_last(&head, new);
 		line_ptr += count;
 	}
 	return (head);
