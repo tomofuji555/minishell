@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/19 22:09:12 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 22:18:12 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,8 @@ typedef struct s_manager
 
 
 //~~~~ initi start~~~~
-t_env *make_new_env(char *envvar);
-t_manager initialize(void);
-void	finalize(t_manager *manager);
-void	add_env_last(t_env **head, t_env *new);
+t_manager	initialize(void);
+void		finalize(t_manager *manager);
 //~~~~~~~~
 
 #endif

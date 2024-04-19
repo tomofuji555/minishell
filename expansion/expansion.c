@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 17:26:22 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 23:49:56 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	expansion(t_tree_node *ptr, t_manager *manager)
 		ptr->adv_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
 		ptr->adv_data.infile_paths = make_redir_list(ptr->init_data.infile_tokens);
 		ptr->adv_data.outfile_paths = make_redir_list(ptr->init_data.outfile_tokens);
-		free_init_data(ptr);
+		// free_init_data(ptr);
 		ptr = ptr->right;
 	}
 }

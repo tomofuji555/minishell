@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/19 21:10:10 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/19 23:15:20 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	update_current_dir(t_manager *manager, char *path_slash)
 	free(new_pwd);
 }
 
-t_bool	can_cd_home(t_manager *manager)
+t_bool	try_cd_home(t_manager *manager)
 {
 	char *path_slash;
 
@@ -49,7 +49,7 @@ t_bool	can_cd_home(t_manager *manager)
 	return (TRUE);
 }
 
-t_bool	can_cd_arg(char *arg, t_manager *manager)
+t_bool	try_cd_arg(char *arg, t_manager *manager)
 {
 	char *path_slash;
 	
@@ -79,12 +79,12 @@ int	do_cd(char **cmd_args, t_manager *manager)
 	}
 	else if (argc == 1)
 	{
-		if (!can_cd_home(manager))
+		if (!try_cd_home(manager))
 			return (1);
 	}
 	else
 	{
-		if (!can_cd_arg(cmd_args[1], manager))
+		if (!try_cd_arg(cmd_args[1], manager))
 			return (1);
 	}
 	return (0);
