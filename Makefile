@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/19 00:29:03 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/20 20:06:41 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIBFT_A		:=	$(LIBFT_PATH)libft.a
 SRC_PATHS	:=	$(LIBFT_PATH) \
 				utils/ \
 				token_tozeki/ \
-				parse_tozeki/ \
+				parse/ \
 				expansion/ \
 				execute/ \
 				builtin/ \

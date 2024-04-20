@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:02:01 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:37:18 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:50:39 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_init_data(t_tree_node *ptr)
 		free_token_list(ptr->init_data.cmd_tokens);
 	if (ptr->init_data.infile_tokens)
 		free_token_list(ptr->init_data.infile_tokens);
-	if (ptr->init_data.infile_tokens)
+	if (ptr->init_data.outfile_tokens)
 		free_token_list(ptr->init_data.outfile_tokens);
 }
 

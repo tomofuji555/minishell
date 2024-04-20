@@ -34,8 +34,7 @@ OBJS	=	ft_isalpha.o\
 			ft_putchar_fd.o\
 			ft_putstr_fd.o\
 			ft_putendl_fd.o\
-			ft_putnbr_fd.o\
-			itonbase.o
+			ft_putnbr_fd.o
 AR	=	ar rcs
 RM	=	rm -f
 

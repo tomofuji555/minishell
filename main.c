@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/20 18:58:49 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:00:17 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "utils/utils.h"
 #include "token_tozeki/tokenize.h"
-#include "parse_tozeki/parse.h"
+#include "parse/parse.h"
 #include "expansion/expansion.h"
 #include "execute/execute.h"
 
@@ -22,7 +22,7 @@
 //    system("leaks -q minishell");
 // }
 
-void	_handle_sigint_in_prompt(int num)
+static void _handle_sigint_in_prompt(int num)
 {
 	g_signal_flag = 128 + num;
 	printf("\n");
@@ -33,7 +33,7 @@ void	_handle_sigint_in_prompt(int num)
 
 /// @brief  token_head == NULLに入る時は、quote_errのみ??と""/''/(スペースのみ)は??
 ///
-void	_process_line(char *line, t_manager *manager)
+static void	_process_line(char *line, t_manager *manager)
 {
 	t_token		*token_head;
 	t_tree_node	*tnode_head;
@@ -45,11 +45,18 @@ void	_process_line(char *line, t_manager *manager)
 		return ;
 	}
 	tnode_head = parse(token_head);
+	if (tnode_head == NULL)
+	{
+		update_exit_status(manager, 1);
+		return ;
+	}
 	expansion(tnode_head, manager);
 	manager->tmp_fd = ft_xdup(STDIN_FILENO);
+	// print_tree(tnode_head);
 	execute(tnode_head, manager);
 	ft_xdup2(manager->tmp_fd, STDIN_FILENO);
-	free_tnode_list(tnode_head);
+	free_tree(tnode_head);
+	// system("leaks -q minishell");
 }
 
 void	_run_prompt(t_manager *manager)

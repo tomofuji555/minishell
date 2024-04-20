@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bool.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:09 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:34:00 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:45:17 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ t_bool	is_equal_str(const char *s1, char *s2)
 
 t_bool	is_cmd_node(t_tree_node *ptr)
 {
-	return (ptr->adv_data.cmd_args || ptr->adv_data.infile_paths \
-			|| ptr->adv_data.outfile_paths);
+	return (ptr->left == NULL && ptr->right == NULL);
 }

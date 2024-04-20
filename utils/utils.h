@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 12:07:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:33:30 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:51:37 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void	print_redir_list(t_redir *head);
 //print_utils2.c
 void	print_init_data(t_tree_node *ptr);
 void	print_adv_data(t_tree_node	*ptr);
-void	print_init_of_tnode_list(t_tree_node *tnode_ptr);
-void	print_adv_of_tnode_list(t_tree_node *tnode_ptr);
 void	print_tree(t_tree_node *root);
 //print_utils3.c
+void	print_init_of_tnode_list(t_tree_node *tnode_ptr);
+void	print_adv_of_tnode_list(t_tree_node *tnode_ptr);
 void	print_env_list(t_env *ptr);
 //syswrap_utils.c
 void	*ft_xmalloc(size_t size);
