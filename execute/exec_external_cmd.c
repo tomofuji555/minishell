@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_external_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:06:02 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/19 21:05:54 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:27:42 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-static char *_search_cmd_path(char *cmd_name, char **path_list)
+static char	*_search_cmd_path(char *cmd_name, char **path_list)
 {
 	size_t	i;
 	char	*cmd_path;
@@ -41,7 +41,7 @@ static char	*_make_cmd_path(char *cmd_name, t_manager *manager)
 	char	**path_list;
 	char	*cmd_path;
 
-	path_list = ft_xsplit(ms_getenv("PATH", manager) , ':');
+	path_list = ft_xsplit(ms_getenv("PATH", manager), ':');
 	if (path_list != NULL)
 	{
 		cmd_path = _search_cmd_path(cmd_name, path_list);

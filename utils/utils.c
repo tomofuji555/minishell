@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:02:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 21:15:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:33:08 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 size_t	count_strs(char **strs)
 {
-	size_t i;
+	size_t	i;
 
 	i = 1;
 	while (strs[i] != NULL)
@@ -31,7 +31,7 @@ void	update_exit_status(t_manager *manger, int num)
 
 char	*join_and_free_str2(char *str1, char *str2)
 {
-	char *joined_str;
+	char	*joined_str;
 
 	joined_str = ft_xstrjoin(str1, str2);
 	free(str2);
@@ -65,7 +65,7 @@ size_t	strlcat_ret_catlen(char *dest, const char *src, size_t size)
 {
 	size_t	dest_len;
 	size_t	i;
-	
+
 	dest_len = ft_strlen(dest);
 	if (dest_len > size)
 		return (0);

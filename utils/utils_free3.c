@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:02:01 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 00:19:57 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:37:18 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_init_data(t_tree_node *ptr)
 		free_token_list(ptr->init_data.outfile_tokens);
 }
 
-void	free_adv_data(t_tree_node 	*tnode)
+void	free_adv_data(t_tree_node	*tnode)
 {
 	if (tnode->adv_data.cmd_args)
 		free_multi_strs(tnode->adv_data.cmd_args);
@@ -41,14 +41,14 @@ void	free_tree_node(t_tree_node *ptr)
 
 void	free_tnode_list(t_tree_node *head)
 {
-	t_tree_node *next_ptr;
-	t_tree_node *ptr;
+	t_tree_node	*next_ptr;
+	t_tree_node	*ptr;
 
 	if (head == NULL)
-		return;
+		return ;
 	ptr = head;
 	next_ptr = head->right;
-	while(next_ptr != NULL)
+	while (next_ptr != NULL)
 	{
 		free_tree_node(ptr);
 		ptr = next_ptr;

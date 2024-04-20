@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_redir_list_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:04:22 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 17:24:48 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:26:49 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,9 @@
 #include "../minishell.h"
 #include "../utils/utils.h"
 
-//static t_bool	has_space_between(t_token *first)
-//{
-//	t_token *ptr;
-//	t_token *prev;
-
-//	ptr = first->next;
-//	prev = first;
-//	while (ptr && !is_redir_tkn(ptr->kind))
-//	{
-//		if (is_valuable_token(prev->kind) && ptr->kind == TKN_SPACE && \
-//			ptr->next != NULL && is_valuable_token(ptr->next->kind))
-//			return (TRUE);
-//		prev = ptr;
-//		ptr = ptr->next;
-//	}
-//	return (FALSE);
-//}
-
 static t_bool	_contains_quote(t_token *first)
 {
-	t_token *ptr;
+	t_token	*ptr;
 
 	ptr = first->next;
 	while (ptr && !is_redir_tkn(ptr->kind))

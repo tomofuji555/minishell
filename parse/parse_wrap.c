@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_wrap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:20:50 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/13 18:59:44 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:31:29 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_tree_node	*parse_wrap(t_token *token_head)
 	t_tree_node	*tree_head;
 	ssize_t		count;
 
-	tree_head = (t_tree_node *)calloc(sizeof(t_tree_node), 1); //注意
+	tree_head = (t_tree_node *)calloc(sizeof(t_tree_node), 1);
 	count = count_pipe(token_head);
 	if (count == 0)
 		tree_head->init_data.cmd_tokens = token_head;

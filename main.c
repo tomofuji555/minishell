@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/19 23:41:55 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 18:58:49 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@
 #include "expansion/expansion.h"
 #include "execute/execute.h"
 
-int	signal_flag = 0;
-
 // __attribute__((destructor))
 // static void destructor() {
 //    system("leaks -q minishell");
 // }
 
-void _handle_sigint_in_prompt(int num)
+void	_handle_sigint_in_prompt(int num)
 {
-	signal_flag = 128 + num;
+	g_signal_flag = 128 + num;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -49,31 +47,29 @@ void	_process_line(char *line, t_manager *manager)
 	tnode_head = parse(token_head);
 	expansion(tnode_head, manager);
 	manager->tmp_fd = ft_xdup(STDIN_FILENO);
-	print_adv_of_tnode_list(tnode_head);
-	// execute(tnode_head, manager);
+	execute(tnode_head, manager);
 	ft_xdup2(manager->tmp_fd, STDIN_FILENO);
 	free_tnode_list(tnode_head);
 }
 
-#include <string.h>
 void	_run_prompt(t_manager *manager)
 {
-	char *line;
+	char	*line;
 
 	while (1)
 	{
-		signal_flag = 0;
+		g_signal_flag = 0;
 		signal(SIGINT, _handle_sigint_in_prompt);
 		signal(SIGQUIT, SIG_IGN);
 		line = readline("minishell$ ");
-		if (signal_flag != 0)
+		if (g_signal_flag != 0)
 		{
-			update_exit_status(manager, signal_flag);
-			signal_flag = 0;
+			update_exit_status(manager, g_signal_flag);
+			g_signal_flag = 0;
 		}
 		if (line == NULL)
-			break;
-		else if (strcmp(line, "") != 0)
+			break ;
+		else if (!is_equal_str(line, ""))
 		{
 			add_history(line);
 			_process_line(line, manager);
@@ -82,10 +78,11 @@ void	_run_prompt(t_manager *manager)
 	}
 }
 
-int main(void)
+int	main(void)
 {
-	t_manager manager;
+	t_manager	manager;
 
+	g_signal_flag = 0;
 	manager = initialize();
 	_run_prompt(&manager);
 	finalize(&manager);

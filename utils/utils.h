@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 12:07:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 22:13:47 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:33:30 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-#include "../minishell.h"
+# include "../minishell.h"
 
 //bool_utils.c
 t_bool	is_ifs(char c);
@@ -50,7 +50,7 @@ void	free_redir_node(t_redir *redir_node);
 void	free_redir_list(t_redir *head);
 //free_utils3.c
 void	free_init_data(t_tree_node *ptr);
-void	free_adv_data(t_tree_node 	*tnode);
+void	free_adv_data(t_tree_node *tnode);
 void	free_tree_node(t_tree_node *ptr);
 void	free_tnode_list(t_tree_node *head);
 void	free_tree(t_tree_node *root);
@@ -65,9 +65,9 @@ char	**ft_xsplit(const char *s, char c);
 //print_utils.c
 void	wc(char *str);
 void	print_to_last(char *first, char *last);
-void 	print_token_list(t_token *ptr);
+void	print_token_list(t_token *ptr);
 void	print_cmd_args(char **strs);
-void print_redir_list(t_redir *head);
+void	print_redir_list(t_redir *head);
 //print_utils2.c
 void	print_init_data(t_tree_node *ptr);
 void	print_adv_data(t_tree_node	*ptr);

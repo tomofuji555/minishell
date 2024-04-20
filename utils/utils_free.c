@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:12:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 17:03:05 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:36:28 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	free_token(t_token *tkn)
 
 void	free_token_list(t_token *head)
 {
-	t_token *next_ptr;
-	t_token *ptr;
+	t_token	*next_ptr;
+	t_token	*ptr;
 
 	if (head == NULL)
 		return ;
 	ptr = head;
 	next_ptr = head->next;
-	while(next_ptr != NULL)
+	while (next_ptr != NULL)
 	{
 		free_token(ptr);
 		ptr = next_ptr;

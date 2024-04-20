@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_redir_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 20:56:07 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/18 22:14:37 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:26:55 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_redir	*_find_last_redir(t_redir *head)
 	t_redir	*ptr;
 
 	ptr = head;
-	while(ptr->next != NULL)
+	while (ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
 }
@@ -29,7 +29,7 @@ static void	_add_redir_last(t_redir **head_node, t_redir *new_node)
 	if (*head_node == NULL)
 	{
 		*head_node = new_node;
-		return;
+		return ;
 	}
 	_find_last_redir(*head_node)->next = new_node;
 }
@@ -38,12 +38,12 @@ static void	_add_redir_last(t_redir **head_node, t_redir *new_node)
 static t_redir	*make_new_redir(t_token *first, t_token *last)
 {
 	t_redir	*node;
-	char *tmp_val;
+	char	*tmp_val;
 
 	node = (t_redir *)ft_xmalloc(sizeof(t_redir));
 	node->kind = convert_redir_kind(first);
-	tmp_val =  substr_from_tkn(first->next, last);
-	node->val =  ft_xstrtrim(tmp_val, " \t\n");
+	tmp_val = substr_from_tkn(first->next, last);
+	node->val = ft_xstrtrim(tmp_val, " \t\n");
 	free(tmp_val);
 	node->next = NULL;
 	return (node);
@@ -52,7 +52,7 @@ static t_redir	*make_new_redir(t_token *first, t_token *last)
 t_redir	*make_redir_list(t_token *tkn_ptr)
 {
 	t_redir	*head;
-	t_redir *new;
+	t_redir	*new;
 	t_token	*tkn_first;
 
 	if (tkn_ptr == NULL)

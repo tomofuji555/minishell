@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 20:33:25 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:34:32 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_env	*search_env(char *name, t_env *env_list)
 {
 	t_env	*ptr;
 	t_env	*new;
-	
+
 	ptr = env_list;
 	while (ptr != NULL)
 	{
@@ -75,4 +75,3 @@ char	**make_envp(t_env *env_list)
 	envp[i] = NULL;
 	return (envp);
 }
-

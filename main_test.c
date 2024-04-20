@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:13:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 17:11:44 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 18:58:31 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "token_tozeki/tokenize.h"
 #include "parse_tozeki/parse.h"
 
-int	signal_flag = 0;
+int	g_signal_flag = 0;
 
 // __attribute__((destructor))
 // static void destructor() {
@@ -233,7 +233,7 @@ int main()
 // 	expansion(tnode_head, &manager);
 // 	print_adv_of_tnode_list(tnode_head);
 // 	try_heredoc(tnode_head, &manager);
-// 	if (signal_flag == 0)
+// 	if (g_signal_flag == 0)
 // 		execute(tnode_head, &manager);
 // 	rm_heredoc_tmp(tnode_head);
 // 	free_tnode_list(tnode_head);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 23:14:07 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 21:11:40 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:55:38 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 void	upsert_env(t_manager *manager, char *str)
 {
-	char *sep_ptr;
-	char *env_name;
-	t_env *env_ptr;
-	t_env *new;
-	
+	char	*sep_ptr;
+	char	*env_name;
+	t_env	*env_ptr;
+	t_env	*new;
+
 	sep_ptr = ft_strchr(str, '=');
 	if (sep_ptr == NULL)
 		return ;
@@ -29,7 +29,8 @@ void	upsert_env(t_manager *manager, char *str)
 	if (env_ptr)
 	{
 		free(env_ptr->val);
-		env_ptr->val = ft_xsubstr(sep_ptr, 1, (size_t)(ft_strchr(str, '\0') - sep_ptr - 1));
+		env_ptr->val = ft_xsubstr(sep_ptr, 1, \
+					(size_t)(ft_strchr(str, '\0') - sep_ptr - 1));
 	}
 	else
 	{
@@ -54,9 +55,9 @@ t_bool	is_invalid_key(char *key)
 
 t_bool	validate_key_and_upsert_env(char *str, t_manager *manager)
 {
-	char *sep_ptr;
-	char *env_name;
-	
+	char	*sep_ptr;
+	char	*env_name;
+
 	sep_ptr = ft_strchr(str, '=');
 	if (sep_ptr == NULL)
 		sep_ptr = ft_strchr(str, '\0');

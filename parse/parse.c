@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:48 by username          #+#    #+#             */
-/*   Updated: 2024/04/13 18:02:51 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:31:05 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 void	split_by_pipe(t_tree_node **tree, t_token **head, ssize_t count)
 {
 	t_tree_node	*tree_head;
-	// t_tree_node	*prev_tree;
 	t_bool		is_root;
 	t_token		*last_pipe;
 
 	tree_head = *tree;
 	is_root = TRUE;
-	// prev_tree = NULL;
 	(*tree)->prev = NULL;
 	while (count)
 	{
@@ -30,9 +28,7 @@ void	split_by_pipe(t_tree_node **tree, t_token **head, ssize_t count)
 		(*tree)->init_data.cmd_tokens = \
 		put_pipe_token (head, last_pipe, count);
 		(*tree)->left = ls_tree_node (head, *tree);
-		// (*tree)->prev = prev_node (prev_tree);
 		is_root = FALSE;
-		// prev_tree = *tree;
 		*tree = (*tree)->left;
 		count = count_pipe (*head);
 	}

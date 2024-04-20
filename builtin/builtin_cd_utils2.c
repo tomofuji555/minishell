@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:39:44 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 21:10:38 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:53:33 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_path_list(t_path *ptr)
 t_path	*make_new(char *first, char *last, t_bool no_slash_flag)
 {
 	char	*tmp_val;
-	t_path *new;
+	t_path	*new;
 
 	new = (t_path *)ft_xmalloc(sizeof(t_path));
 	tmp_val = ft_xsubstr(first, 0, (size_t)(last - first + 1));
@@ -43,15 +43,15 @@ t_path	*make_new(char *first, char *last, t_bool no_slash_flag)
 
 t_path	*find_last_path(t_path *head)
 {
-	t_path *ptr;
+	t_path	*ptr;
 
 	ptr = head;
-	while(ptr->next != NULL)
+	while (ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
 }
 
-void add_new_last(t_path **head, t_path *new)
+void	add_new_last(t_path **head, t_path *new)
 {
 	if (*head == NULL)
 	{
@@ -61,7 +61,7 @@ void add_new_last(t_path **head, t_path *new)
 	find_last_path(*head)->next = new;
 }
 
-t_path *make_path_list(char *path_ptr)
+t_path	*make_path_list(char *path_ptr)
 {
 	t_path	*new;
 	t_path	*head;

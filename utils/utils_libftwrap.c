@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_libftwrap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 06:28:47 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/19 20:43:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:37:36 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 //s1がNULLのときの対応追加
 char	*ft_xstrdup(const char *s1)
 {
-	char *str;
+	char	*str;
 
 	if (!s1)
 		return (NULL);
@@ -28,30 +28,10 @@ char	*ft_xstrdup(const char *s1)
 	return (str);
 }
 
-// static size_t	get_start_count(const char *s1, const char *set)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (s1[i] != '\0' && ft_strchr(set, s1[i]) != NULL)
-// 		i++;
-// 	return (i);
-// }
-
-// static size_t	get_end_count(const char *s1, const char *set, size_t start)
-// {
-// 	size_t	len;
-
-// 	len = ft_strlen(s1);
-// 	while (len > start && ft_strchr(set, s1[len -1]) != NULL)
-// 		len--;
-// 	return (len - 1);
-// }
-
 //malloc失敗したら、exitするだけのft_strtrim
 char	*ft_xstrtrim(const char *s1, const char *set)
 {
-	char *trimed_str;
+	char	*trimed_str;
 
 	if (s1 == NULL)
 		return (NULL);
@@ -93,7 +73,7 @@ char	*ft_xstrjoin(const char *s1, const char *s2)
 char	*ft_xitoa(int n)
 {
 	char	*str;
-	
+
 	str = ft_itoa(n);
 	if (str == NULL)
 		perror_and_exit("malloc", 1);

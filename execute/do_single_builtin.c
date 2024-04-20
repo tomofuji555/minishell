@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_single_builtin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:59:20 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/18 20:48:23 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:27:55 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static t_bool	_try_change_iostream_redirect(t_adv_data data)
 	return (TRUE);
 }
 
-void do_single_builtin(t_tree_node *root, t_manager *manager)
+void	do_single_builtin(t_tree_node *root, t_manager *manager)
 {
-	int tmpfd_in;
-	int tmpfd_out;
-	int status;
+	int	tmpfd_in;
+	int	tmpfd_out;
+	int	status;
 
 	tmpfd_in = ft_xdup(STDIN_FILENO);
 	tmpfd_out = ft_xdup(STDOUT_FILENO);

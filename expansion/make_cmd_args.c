@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_cmd_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:05:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 17:24:48 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:22:24 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "../minishell.h"
 #include "../utils/utils.h"
 
-static size_t count_arg_strs(t_token *tkn_ptr)
+static size_t	count_arg_strs(t_token *tkn_ptr)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (tkn_ptr != NULL)
@@ -32,7 +32,7 @@ static size_t count_arg_strs(t_token *tkn_ptr)
 }
 
 //valuable_tknが一つもないtkn_listはNULLに変換される
-char **make_cmd_args(t_token *tkn_ptr)
+char	**make_cmd_args(t_token *tkn_ptr)
 {
 	char	**cmd_args;
 	size_t	count;
@@ -44,7 +44,7 @@ char **make_cmd_args(t_token *tkn_ptr)
 		return (NULL);
 	cmd_args = (char **)ft_xmalloc(sizeof(char *) * (count + 1));
 	i = 0;
-	while(tkn_ptr != NULL)
+	while (tkn_ptr != NULL)
 	{
 		if (is_valuable_token(tkn_ptr->kind))
 		{

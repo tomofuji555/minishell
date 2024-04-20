@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_print2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:07:30 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 23:40:44 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:39:31 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	print_adv_data(t_tree_node	*ptr)
 
 void	print_init_of_tnode_list(t_tree_node *tnode_ptr)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
-	while(tnode_ptr != NULL)
+	while (tnode_ptr != NULL)
 	{
 		printf("--------node_No==%zd--------\n", i++);
 		print_init_data(tnode_ptr);
@@ -67,10 +67,10 @@ void	print_init_of_tnode_list(t_tree_node *tnode_ptr)
 
 void	print_adv_of_tnode_list(t_tree_node *tnode_ptr)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
-	while(tnode_ptr != NULL)
+	while (tnode_ptr != NULL)
 	{
 		printf("--------node_No==%zd--------\n", i++);
 		if (is_cmd_node(tnode_ptr))
@@ -86,7 +86,7 @@ void	print_adv_of_tnode_list(t_tree_node *tnode_ptr)
 /// @brief 木構造がちゃんと構成されているか、prevがちゃんとつながっているかのテスト
 void	print_tree(t_tree_node *root)
 {
-	t_tree_node *ptr;
+	t_tree_node	*ptr;
 	size_t		i;
 
 	ptr = root;

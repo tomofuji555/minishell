@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/19 23:15:20 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:52:57 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void	update_current_dir(t_manager *manager, char *path_slash)
 {
-	char *new_current_dir;
-	char *new_pwd;
+	char	*new_current_dir;
+	char	*new_pwd;
 
 	free(manager->current_dir);
 	new_current_dir = ft_xsubstr(path_slash, 0, ft_strlen(path_slash) - 1);
@@ -29,9 +29,9 @@ void	update_current_dir(t_manager *manager, char *path_slash)
 
 t_bool	try_cd_home(t_manager *manager)
 {
-	char *path_slash;
+	char	*path_slash;
 
-	path_slash  = ft_xstrjoin(ms_getenv("HOME", manager), "/");
+	path_slash = ft_xstrjoin(ms_getenv("HOME", manager), "/");
 	if (path_slash == NULL)
 	{
 		perror_arg2("cd", "HOME not set");
@@ -51,8 +51,8 @@ t_bool	try_cd_home(t_manager *manager)
 
 t_bool	try_cd_arg(char *arg, t_manager *manager)
 {
-	char *path_slash;
-	
+	char	*path_slash;
+
 	path_slash = make_full_path(arg, manager->current_dir);
 	if (chdir(path_slash) == SYS_FAILURE)
 	{
@@ -66,7 +66,6 @@ t_bool	try_cd_arg(char *arg, t_manager *manager)
 	return (TRUE);
 }
 
-
 int	do_cd(char **cmd_args, t_manager *manager)
 {
 	size_t	argc;
@@ -74,7 +73,7 @@ int	do_cd(char **cmd_args, t_manager *manager)
 	argc = count_strs(cmd_args);
 	if (argc > 2)
 	{
-		perror_arg2("cd","too many arguments");
+		perror_arg2("cd", "too many arguments");
 		return (1);
 	}
 	else if (argc == 1)

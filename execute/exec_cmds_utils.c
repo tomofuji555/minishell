@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmds_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:11:27 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/18 20:45:48 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 18:58:31 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	_change_instream(t_redir *redir_head, int prev_outfd)
 	}
 }
 
-static void	_change_outstream(t_redir *redir_head, int pipefd_out, t_bool last_cmd_flag)
+static void	_change_outstream(t_redir *redir_head, int pipefd_out, \
+			t_bool last_cmd_flag)
 {
 	if (redir_head)
 	{
@@ -54,7 +55,7 @@ static void	_change_outstream(t_redir *redir_head, int pipefd_out, t_bool last_c
 
 static t_bool	_try_exec_builtin(char **cmd_args, t_manager *manager)
 {
-	int exit_status;
+	int	exit_status;
 
 	exit_status = do_builtin(cmd_args, manager);
 	if (exit_status == -1)
@@ -62,7 +63,7 @@ static t_bool	_try_exec_builtin(char **cmd_args, t_manager *manager)
 	exit(exit_status);
 }
 
-pid_t fork_and_exec_cmd(t_adv_data adv, t_manager *manager, t_exec_data *exec)
+pid_t	fork_and_exec_cmd(t_adv_data adv, t_manager *manager, t_exec_data *exec)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -75,7 +76,7 @@ pid_t fork_and_exec_cmd(t_adv_data adv, t_manager *manager, t_exec_data *exec)
 		_change_instream(adv.infile_paths, exec->prev_outfd);
 		_change_outstream(adv.outfile_paths, pipefd[W], exec->last_cmd_flag);
 		if (adv.cmd_args != NULL && !_try_exec_builtin(adv.cmd_args, manager))
-		exec_external_cmd(adv.cmd_args, manager);
+			exec_external_cmd(adv.cmd_args, manager);
 		exit(0);
 	}
 	ft_xclose(pipefd[W]);
@@ -99,7 +100,7 @@ void	wait_child(t_manager *manager, t_exec_data exec)
 			if (WIFEXITED(wait_status))
 				update_exit_status(manager, WEXITSTATUS(wait_status));
 			else if (WIFSIGNALED(wait_status))
-				update_exit_status(manager, signal_flag);
+				update_exit_status(manager, g_signal_flag);
 		}
 		exec.fork_count--;
 	}

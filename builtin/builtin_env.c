@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:03:08 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 21:52:22 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:54:00 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "../utils/utils.h"
 
-int do_env(char **cmd_args, t_manager *manager)
+int	do_env(char **cmd_args, t_manager *manager)
 {
 	if (count_strs(cmd_args) != 1)
 	{

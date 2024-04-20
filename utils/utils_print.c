@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 21:14:38 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:39:16 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	wc(char *str)
 {
 	if (str == NULL)
 	{
-		ft_putendl_fd("test", STDERR_FILENO);	
+		ft_putendl_fd("test", STDERR_FILENO);
 		return ;
 	}
 	ft_putendl_fd(str, STDERR_FILENO);
@@ -27,7 +27,7 @@ void	wc(char *str)
 void	print_to_last(char *first, char *last)
 {
 	printf("%d==", (int)(last - first + 1));
-	while(first != last)
+	while (first != last)
 	{
 		printf("%c", *first);
 		first++;
@@ -66,7 +66,9 @@ void	print_token_list(t_token *ptr)
 
 void	print_cmd_args(char **strs)
 {
-	size_t i = 0;
+	size_t	i;
+
+	i = 0;
 	while (strs[i] != NULL)
 	{
 		printf("%zd=%s;\n", i, strs[i]);
@@ -76,10 +78,10 @@ void	print_cmd_args(char **strs)
 
 void	print_redir_list(t_redir *head)
 {
-	t_redir *ptr;
-	
+	t_redir	*ptr;
+
 	ptr = head;
-	while(ptr != NULL)
+	while (ptr != NULL)
 	{	
 		if (ptr->kind == REDIR_IN_FILE)
 			printf("kind= IN;   val=%s;\n", ptr->val);

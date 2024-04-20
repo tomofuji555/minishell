@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_syswrap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/19 20:48:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:39:51 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	*ft_xmalloc(size_t size)
 {
-	void *ret;
+	void	*ret;
 
 	if (size == 0)
 		return (NULL);
@@ -36,7 +36,7 @@ void	*ft_xrealloc(void *ptr, size_t size)
 
 void	*ft_xcalloc(size_t count, size_t size)
 {
-	void *ret;
+	void	*ret;
 
 	if (count == 0 || size == 0 || size > SIZE_MAX / count)
 		return (NULL);
@@ -52,7 +52,7 @@ void	*ft_xcalloc(size_t count, size_t size)
 
 int	ft_xdup(int copied_fd)
 {
-	int dest_fd;
+	int	dest_fd;
 
 	dest_fd = dup(copied_fd);
 	if (dest_fd == SYS_FAILURE)

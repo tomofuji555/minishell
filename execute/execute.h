@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/19 21:06:45 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 16:00:51 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-#include "../minishell.h"
+# include "../minishell.h"
 
 enum	e_pipefd_direct
 {
@@ -27,8 +27,7 @@ typedef struct s_exec_date
 	size_t	fork_count;
 	pid_t	last_pid;
 	t_bool	last_cmd_flag;
-} t_exec_data;
-
+}t_exec_data;
 
 //~~~~execute start~~~~
 //execute.c
@@ -38,7 +37,8 @@ t_bool	is_single_builtin(t_tree_node *tnode_ptr);
 //exec_cmds.c
 void	exec_cmds(t_tree_node *ptr, t_manager *manager);
 //exec_cmds_utils.c
-pid_t	fork_and_exec_cmd(t_adv_data adv, t_manager *manager, t_exec_data *exec);
+pid_t	fork_and_exec_cmd(t_adv_data adv, t_manager *manager, \
+		t_exec_data *exec);
 void	wait_child(t_manager *manager, t_exec_data exec_data);
 //exec_external_cmd.c
 void	exec_external_cmd(char **cmd_args, t_manager *manager);
@@ -55,8 +55,5 @@ void	try_heredoc(t_tree_node *tnode_head, t_manager *manager);
 //try_heredoc_utils.c
 char	*run_heredoc(t_redir *ptr, t_manager *manager);
 void	remove_heredoc_tmpfile(t_tree_node *tnode_head);
-//~~~~~~~~
 
-
-
-#endif 
+#endif

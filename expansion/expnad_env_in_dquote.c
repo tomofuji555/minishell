@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expnad_env_in_dquote.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:26:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 00:36:41 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:09:06 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include "../utils/utils.h"
 #include "../token_tozeki/tokenize.h"
 
-t_bool is_envname_and_set_len(char *ptr, size_t *envname_len)
+t_bool	is_envname_and_set_len(char *ptr, size_t *envname_len)
 {
-	ssize_t env_len;
+	ssize_t	env_len;
 
 	if (*ptr == '$')
 	{
@@ -37,10 +37,11 @@ t_bool is_envname_and_set_len(char *ptr, size_t *envname_len)
 
 /// @param dollar_ptr 文字列の$のアドレス
 /// @param env_name_len $を含めない環境変数のlength
-char *getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager *manager) //exp
+char	*getenv_in_str(char *dollar_ptr, size_t env_name_len, \
+					t_manager *manager)
 {
-	char *env_name;
-	char *env_val;
+	char	*env_name;
+	char	*env_val;
 
 	env_name = ft_xsubstr(++dollar_ptr, 0, env_name_len);
 	env_val = ms_getenv(env_name, manager);
@@ -48,11 +49,11 @@ char *getenv_in_str(char *dollar_ptr, size_t env_name_len, t_manager *manager) /
 	return (env_val);
 }
 
-static size_t _strlen_env_expanded(char *str, t_manager *manager)
+static size_t	_strlen_env_expanded(char *str, t_manager *manager)
 {
-	size_t len;
-	char *env_val;
-	size_t envname_len;
+	size_t	len;
+	char	*env_val;
+	size_t	envname_len;
 
 	len = 0;
 	while (*str)
@@ -71,11 +72,12 @@ static size_t _strlen_env_expanded(char *str, t_manager *manager)
 	return (len);
 }
 
-static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager *manager)
+static size_t	_strlcat_env_expanded(char *dest, char *str, \
+				size_t len, t_manager *manager)
 {
-	size_t dest_i;
-	char *env_val;
-	size_t envname_len;
+	size_t	dest_i;
+	char	*env_val;
+	size_t	envname_len;
 
 	dest_i = 0;
 	while (*str && dest_i < len)
@@ -98,8 +100,8 @@ static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager
 /// @brief  文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
 char	*expand_env_in_dquote(char *str, t_manager *manager)
 {
-	size_t expanded_len;
-	char *expanded_str;
+	size_t	expanded_len;
+	char	*expanded_str;
 
 	if (str == NULL)
 		return (NULL);

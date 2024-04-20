@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_from_tkn.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:15:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 00:36:45 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:27:04 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	_strlen_from_tkn(t_token *begining, t_token *last)
 
 	ptr = begining;
 	len = 0;
-	while(ptr != last->next)
+	while (ptr != last->next)
 	{
 		len += ft_strlen(ptr->val);
 		ptr = ptr->next;
@@ -44,15 +44,8 @@ static size_t	_strlcat_from_tkn(char *dest, t_token *src, size_t len)
 	dest[dest_i] = '\0';
 	return (dest_i);
 }
-// val_i = 0;
-// while (src->val[val_i] != '\0')
-// {
-// 	dest[dest_i] = src->val[val_i];
-// 	dest_i++;
-// 	val_i++;
-// }
 
-char *substr_from_tkn(t_token *begining, t_token *last)
+char	*substr_from_tkn(t_token *begining, t_token *last)
 {
 	size_t	len;
 	char	*str;

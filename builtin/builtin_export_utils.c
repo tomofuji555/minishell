@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:55:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 21:11:49 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:55:11 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 void	sort_envp(char **envp, size_t count)
 {
-	size_t aa;
-	size_t bb;
-	char *tmp;
+	size_t	aa;
+	size_t	bb;
+	char	*tmp;
 
 	aa = 0;
 	while (aa + 1 < count)
@@ -38,11 +38,11 @@ void	sort_envp(char **envp, size_t count)
 	}
 }
 
-void print_sorted_env(t_env *env_list)
+void	print_sorted_env(t_env *env_list)
 {
-	char **envp;
-	size_t count;
-	size_t i;
+	char	**envp;
+	size_t	count;
+	size_t	i;
 
 	count = count_envvar(env_list);
 	envp = make_envp(env_list);

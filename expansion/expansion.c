@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 23:49:56 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 16:05:20 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 //syntaxは保証されている前提で実装
 void	expansion_tkn_list(t_token **tkn_head, t_manager *manager)
 {
-	t_token *tkn_ptr;
+	t_token	*tkn_ptr;
 
 	tkn_ptr = *tkn_head;
-	while(tkn_ptr != NULL)
+	while (tkn_ptr != NULL)
 	{
 		if (tkn_ptr->kind == TKN_HEREDOC)
 			tkn_ptr = find_last_valuable_token(tkn_ptr->next)->next;
 		else if (tkn_ptr->kind == TKN_ENV)
-			tkn_ptr = expand_env_tkn(tkn_head, tkn_ptr, search_prev_token(*tkn_head, tkn_ptr), manager);
+			tkn_ptr = expand_env_tkn(tkn_head, tkn_ptr, \
+						search_prev_token(*tkn_head, tkn_ptr), manager);
 		else
 		{
 			if (tkn_ptr->kind == TKN_D_QUOTE)
@@ -38,15 +39,16 @@ void	expansion_tkn_list(t_token **tkn_head, t_manager *manager)
 
 void	expansion(t_tree_node *ptr, t_manager *manager)
 {
-	while(ptr != NULL)
+	while (ptr != NULL)
 	{
 		expansion_tkn_list(&ptr->init_data.cmd_tokens, manager);
 		expansion_tkn_list(&ptr->init_data.infile_tokens, manager);
 		expansion_tkn_list(&ptr->init_data.outfile_tokens, manager);
 		ptr->adv_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
-		ptr->adv_data.infile_paths = make_redir_list(ptr->init_data.infile_tokens);
-		ptr->adv_data.outfile_paths = make_redir_list(ptr->init_data.outfile_tokens);
-		// free_init_data(ptr);
+		ptr->adv_data.infile_paths = \
+				make_redir_list(ptr->init_data.infile_tokens);
+		ptr->adv_data.outfile_paths = \
+				make_redir_list(ptr->init_data.outfile_tokens);
 		ptr = ptr->right;
 	}
 }

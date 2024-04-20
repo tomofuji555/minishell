@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 00:16:16 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 23:40:26 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:50:54 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANSION_H
-# define EXPANSION_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-#include "../minishell.h"
+# include "../minishell.h"
 
 typedef struct s_path
 {
@@ -43,6 +43,5 @@ void	print_sorted_env(t_env *env_list);
 int		do_pwd(t_manager *manager);
 
 int		do_unset(char **cmd_args, t_manager *manager);
-
 
 #endif

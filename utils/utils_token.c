@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 20:37:10 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:40:23 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 //ここのNULLリターンは必要か審議
 t_token	*find_last_valuable_token(t_token *head)
 {
-	t_token *ptr;
+	t_token	*ptr;
 
 	ptr = head;
-	while(ptr->next != NULL && is_valuable_token(ptr->next->kind))
+	while (ptr->next != NULL && is_valuable_token(ptr->next->kind))
 		ptr = ptr->next;
 	return (ptr);
 }
@@ -28,7 +28,7 @@ t_token	*find_last_valuable_token(t_token *head)
 // headがNULLの場合もクラッシュする
 t_token	*search_prev_token(t_token *head, t_token *target)
 {
-	t_token *ptr;
+	t_token	*ptr;
 
 	if (head == target)
 		return (NULL);
@@ -40,10 +40,10 @@ t_token	*search_prev_token(t_token *head, t_token *target)
 
 t_token	*find_last_token(t_token *head)
 {
-	t_token *ptr;
+	t_token	*ptr;
 
 	ptr = head;
-	while(ptr->next != NULL)
+	while (ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:26:42 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/12 17:00:26 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:32:13 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ ssize_t	quort_in_env(t_token **head, char *line);
 ssize_t	env_token(t_token **head, char *line);
 int		is_metachar(char c);
 ssize_t	quort_error(char c);
-
-t_token  *tokenize_wrap(char *line);
+t_token	*tokenize_wrap(char *line);
 
 #endif

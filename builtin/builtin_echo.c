@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:45:02 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/19 21:11:01 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:53:51 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_bool	is_opt(char *str, char opt)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (str[i] == '-')
@@ -60,8 +60,3 @@ int	do_echo(char **cmd_args)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }
-
-// int main(int argc, char **argv)
-// {
-// 	do_echo(argv);
-// }

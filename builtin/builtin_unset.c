@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:04:57 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/14 18:07:53 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/20 17:56:00 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "../utils/utils.h"
 
-// targetはlist内にないとクラッシュする
-// headがNULLの場合もクラッシュする
 t_env	*search_prev_env(t_env *head, t_env *target)
 {
 	t_env	*ptr;
