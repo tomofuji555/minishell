@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:45:02 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:53:51 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:26:23 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,11 @@ int	do_echo(char **cmd_args)
 
 	opt_n_flag = FALSE;
 	i = find_opt_start(cmd_args, &opt_n_flag);
-	while (1)
+	while (cmd_args[i] != NULL)
 	{
-		ft_putstr_fd(cmd_args[i++], STDOUT_FILENO);
-		if (cmd_args[i] == NULL)
-			break ;
+		ft_putstr_fd(cmd_args[i], STDOUT_FILENO);
 		ft_putchar_fd(' ', STDOUT_FILENO);
+		i++;
 	}
 	if (!opt_n_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);

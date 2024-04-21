@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:19:18 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/20 21:47:07 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/21 20:32:28 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_exec_data	_init_exec_data(void)
 
 static t_bool	_is_last_cmd(t_tree_node *ptr)
 {
-	return (ptr->prev == NULL || ptr->prev->prev == NULL);
+	return (ptr->prev == NULL \
+	|| (ptr->prev->right == ptr && ptr->prev->prev == NULL));
 }
 
 void	_exec_cmd_helper(t_tree_node *ptr, t_manager *manager, t_exec_data *exec)

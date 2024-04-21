@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:20:50 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 21:50:07 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/21 20:39:36 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,3 @@ t_tree_node	*parse(t_token *token_head)
 	move_to_redir_tokens(tree_head);
 	return (tree_head);
 }
-
-// void    parse(t_token **head)
-// {
-//         t_tree_node     node;
-//         ssize_t         count;
-
-//         node = (t_tree_node) malloc (sizeof (t_tree_node));
-//         count = count_pipe (head);
-//         if (count == 0)
-//         {
-//                 node->right = NULL;
-//                 node->init_arg_data.cmd_tokens =head;
-//                 *head = NULL;
-//                 node->init_arg_data.infile_tokens = NULL;
-//                 node->init_arg_data.outfile_tokens = NULL;
-//                 node->left = NULL;
-//                 node->prev = NULL;
-//         }
-//         else
-//                 split_by_pipe (&tree, head, count);
-// }
