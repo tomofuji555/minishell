@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:15:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/21 20:35:08 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/22 22:30:59 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static size_t	_strlcpy_from_tkn(char *dest, t_token *src, size_t len)
 	size_t	val_i;
 
 	dest_i = 0;
-	while (dest_i + 1 < len && src != NULL)
+	while (src != NULL && dest_i + 1 < len)
 	{
 		val_i = 0;
 		while (src->val[val_i] != '\0')

@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:41:13 by username          #+#    #+#             */
-/*   Updated: 2024/04/12 17:26:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/22 22:28:53 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
+#include "../utils/utils.h"
 
 t_token	*rs_append_node_and_add_null(t_token **head, t_token *last_pipe)
 {
@@ -56,7 +57,7 @@ t_bool is_first, t_tree_node *prev_node)
 
 	if (last_pipe->next == NULL)
 		return (NULL);
-	rs_node = (t_tree_node *)malloc(sizeof (t_tree_node));
+	rs_node = (t_tree_node *)ft_xmalloc(sizeof (t_tree_node));
 	if (rs_node == NULL)
 		return (NULL);
 	rs_node->init_data.cmd_tokens = cmd_of_rs (head, last_pipe, is_first);

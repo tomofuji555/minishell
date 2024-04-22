@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:40:15 by username          #+#    #+#             */
-/*   Updated: 2024/04/12 17:26:09 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/22 22:28:07 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_tree_node *prev_node)
 {
 	t_tree_node	*ls_node;
 
-	ls_node = (t_tree_node *)malloc(sizeof(t_tree_node));
+	ls_node = (t_tree_node *)ft_xmalloc(sizeof(t_tree_node));
 	if (ls_node == NULL)
 		return (NULL);
 	ls_node->init_data.cmd_tokens = NULL;
