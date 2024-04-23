@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/23 00:02:17 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/23 17:49:03 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,22 @@ static void	_process_line(char *line, t_manager *manager)
 		update_exit_status(manager, 1);
 		return ;
 	}
-	tnode_head = parse(token_head);
-	if (tnode_head == NULL)
-	{
-		update_exit_status(manager, 1);
-		return ;
-	}
-	expansion(tnode_head, manager);
-	manager->tmp_fd = ft_xdup(STDIN_FILENO);
+	validate_syntax(token_head);
+	free_token_list(token_head);
+	// tnode_head = parse(token_head);
+	// if (tnode_head == NULL)
+	// {
+	// 	update_exit_status(manager, 1);
+	// 	return ;
+	// }
+	// expansion(tnode_head, manager);
+	// manager->tmp_fd = ft_xdup(STDIN_FILENO);
+	// // print_tree(tnode_head);
 	// print_tree(tnode_head);
-	print_tree(tnode_head);
-	wc(NULL);
-	execute(tnode_head, manager);
-	ft_xdup2(manager->tmp_fd, STDIN_FILENO);
-	free_tree(tnode_head);
+	// wc(NULL);
+	// execute(tnode_head, manager);
+	// ft_xdup2(manager->tmp_fd, STDIN_FILENO);
+	// free_tree(tnode_head);
 	// system("leaks -q minishell");
 }
 

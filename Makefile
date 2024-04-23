@@ -6,7 +6,7 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/20 20:06:41 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/23 23:47:33 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRC_PATHS	:=	$(LIBFT_PATH) \
 				./
 SRCS		:=	$(foreach path, $(SRC_PATHS), $(wildcard $(path)*.c))
 OUT_PATTERN	:=	$(LIBFT_PATH)% \
-				./main_test.c
+				./main_test.c \
+				parse/syntax_check.c
 OBJS		:=	$(patsubst %.c, %.o, $(filter-out $(OUT_PATTERN), $(SRCS)))
 
 
