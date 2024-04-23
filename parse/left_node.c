@@ -6,11 +6,12 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:40:15 by username          #+#    #+#             */
-/*   Updated: 2024/04/22 22:28:07 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/22 23:54:20 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
+#include "../utils/utils.h"
 
 t_token	*cmd_of_ls(t_token **head, t_token **last_pipe)
 {

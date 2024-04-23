@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 21:01:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 18:44:37 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/23 00:05:07 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_bool	_is_builtin(char *cmd)
 t_bool	is_single_builtin(t_tree_node *tnode_head)
 {
 	return (tnode_head->left == NULL \
-	&& tnode_head->right == NULL \
 	&& tnode_head->prev == NULL \
+	&& tnode_head->adv_data.cmd_args != NULL \
 	&& _is_builtin(tnode_head->adv_data.cmd_args[0]));
 }

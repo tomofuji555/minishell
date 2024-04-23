@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/20 17:44:45 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/22 23:57:51 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "../libft/libft.h"
+#include "libft/libft.h"
 #include "utils/utils.h"
 
 static t_env	*_make_env_list(void)
