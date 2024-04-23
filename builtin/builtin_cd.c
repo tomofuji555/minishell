@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/20 17:52:57 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/23 13:31:48 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	update_current_dir(t_manager *manager, char *path_slash)
 	char	*new_pwd;
 
 	free(manager->current_dir);
-	new_current_dir = ft_xsubstr(path_slash, 0, ft_strlen(path_slash) - 1);
+	if (is_equal_str(path_slash, "/"))
+		new_current_dir = ft_xstrdup(path_slash);
+	else
+		new_current_dir = ft_xsubstr(path_slash, 0, ft_strlen(path_slash) - 1);
 	manager->current_dir = new_current_dir;
 	new_pwd = ft_xstrjoin("PWD=", new_current_dir);
 	upsert_env(manager, new_pwd);
