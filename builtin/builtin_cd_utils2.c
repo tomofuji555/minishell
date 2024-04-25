@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:39:44 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:53:33 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:47:17 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_path_list(t_path *ptr)
 	}
 }
 
-t_path	*make_new(char *first, char *last, t_bool no_slash_flag)
+t_path	*make_new(char *first, char *last, t_bool no_slash_flag) //name
 {
 	char	*tmp_val;
 	t_path	*new;
@@ -51,7 +51,7 @@ t_path	*find_last_path(t_path *head)
 	return (ptr);
 }
 
-void	add_new_last(t_path **head, t_path *new)
+void	add_new_last(t_path **head, t_path *new) //name
 {
 	if (*head == NULL)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:03:06 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:47:55 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:44:12 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_path_list(t_path *head)
 ///	./->今のcurrent_pathを返す
 ///	/->/を返す
 /// 文字列/->current_pathとjoinして返す 
-char	*make_path(char *current_path, char *arg)
+char	*make_path(char *current_path, char *arg) //name
 {
 	char	*last_ptr;
 
@@ -62,7 +62,8 @@ char	*make_path(char *current_path, char *arg)
 		return (ft_xstrjoin(current_path, arg));
 }
 
-char	*make_full_path_helper(char *current_dir_slash, t_path *head)
+//ptrがNULLじゃない前提で実装している
+char	*make_full_path_helper(char *current_dir_slash, t_path *head) //name
 {
 	t_path	*ptr;
 	char	*path;
