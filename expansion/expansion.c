@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/22 22:27:07 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/25 03:04:57 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	expansion(t_tree_node *ptr, t_manager *manager)
 {
 	while (ptr->left != NULL)
 		ptr = ptr->left;
-	_expansion_helper(ptr, manager);
 	while (ptr != NULL)
 	{
 		_expansion_helper(ptr, manager);

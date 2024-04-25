@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/23 23:47:45 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/25 02:30:21 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ typedef struct s_manager
 	char	*current_dir;
 	char	*exit_status;
 	int		heredoc_line;
-	int		tmp_fd;
 }	t_manager;
 
 t_manager	initialize(void);

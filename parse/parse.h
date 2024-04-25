@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:36:24 by username          #+#    #+#             */
-/*   Updated: 2024/04/23 23:48:06 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/25 16:50:46 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 # define PARSE_H
 
 # include "../minishell.h"
-
-enum e_mode
-{
-	MODE_FIRST,
-	MODE_PIPE,
-	MODE_REDIR,
-};
 
 void		split_by_pipe(t_tree_node **tree, t_token **head, ssize_t count);
 ssize_t		count_pipe(t_token *head);
@@ -45,7 +38,6 @@ bool		is_syntax_error_redirect(t_token **head, t_token *current);
 void		syntax_check(t_token **head);
 
 void	move_to_redir_tokens(t_tree_node *ptr);
-t_bool	validate_syntax(t_token *ptr);
 t_tree_node	*parse(t_token *token_head);
 
 #endif
