@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:07:30 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 17:06:31 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/26 21:50:30 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	print_adv_data(t_tree_node	*tree_node)
 void	print_tree(t_tree_node *root)
 {
 	t_tree_node	*ptr;
-	size_t		i;
 
 	ptr = root;
 	while (ptr->left != NULL)

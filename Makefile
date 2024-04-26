@@ -6,13 +6,13 @@
 #    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/26 19:01:11 by tozeki           ###   ########.fr        #
+#    Updated: 2024/04/26 21:49:09 by tozeki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	minishell
 CC			:=	cc
-# CFLAGS		:=	-Wall -Wextra -Werror 
+ CFLAGS		:=	-Wall -Wextra -Werror 
 RL_LIB_FLAG	:=	-L $(shell brew --prefix readline)/lib
 RL_H_FLAG	:=	-I $(shell brew --prefix readline)/include
 RL_FLAGS	:=	-lreadline $(RL_LIB_FLAG) $(RL_H_FLAG)
@@ -20,7 +20,7 @@ LIBFT_PATH	:=	libft/
 LIBFT_A		:=	$(LIBFT_PATH)libft.a
 SRC_PATHS	:=	$(LIBFT_PATH) \
 				utils/ \
-				token_tozeki/ \
+				token/ \
 				parse/ \
 				expansion/ \
 				execute/ \
@@ -28,8 +28,7 @@ SRC_PATHS	:=	$(LIBFT_PATH) \
 				./
 SRCS		:=	$(foreach path, $(SRC_PATHS), $(wildcard $(path)*.c))
 OUT_PATTERN	:=	$(LIBFT_PATH)% \
-				parse/syntax_check.c \
-				./main_test.c
+				parse/syntax_check.c 
 OBJS		:=	$(patsubst %.c, %.o, $(filter-out $(OUT_PATTERN), $(SRCS)))
 
 

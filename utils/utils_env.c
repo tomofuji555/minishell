@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 16:55:03 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/26 21:49:41 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*ms_getenv(const char *env_name, t_manager *manager)
 t_env	*search_env(char *env_name, t_env *env_list)
 {
 	t_env	*ptr;
-	t_env	*new;
 
 	ptr = env_list;
 	while (ptr != NULL)

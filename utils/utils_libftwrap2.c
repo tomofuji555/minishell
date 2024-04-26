@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_libftwrap2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 19:37:54 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:37:49 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:49:56 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 //ここのNULLリターンは必要か審議->make_cmdで必要
 char	**ft_xsplit(const char *s, char c)
 {
-	size_t	len_i;
 	char	**strs;
 
 	if (s == NULL)

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:51:12 by tofujiwa          #+#    #+#             */
-/*   Updated: 2023/12/28 00:08:18 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:25:44 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenize.h"
+#include "../utils/utils.h"
 
 //__attribute__((destructor))
 //static void destructor() {
@@ -31,10 +32,10 @@ t_token	*make_new_token(char *start, ssize_t mv_count, int token_kind)
 {
 	t_token	*node;
 
-	node = (t_token *)malloc(sizeof(t_token));
+	node = (t_token *)ft_xmalloc(sizeof(t_token));
 	if (node == NULL)
 		return (NULL);
-	node->val = ft_substr(start, 0, mv_count);
+	node->val = ft_xsubstr(start, 0, mv_count);
 	if (node->val == NULL)
 	{
 		free(node);

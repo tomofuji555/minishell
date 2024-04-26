@@ -6,13 +6,13 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/26 19:42:40 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/26 21:47:34 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "utils/utils.h"
-#include "token_tozeki/tokenize.h"
+#include "token/tokenize.h"
 #include "parse/parse.h"
 #include "expansion/expansion.h"
 #include "execute/execute.h"
@@ -31,24 +31,22 @@ static void	handle_sigint_in_prompt(int num)
 	rl_redisplay();
 }
 
-/// @brief  token_head == NULLに入る時は、quote_errのみ??と""/''/(スペースのみ)は??
-///
+/// @brief  tkn_list == NULLに入る時は、quote_errのみ??と""/''/(スペースのみ)は??
 static void	process_line(char *line, t_manager *manager)
 {
-	t_token		*token_head;
-	t_tree_node	*tnode_head;
+	t_token		*tkn_list;
+	t_tree_node	*tree_list;
 
-	token_head = tokenize(line);
-	if (token_head == NULL)
+	tkn_list = tokenize(line);
+	if (tkn_list == NULL)
 	{
 		update_exit_status(manager, 1);
 		return ;
 	}
-	tnode_head = parse(token_head);
-	expansion(tnode_head, manager);
-	execute(tnode_head, manager);
-	free_tree(tnode_head);
-	system("leaks -q minishell");
+	tree_list = parse(tkn_list);
+	expansion(tree_list, manager);
+	execute(tree_list, manager);
+	free_tree(tree_list);
 }
 
 static void	run_prompt(t_manager *manager)
@@ -72,6 +70,7 @@ static void	run_prompt(t_manager *manager)
 		{
 			add_history(line);
 			process_line(line, manager);
+			system("leaks -q minishell");
 		}
 		free(line);
 	}

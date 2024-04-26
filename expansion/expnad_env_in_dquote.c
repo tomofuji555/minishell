@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:26:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 19:11:59 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/26 21:11:47 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../minishell.h"
 #include "../libft/libft.h"
 #include "../utils/utils.h"
-#include "../token_tozeki/tokenize.h"
+#include "../token/tokenize.h"
 
 // size_t	count_envname(char *dollar_ptr)
 // {

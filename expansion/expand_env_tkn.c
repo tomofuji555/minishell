@@ -6,14 +6,14 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:15:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 19:10:01 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/26 21:11:47 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 #include "../minishell.h"
 #include "../utils/utils.h"
-#include "../token_tozeki/tokenize.h"
+#include "../token/tokenize.h"
 
 static void	set_kind_and_count(char *first, \
 		enum e_token_kind *kind, ssize_t *count)

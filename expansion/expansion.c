@@ -6,13 +6,13 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 19:11:11 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/26 21:11:47 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 #include "../utils/utils.h"
-#include "../token_tozeki/tokenize.h"
+#include "../token/tokenize.h"
 
 //引数を**型にしないと反映されない
 //syntaxは保証されている前提で実装

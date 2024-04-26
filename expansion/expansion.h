@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 00:09:58 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/25 20:24:17 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/26 21:19:17 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ char				**make_cmd_args(t_token *tkn_ptr);
 t_redir				*make_redir_list(t_token *tkn_ptr);
 //make_redir_list_utils.c
 enum e_redir_kind	convert_redir_kind(t_token *first);
+//utils_from_tokenize_tozeki.c
+ssize_t				count_ifs_last(char *first);
+ssize_t				count_dollar_last(char *first);
 
 #endif

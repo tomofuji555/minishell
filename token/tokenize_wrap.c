@@ -3,27 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_wrap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:11:11 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/25 16:53:20 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 21:46:07 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenize.h"
 #include "../utils/utils.h"
 
-t_token	*tokenize_wrap(char *line)
+t_token	*tokenize(char *line)
 {
-	t_token	*head;
+	t_token	*tkn_list;
 
-	head = NULL;
-	if (split_to_token(&head, line) == -1)
-		return (NULL);
-	if (!validate_syntax(head))
+	tkn_list = NULL;
+	if (split_to_token(&tkn_list, line) == -1)
 	{
-		free_token_list(head);
+		free_token_list(tkn_list);
 		return (NULL);
 	}
-	return (head);
+	if (!validate_syntax(tkn_list))
+	{
+		free_token_list(tkn_list);
+		return (NULL);
+	}
+	return (tkn_list);
 }
