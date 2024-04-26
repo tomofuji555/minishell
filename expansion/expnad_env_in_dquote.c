@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expnad_env_in_dquote.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:26:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:09:06 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:11:59 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 #include "../utils/utils.h"
 #include "../token_tozeki/tokenize.h"
 
-t_bool	is_envname_and_set_len(char *ptr, size_t *envname_len)
+// size_t	count_envname(char *dollar_ptr)
+// {
+// 	return (count_dollar_last(dollar_ptr) - 1);
+// }
+static t_bool	is_envname_and_set_len(char *ptr, size_t *envname_len)
 {
 	ssize_t	env_len;
 
@@ -30,14 +34,10 @@ t_bool	is_envname_and_set_len(char *ptr, size_t *envname_len)
 	}
 	return (FALSE);
 }
-// size_t	count_envname(char *dollar_ptr)
-// {
-// 	return (count_dollar_last(dollar_ptr) - 1);
-// }
 
 /// @param dollar_ptr 文字列の$のアドレス
 /// @param env_name_len $を含めない環境変数のlength
-char	*getenv_in_str(char *dollar_ptr, size_t env_name_len, \
+static char	*getenv_in_str(char *dollar_ptr, size_t env_name_len, \
 					t_manager *manager)
 {
 	char	*env_name;
@@ -49,7 +49,7 @@ char	*getenv_in_str(char *dollar_ptr, size_t env_name_len, \
 	return (env_val);
 }
 
-static size_t	_strlen_env_expanded(char *str, t_manager *manager)
+static size_t	strlen_env_expanded(char *str, t_manager *manager)
 {
 	size_t	len;
 	char	*env_val;
@@ -72,7 +72,7 @@ static size_t	_strlen_env_expanded(char *str, t_manager *manager)
 	return (len);
 }
 
-static size_t	_strlcat_env_expanded(char *dest, char *str, \
+static size_t	strlcat_env_expanded(char *dest, char *str, \
 				size_t len, t_manager *manager)
 {
 	size_t	dest_i;
@@ -105,9 +105,9 @@ char	*expand_env_in_dquote(char *str, t_manager *manager)
 
 	if (str == NULL)
 		return (NULL);
-	expanded_len = _strlen_env_expanded(str, manager);
+	expanded_len = strlen_env_expanded(str, manager);
 	expanded_str = (char *)ft_xmalloc(sizeof(char) * (expanded_len + 1));
-	_strlcat_env_expanded(expanded_str, str, (expanded_len + 1), manager);
+	strlcat_env_expanded(expanded_str, str, (expanded_len + 1), manager);
 	free(str);
 	return (expanded_str);
 }

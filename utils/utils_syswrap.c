@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_syswrap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:14:55 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/20 17:39:51 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:54:57 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ void	*ft_xcalloc(size_t count, size_t size)
 		perror_and_exit("malloc", 1);
 	return (ret);
 }
-	// ret = (void *)malloc(size * count);
-	// if (ret == NULL)
-	// 	perror_and_exit("malloc", 1);
-	// ft_memset(ret, '\0', count * size);
 
 int	ft_xdup(int copied_fd)
 {

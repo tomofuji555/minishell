@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:54:15 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/23 13:31:48 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 18:42:55 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-void	update_current_dir(t_manager *manager, char *path_slash)
+static void	update_current_dir(t_manager *manager, char *path_slash)
 {
 	char	*new_current_dir;
 	char	*new_pwd;
@@ -30,7 +30,7 @@ void	update_current_dir(t_manager *manager, char *path_slash)
 	free(new_pwd);
 }
 
-t_bool	try_cd_home(t_manager *manager)
+static t_bool	try_cd_home(t_manager *manager)
 {
 	char	*path_slash;
 
@@ -52,7 +52,7 @@ t_bool	try_cd_home(t_manager *manager)
 	return (TRUE);
 }
 
-t_bool	try_cd_arg(char *arg, t_manager *manager)
+static t_bool	try_cd_arg(char *arg, t_manager *manager)
 {
 	char	*path_slash;
 

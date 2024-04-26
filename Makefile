@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
+#    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/24 02:05:50 by toshi            ###   ########.fr        #
+#    Updated: 2024/04/26 19:01:11 by tozeki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,5 +51,8 @@ fclean: clean
 	rm -f $(NAME)
 
 re : fclean all
+
+norm :
+	norminette $(SRC_PATHS)
 
 .PHONY: all clean fclean re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:04:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:34:32 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:55:03 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ms_getenv(const char *env_name, t_manager *manager)
 	return (NULL);
 }
 
-t_env	*search_env(char *name, t_env *env_list)
+t_env	*search_env(char *env_name, t_env *env_list)
 {
 	t_env	*ptr;
 	t_env	*new;
@@ -36,14 +36,14 @@ t_env	*search_env(char *name, t_env *env_list)
 	ptr = env_list;
 	while (ptr != NULL)
 	{
-		if (is_equal_str(ptr->key, name))
+		if (is_equal_str(ptr->key, env_name))
 			return (ptr);
 		ptr = ptr->next;
 	}
 	return (NULL);
 }
 
-size_t	count_envvar(t_env *env_list)
+size_t	count_env(t_env *env_list)
 {
 	t_env	*ptr;
 	size_t	count;
@@ -64,7 +64,7 @@ char	**make_envp(t_env *env_list)
 	t_env	*ptr;
 	size_t	i;
 
-	envp = (char **)ft_xmalloc(sizeof(char *) * (count_envvar(env_list) + 1));
+	envp = (char **)ft_xmalloc(sizeof(char *) * (count_env(env_list) + 1));
 	i = 0;
 	ptr = env_list;
 	while (ptr != NULL)

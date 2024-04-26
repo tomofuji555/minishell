@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 21:01:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/23 00:05:07 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 18:58:01 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../minishell.h"
 #include "../utils/utils.h"
 
-static t_bool	_is_builtin(char *cmd)
+static t_bool	is_builtin(char *cmd)
 {
 	return (is_equal_str(cmd, "cd") \
 	|| is_equal_str(cmd, "echo") \
@@ -25,10 +25,10 @@ static t_bool	_is_builtin(char *cmd)
 	|| is_equal_str(cmd, "unset"));
 }
 
-t_bool	is_single_builtin(t_tree_node *tnode_head)
+t_bool	is_single_builtin(t_tree_node *root)
 {
-	return (tnode_head->left == NULL \
-	&& tnode_head->prev == NULL \
-	&& tnode_head->adv_data.cmd_args != NULL \
-	&& _is_builtin(tnode_head->adv_data.cmd_args[0]));
+	return (root->left == NULL \
+	&& root->prev == NULL \
+	&& root->adv_data.cmd_args != NULL \
+	&& is_builtin(root->adv_data.cmd_args[0]));
 }

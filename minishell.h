@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/25 02:30:21 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 19:37:52 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@
 # define EXIST			0
 # define NOT_EXIST		-1
 # define DEFAULT		0
-# define AMBIGUOUS		NULL
-
+# define ERROR_STATUS	1
 
 int	g_signal_flag;
 

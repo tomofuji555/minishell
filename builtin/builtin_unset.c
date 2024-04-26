@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:04:57 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:56:00 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:44:16 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "../utils/utils.h"
 
-t_env	*search_prev_env(t_env *head, t_env *target)
+static t_env	*search_prev_env(t_env *head, t_env *target)
 {
 	t_env	*ptr;
 
@@ -25,7 +25,7 @@ t_env	*search_prev_env(t_env *head, t_env *target)
 	return (ptr);
 }
 
-void	remove_env(t_env **head, t_env *target)
+static void	remove_env(t_env **head, t_env *target)
 {
 	t_env	*prev;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_from_tkn.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:15:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/22 22:30:59 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 18:50:47 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,20 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-static size_t	_strlen_from_tkn(t_token *begining, t_token *last)
+static size_t	strlen_from_tkn(t_token *first, t_token *last)
 {
-	t_token	*ptr;
 	size_t	len;
 
-	ptr = begining;
 	len = 0;
-	while (ptr != last->next)
+	while (first != last->next)
 	{
-		len += ft_strlen(ptr->val);
-		ptr = ptr->next;
+		len += ft_strlen(first->val);
+		first = first->next;
 	}
 	return (len);
 }
 
-static size_t	_strlcpy_from_tkn(char *dest, t_token *src, size_t len)
+static size_t	strlcpy_from_tkn(char *dest, t_token *src, size_t len)
 {
 	size_t	dest_i;
 	size_t	val_i;
@@ -51,13 +49,13 @@ static size_t	_strlcpy_from_tkn(char *dest, t_token *src, size_t len)
 	return (dest_i);
 }
 
-char	*substr_from_tkn(t_token *begining, t_token *last)
+char	*substr_from_tkn(t_token *first, t_token *last)
 {
 	size_t	len;
 	char	*str;
 
-	len = _strlen_from_tkn(begining, last);
+	len = strlen_from_tkn(first, last);
 	str = (char *)ft_xmalloc(sizeof(char) * (len + 1));
-	_strlcpy_from_tkn(str, begining, (len + 1));
+	strlcpy_from_tkn(str, first, (len + 1));
 	return (str);
 }

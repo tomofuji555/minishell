@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 23:14:07 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:55:38 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:04:45 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ void	upsert_env(t_manager *manager, char *str)
 	free(env_name);
 }
 
-t_bool	is_invalid_key(char *key)
+static t_bool	is_valid_key(char *key)
 {
 	if (!(ft_isalpha(*key) || *key == '_'))
-		return (TRUE);
+		return (FALSE);
 	while (*key != '\0' && *key != '=')
 	{
 		if (!(ft_isalnum(*key) || *key == '_'))
-			return (TRUE);
+			return (FALSE);
 		key++;
 	}
-	return (FALSE);
+	return (TRUE);
 }
 
-t_bool	validate_key_and_upsert_env(char *str, t_manager *manager)
+static t_bool	validate_key_and_upsert_env(char *str, t_manager *manager)
 {
 	char	*sep_ptr;
 	char	*env_name;
@@ -62,7 +62,7 @@ t_bool	validate_key_and_upsert_env(char *str, t_manager *manager)
 	if (sep_ptr == NULL)
 		sep_ptr = ft_strchr(str, '\0');
 	env_name = ft_xsubstr(str, 0, (size_t)(sep_ptr - str));
-	if (is_invalid_key(env_name))
+	if (!is_valid_key(env_name))
 	{
 		perror_arg3("export", env_name, "not a valid identifier");
 		free(env_name);

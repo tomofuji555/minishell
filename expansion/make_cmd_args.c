@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_cmd_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:05:26 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/22 22:26:43 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/25 21:17:39 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,45 @@
 #include "../minishell.h"
 #include "../utils/utils.h"
 
-static size_t	count_arg_strs(t_token *tkn_ptr)
+static size_t	count_arg_strs(t_token *ptr)
 {
 	size_t	i;
 
 	i = 0;
-	while (tkn_ptr != NULL)
+	while (ptr != NULL)
 	{
-		if (is_valuable_token(tkn_ptr->kind))
+		if (is_valuable_token(ptr->kind))
 		{
 			i++;
-			tkn_ptr = find_last_valuable_token(tkn_ptr);
+			ptr = find_last_valuable_token(ptr);
 		}
-		tkn_ptr = tkn_ptr->next;
+		ptr = ptr->next;
 	}
 	return (i);
 }
 
 //valuable_tknが一つもないtkn_listはNULLに変換される
-char	**make_cmd_args(t_token *tkn_ptr)
+char	**make_cmd_args(t_token *ptr)
 {
 	char	**cmd_args;
 	size_t	count;
 	size_t	i;
 	t_token	*last;
 
-	count = count_arg_strs(tkn_ptr);
+	count = count_arg_strs(ptr);
 	if (!count)
 		return (NULL);
 	cmd_args = (char **)ft_xmalloc(sizeof(char *) * (count + 1));
 	i = 0;
-	while (tkn_ptr != NULL)
+	while (ptr != NULL)
 	{
-		if (is_valuable_token(tkn_ptr->kind))
+		if (is_valuable_token(ptr->kind))
 		{
-			last = find_last_valuable_token(tkn_ptr);
-			cmd_args[i++] = substr_from_tkn(tkn_ptr, last);
-			tkn_ptr = last;
+			last = find_last_valuable_token(ptr);
+			cmd_args[i++] = substr_from_tkn(ptr, last);
+			ptr = last;
 		}
-		tkn_ptr = tkn_ptr->next;
+		ptr = ptr->next;
 	}
 	cmd_args[i] = NULL;
 	return (cmd_args);

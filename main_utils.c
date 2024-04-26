@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/22 23:57:51 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 18:55:57 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft/libft.h"
 #include "utils/utils.h"
 
-static t_env	*_make_env_list(void)
+static t_env	*make_env_list(void)
 {
 	extern char	**environ;
 	size_t		i;
@@ -32,7 +32,7 @@ static t_env	*_make_env_list(void)
 	return (head);
 }
 
-static char	*_get_current_dir(void)
+static char	*get_current_dir(void)
 {
 	char	*buf;
 
@@ -45,8 +45,8 @@ t_manager	initialize(void)
 {
 	t_manager	manager;
 
-	manager.env_list = _make_env_list();
-	manager.current_dir = _get_current_dir();
+	manager.env_list = make_env_list();
+	manager.current_dir = get_current_dir();
 	manager.exit_status = ft_xitoa(0);
 	manager.heredoc_line = 0;
 	return (manager);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 13:24:13 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:54:48 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:43:43 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-char	*find_start_and_sign(char *ptr, int *sign)
+static char	*find_start_and_sign(char *ptr, int *sign)
 {
 	while (*ptr && (*ptr == ' ' || *ptr == '\t' || *ptr == '\n' \
 			|| *ptr == '\v' || *ptr == '\f' || *ptr == '\r'))
@@ -28,7 +28,7 @@ char	*find_start_and_sign(char *ptr, int *sign)
 	return (ptr);
 }
 
-t_bool	validate_and_set_end(char *ptr, char **end)
+static t_bool	validate_and_set_end(char *ptr, char **end)
 {
 	t_bool	flag;
 
@@ -46,7 +46,7 @@ t_bool	validate_and_set_end(char *ptr, char **end)
 	return (TRUE);
 }
 
-t_bool	is_long_over(const long num, const char c, int sign)
+static t_bool	is_long_over(const long num, const char c, int sign)
 {
 	if (sign > 0)
 	{
@@ -65,7 +65,7 @@ t_bool	is_long_over(const long num, const char c, int sign)
 	return (FALSE);
 }
 
-t_bool	validate_and_set_num(const char *str, int *ans_num)
+static t_bool	validate_and_set_num(const char *str, int *ans_num)
 {
 	int		sign;
 	char	*start;

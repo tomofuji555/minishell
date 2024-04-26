@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_external_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:06:02 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/20 17:27:42 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:46:29 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-static char	*_search_cmd_path(char *cmd_name, char **path_list)
+static char	*search_cmd_path(char *cmd_name, char **path_list)
 {
 	size_t	i;
 	char	*cmd_path;
@@ -36,7 +36,7 @@ static char	*_search_cmd_path(char *cmd_name, char **path_list)
 	return (NULL);
 }
 
-static char	*_make_cmd_path(char *cmd_name, t_manager *manager)
+static char	*make_cmd_path(char *cmd_name, t_manager *manager)
 {
 	char	**path_list;
 	char	*cmd_path;
@@ -44,7 +44,7 @@ static char	*_make_cmd_path(char *cmd_name, t_manager *manager)
 	path_list = ft_xsplit(ms_getenv("PATH", manager), ':');
 	if (path_list != NULL)
 	{
-		cmd_path = _search_cmd_path(cmd_name, path_list);
+		cmd_path = search_cmd_path(cmd_name, path_list);
 		if (cmd_path)
 			return (cmd_path);
 	}
@@ -65,7 +65,7 @@ void	exec_external_cmd(char **cmd_args, t_manager *manager)
 			perror_arg2_and_exit(cmd_args[0], "No such file or directory", 127);
 		ft_xexecve(cmd_args[0], cmd_args, manager->env_list);
 	}
-	cmd_path = _make_cmd_path(cmd_args[0], manager);
+	cmd_path = make_cmd_path(cmd_args[0], manager);
 	if (cmd_path == NULL)
 		perror_arg2_and_exit(cmd_args[0], "command not found", 127);
 	ft_xexecve(cmd_path, cmd_args, manager->env_list);

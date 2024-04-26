@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:19:04 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/25 03:04:57 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 19:11:11 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,36 @@
 
 //引数を**型にしないと反映されない
 //syntaxは保証されている前提で実装
-static void	_expansion_tkn_list(t_token **tkn_head, t_manager *manager)
+static void	expansion_token_list(t_token **head, t_manager *manager)
 {
-	t_token	*tkn_ptr;
+	t_token	*ptr;
 
-	tkn_ptr = *tkn_head;
-	while (tkn_ptr != NULL)
+	ptr = *head;
+	while (ptr != NULL)
 	{
-		if (tkn_ptr->kind == TKN_HEREDOC)
-			tkn_ptr = find_last_valuable_token(tkn_ptr->next)->next;
-		else if (tkn_ptr->kind == TKN_ENV)
-			tkn_ptr = expand_env_tkn(tkn_head, tkn_ptr, \
-						search_prev_token(*tkn_head, tkn_ptr), manager);
+		if (ptr->kind == TKN_HEREDOC)
+			ptr = find_last_valuable_token(ptr->next)->next;
+		else if (ptr->kind == TKN_ENV)
+			ptr = expand_env_token(head, ptr, \
+						search_prev_token(*head, ptr), manager);
 		else
 		{
-			if (tkn_ptr->kind == TKN_D_QUOTE)
-				tkn_ptr->val = expand_env_in_dquote(tkn_ptr->val, manager);
-			tkn_ptr = tkn_ptr->next;
+			if (ptr->kind == TKN_D_QUOTE)
+				ptr->val = expand_env_in_dquote(ptr->val, manager);
+			ptr = ptr->next;
 		}
 	}
 }
 
-static void	_expansion_helper(t_tree_node *ptr, t_manager *manager)
+static void	expansion_helper(t_tree_node *ptr, t_manager *manager)
 {
-	_expansion_tkn_list(&ptr->init_data.cmd_tokens, manager);
-	_expansion_tkn_list(&ptr->init_data.infile_tokens, manager);
-	_expansion_tkn_list(&ptr->init_data.outfile_tokens, manager);
+	expansion_token_list(&ptr->init_data.cmd_tokens, manager);
+	expansion_token_list(&ptr->init_data.infile_tokens, manager);
+	expansion_token_list(&ptr->init_data.outfile_tokens, manager);
 	ptr->adv_data.cmd_args = make_cmd_args(ptr->init_data.cmd_tokens);
 	ptr->adv_data.infile_paths = make_redir_list(ptr->init_data.infile_tokens);
-	ptr->adv_data.outfile_paths = make_redir_list(ptr->init_data.outfile_tokens);
+	ptr->adv_data.outfile_paths = \
+		make_redir_list(ptr->init_data.outfile_tokens);
 }
 
 void	expansion(t_tree_node *ptr, t_manager *manager)
@@ -53,9 +54,9 @@ void	expansion(t_tree_node *ptr, t_manager *manager)
 		ptr = ptr->left;
 	while (ptr != NULL)
 	{
-		_expansion_helper(ptr, manager);
+		expansion_helper(ptr, manager);
 		if (ptr->right != NULL)
-			_expansion_helper(ptr->right, manager);
+			expansion_helper(ptr->right, manager);
 		ptr = ptr->prev;
 	}
 }

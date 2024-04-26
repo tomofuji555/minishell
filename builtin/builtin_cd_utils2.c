@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:39:44 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/25 16:47:17 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 17:57:01 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_path_list(t_path *ptr)
 	}
 }
 
-t_path	*make_new(char *first, char *last, t_bool no_slash_flag) //name
+static t_path	*make_new_path(char *first, char *last, t_bool no_slash_flag)
 {
 	char	*tmp_val;
 	t_path	*new;
@@ -41,17 +41,14 @@ t_path	*make_new(char *first, char *last, t_bool no_slash_flag) //name
 	return (new);
 }
 
-t_path	*find_last_path(t_path *head)
+static t_path	*find_last_path(t_path *ptr)
 {
-	t_path	*ptr;
-
-	ptr = head;
 	while (ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
 }
 
-void	add_new_last(t_path **head, t_path *new) //name
+static void	add_path_last(t_path **head, t_path *new)
 {
 	if (*head == NULL)
 	{
@@ -78,8 +75,8 @@ t_path	*make_path_list(char *path_ptr)
 			last = ft_strchr(path_ptr, '\0') - sizeof(char);
 			no_slash_flag = TRUE;
 		}
-		new = make_new(path_ptr, last, no_slash_flag);
-		add_new_last(&head, new);
+		new = make_new_path(path_ptr, last, no_slash_flag);
+		add_path_last(&head, new);
 		path_ptr = last + sizeof(char);
 	}
 	return (head);

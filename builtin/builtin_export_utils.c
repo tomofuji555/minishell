@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 21:55:15 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:55:11 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:58:51 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-void	sort_envp(char **envp, size_t count)
+static void	sort_envp(char **envp, size_t count)
 {
 	size_t	aa;
 	size_t	bb;
@@ -44,7 +44,7 @@ void	print_sorted_env(t_env *env_list)
 	size_t	count;
 	size_t	i;
 
-	count = count_envvar(env_list);
+	count = count_env(env_list);
 	envp = make_envp(env_list);
 	sort_envp(envp, count);
 	i = 0;

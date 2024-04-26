@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 00:36:35 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:39:16 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:05:02 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,8 @@ void	print_cmd_args(char **strs)
 	}
 }
 
-void	print_redir_list(t_redir *head)
+void	print_redir_list(t_redir *ptr)
 {
-	t_redir	*ptr;
-
-	ptr = head;
 	while (ptr != NULL)
 	{	
 		if (ptr->kind == REDIR_IN_FILE)

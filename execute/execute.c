@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:17 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/25 02:29:54 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 19:09:13 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-void	_handle_sigint_in_exec(int num)
+static void	handle_sigint_in_exec(int num)
 {
 	g_signal_flag = 128 + num;
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
 //cat | cat と cat | ls で出力が違う 
-void	_handle_sigquit_in_exec(int num)
+static void	handle_sigquit_in_exec(int num)
 {
 	g_signal_flag = 128 + num;
 	ft_putendl_fd("Quit: 3", STDERR_FILENO);
@@ -35,8 +35,8 @@ void	execute(t_tree_node *root, t_manager *manager)
 	try_heredoc(root, manager);
 	if (g_signal_flag == 0)
 	{
-		signal(SIGINT, _handle_sigint_in_exec);
-		signal(SIGQUIT, _handle_sigquit_in_exec);
+		signal(SIGINT, handle_sigint_in_exec);
+		signal(SIGQUIT, handle_sigquit_in_exec);
 		if (is_single_builtin(root))
 			do_single_builtin(root, manager);
 		else

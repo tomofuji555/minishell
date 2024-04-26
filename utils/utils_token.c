@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:46 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:40:23 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:55:18 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-//ここのNULLリターンは必要か審議
-t_token	*find_last_valuable_token(t_token *head)
+t_token	*find_last_valuable_token(t_token *ptr)
 {
-	t_token	*ptr;
-
-	ptr = head;
 	while (ptr->next != NULL && is_valuable_token(ptr->next->kind))
 		ptr = ptr->next;
 	return (ptr);
@@ -38,11 +34,8 @@ t_token	*search_prev_token(t_token *head, t_token *target)
 	return (ptr);
 }
 
-t_token	*find_last_token(t_token *head)
+t_token	*find_last_token(t_token *ptr)
 {
-	t_token	*ptr;
-
-	ptr = head;
 	while (ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
@@ -58,11 +51,11 @@ void	add_token_last(t_token **head, t_token *new)
 	find_last_token(*head)->next = new;
 }
 
-void	remove_token(t_token **head, t_token *target, t_token *prev)
+void	remove_token(t_token **head, t_token *target, t_token *targt_prev)
 {
-	if (prev == NULL)
+	if (targt_prev == NULL)
 		*head = target->next;
 	else
-		prev->next = target->next;
+		targt_prev->next = target->next;
 	free_token(target);
 }

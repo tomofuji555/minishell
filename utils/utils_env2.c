@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 22:03:51 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:40:57 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:55:45 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_env	*make_new_env(char *envstr)
 	return (new);
 }
 
-static t_env	*_find_last_env(t_env *head)
+static t_env	*find_last_env(t_env *head)
 {
 	t_env	*ptr;
 
@@ -46,5 +46,5 @@ void	add_env_last(t_env **head, t_env *new)
 		*head = new;
 		return ;
 	}
-	_find_last_env(*head)->next = new;
+	find_last_env(*head)->next = new;
 }

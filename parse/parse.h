@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:36:24 by username          #+#    #+#             */
-/*   Updated: 2024/04/25 16:50:46 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 19:21:59 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ t_token		*next_cmd(t_token *current);
 bool		is_syntax_error_pipe(t_token **head, t_token *current);
 bool		is_syntax_error_redirect(t_token **head, t_token *current);
 void		syntax_check(t_token **head);
-
-void	move_to_redir_tokens(t_tree_node *ptr);
+void		move_to_redir_tokens(t_tree_node *ptr);
 t_tree_node	*parse(t_token *token_head);
 
 #endif

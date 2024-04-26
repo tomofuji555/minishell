@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:45:02 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/21 20:26:23 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 17:58:37 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "../libft/libft.h"
 
-t_bool	is_opt(char *str, char opt)
+static t_bool	is_opt(char *str, char opt)
 {
 	size_t	i;
 
@@ -29,7 +29,7 @@ t_bool	is_opt(char *str, char opt)
 	return (FALSE);
 }
 
-size_t	find_opt_start(char **cmd_arg, t_bool *opt_n_flag)
+static size_t	find_opt_and_start(char **cmd_arg, t_bool *opt_n_flag)
 {
 	size_t	i;
 
@@ -48,7 +48,7 @@ int	do_echo(char **cmd_args)
 	t_bool	opt_n_flag;
 
 	opt_n_flag = FALSE;
-	i = find_opt_start(cmd_args, &opt_n_flag);
+	i = find_opt_and_start(cmd_args, &opt_n_flag);
 	while (cmd_args[i] != NULL)
 	{
 		ft_putstr_fd(cmd_args[i], STDOUT_FILENO);

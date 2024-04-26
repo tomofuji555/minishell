@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:03:06 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/25 16:44:12 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 18:00:20 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "../utils/utils.h"
 
-void	free_path_node(t_path *pnode)
+static void	free_path_node(t_path *path_node)
 {
-	free(pnode->val);
-	free(pnode);
+	free(path_node->val);
+	free(path_node);
 }
 
-void	free_path_list(t_path *head)
+static void	free_path_list(t_path *head)
 {
 	t_path	*next_ptr;
 	t_path	*ptr;
@@ -42,7 +42,7 @@ void	free_path_list(t_path *head)
 ///	./->今のcurrent_pathを返す
 ///	/->/を返す
 /// 文字列/->current_pathとjoinして返す 
-char	*make_path(char *current_path, char *arg) //name
+static char	*make_path(char *current_path, char *arg)
 {
 	char	*last_ptr;
 
@@ -63,7 +63,7 @@ char	*make_path(char *current_path, char *arg) //name
 }
 
 //ptrがNULLじゃない前提で実装している
-char	*make_full_path_helper(char *current_dir_slash, t_path *head) //name
+static char	*make_full_path_helper(char *current_dir_slash, t_path *head)
 {
 	t_path	*ptr;
 	char	*path;

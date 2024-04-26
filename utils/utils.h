@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 12:07:59 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 21:51:37 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 16:55:03 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_bool	is_redir_tkn(enum e_token_kind kind);
 //env_utils.c
 char	*ms_getenv(const char *env_name, t_manager *manager);
 t_env	*search_env(char *name, t_env *env_list);
-size_t	count_envvar(t_env *env_list);
+size_t	count_env(t_env *env_list);
 char	**make_envp(t_env *env_list);
 //env_utils2.c
 t_env	*make_new_env(char *envstr);

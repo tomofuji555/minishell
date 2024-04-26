@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   try_change_stream_redirect.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:17:33 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/20 17:27:29 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:47:50 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /// @brief openでエラーが起きた時、perrorでエラー文(No such file or
 /// directory/Permission denied)を自動に振り分けてくれる
-int	_open_redir_path(t_redir *ptr)
+static int	open_redir_path(t_redir *ptr)
 {
 	int	fd;
 
@@ -30,7 +30,7 @@ int	_open_redir_path(t_redir *ptr)
 	return (fd);
 }
 
-static int	_find_last_fd(t_redir *redir_ptr)
+static int	find_last_fd(t_redir *redir_ptr)
 {
 	int	fd;
 
@@ -39,7 +39,7 @@ static int	_find_last_fd(t_redir *redir_ptr)
 	{
 		if (fd != DEFAULT)
 			ft_xclose(fd);
-		fd = _open_redir_path(redir_ptr);
+		fd = open_redir_path(redir_ptr);
 		if (fd == SYS_FAILURE)
 			return (fd);
 		redir_ptr = redir_ptr->next;
@@ -47,12 +47,12 @@ static int	_find_last_fd(t_redir *redir_ptr)
 	return (fd);
 }
 
-/// @brief redir_headがNULLじゃない前提で実装
-t_bool	try_change_stream_redirect(t_redir *redir_head, int dest_fd)
+/// @brief redir_listがNULLじゃない前提で実装
+t_bool	try_change_stream_redirect(t_redir *redir_list, int dest_fd)
 {
 	int	redir_fd;
 
-	redir_fd = _find_last_fd(redir_head);
+	redir_fd = find_last_fd(redir_list);
 	if (redir_fd == SYS_FAILURE)
 		return (FALSE);
 	ft_xdup2 (redir_fd, dest_fd);

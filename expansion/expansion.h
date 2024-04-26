@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 00:09:58 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:17:04 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:24:17 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 void				expansion(t_tree_node *ptr, t_manager *manager);
 char				*expand_env_in_dquote(char *str, t_manager *manager);
 //expansion_env_tkn.c
-t_token				*expand_env_tkn(t_token **dest_head, t_token *env_tkn, \
-					t_token *prev, t_manager *manager);
+t_token				*expand_env_token(t_token **head, t_token *env_tkn, \
+					t_token *prev_env, t_manager *manager);
 //expansion_env_in_dquote.c
 char				*expand_env_in_dquote(char *str, t_manager *manager);
 //substr_from_tkn.c

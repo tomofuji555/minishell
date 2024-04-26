@@ -3,40 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:02:01 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/25 16:57:51 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/26 17:02:31 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	free_init_data(t_tree_node *ptr)
+void	free_init_data(t_tree_node *tree_node)
 {
-	if (ptr->init_data.cmd_tokens)
-		free_token_list(ptr->init_data.cmd_tokens);
-	if (ptr->init_data.infile_tokens)
-		free_token_list(ptr->init_data.infile_tokens);
-	if (ptr->init_data.outfile_tokens)
-		free_token_list(ptr->init_data.outfile_tokens);
+	if (tree_node->init_data.cmd_tokens)
+		free_token_list(tree_node->init_data.cmd_tokens);
+	if (tree_node->init_data.infile_tokens)
+		free_token_list(tree_node->init_data.infile_tokens);
+	if (tree_node->init_data.outfile_tokens)
+		free_token_list(tree_node->init_data.outfile_tokens);
 }
 
-void	free_adv_data(t_tree_node	*tnode)
+void	free_adv_data(t_tree_node *tree_node)
 {
-	if (tnode->adv_data.cmd_args)
-		free_multi_strs(tnode->adv_data.cmd_args);
-	if (tnode->adv_data.infile_paths)
-		free_redir_list(tnode->adv_data.infile_paths);
-	if (tnode->adv_data.outfile_paths)
-		free_redir_list(tnode->adv_data.outfile_paths);
+	if (tree_node->adv_data.cmd_args)
+		free_multi_strs(tree_node->adv_data.cmd_args);
+	if (tree_node->adv_data.infile_paths)
+		free_redir_list(tree_node->adv_data.infile_paths);
+	if (tree_node->adv_data.outfile_paths)
+		free_redir_list(tree_node->adv_data.outfile_paths);
 }
 
-void	free_tree_node(t_tree_node *ptr)
+void	free_tree_node(t_tree_node *tree_node)
 {
-	free_init_data(ptr);
-	free_adv_data(ptr);
-	free(ptr);
+	free_init_data(tree_node);
+	free_adv_data(tree_node);
+	free(tree_node);
 }
 
 void	free_tnode_list(t_tree_node *head)
