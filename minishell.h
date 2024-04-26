@@ -6,7 +6,7 @@
 /*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/26 21:39:00 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/26 22:16:21 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # define NOT_EXIST		-1
 # define DEFAULT		0
 # define ERROR_STATUS	1
-# define PROMPT			"minishell"
 
 int	g_signal_flag;
 
