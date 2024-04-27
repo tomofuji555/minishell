@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_single_builtin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:59:20 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/26 18:57:41 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/27 12:45:40 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ void	do_single_builtin(t_tree_node *root, t_manager *manager)
 		exit_status = do_builtin(root->adv_data.cmd_args, manager);
 	update_exit_status(manager, exit_status);
 	ft_xdup2(tmpfd_in, STDIN_FILENO);
+	ft_xclose(tmpfd_in);
 	ft_xdup2(tmpfd_out, STDOUT_FILENO);
+	ft_xclose(tmpfd_out);
 }

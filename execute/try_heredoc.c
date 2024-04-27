@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   try_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 00:12:49 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 18:48:36 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/27 13:00:20 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	_handle_sigint_in_heredoc(int num)
 {
 	g_signal_flag = 128 + num;
 	ft_xclose(STDIN_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
 static void	run_heredoc_helper(int fd, t_redir *ptr, t_manager *manager)

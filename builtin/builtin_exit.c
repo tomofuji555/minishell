@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 13:24:13 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 18:43:43 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/27 12:56:04 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ int	do_exit(char **cmd_args, t_manager *manager)
 	argc = count_strs(cmd_args);
 	if (argc == 1)
 	{
-		ft_putendl_fd("eixt", STDOUT_FILENO);
+		ft_putendl_fd("eixt", STDERR_FILENO);
 		exit (ft_atoi(manager->exit_status));
 	}
 	if (!validate_and_set_num(cmd_args[1], &num))
 	{
-		ft_putendl_fd("eixt", STDOUT_FILENO);
+		ft_putendl_fd("eixt", STDERR_FILENO);
 		perror_arg3("exit", cmd_args[1], "numeric argument required");
 		exit (2);
 	}
@@ -110,6 +110,6 @@ int	do_exit(char **cmd_args, t_manager *manager)
 		perror_arg2("exit", "too many arguments");
 		return (1);
 	}
-	ft_putendl_fd("eixt", STDOUT_FILENO);
+	ft_putendl_fd("eixt", STDERR_FILENO);
 	exit ((unsigned char)num);
 }
