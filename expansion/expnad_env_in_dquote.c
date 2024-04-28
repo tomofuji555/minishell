@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expnad_env_in_dquote.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:26:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/28 17:03:47 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/28 20:00:41 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,65 @@ static size_t	strlcat_env_expanded(char *dest, char *str, \
 	return (dest_i);
 }
 
+//size_t count_envname(char *dollar_ptr)
+//{
+//	ssize_t ret;
+
+//	ret = count_dollar_last(dollar_ptr);
+//	if (ret == -1 || ret == 0)
+//		return (0);
+//	return ((size_t)(ret - 1));
+//}
+
+//static size_t _strlen_env_expanded(char *str, t_manager *manager)
+//{
+//	size_t len;
+//	char *env_val;
+//	size_t count;
+
+//	len = 0;
+//	while(*str)
+//	{
+//		if (*str == '$' && count_envname(str))
+//		{
+//			count = count_envname(str);
+//			env_val = getenv_in_str(str, count, manager);
+//			if (env_val)
+//				len += ft_strlen(env_val);
+//			str += sizeof(char) * count;
+//		}
+//		else
+//			len++;
+//		str++;
+//	}
+//	return (len);
+//}
+
+//static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager *manager)
+//{
+//	size_t dest_i;
+//	char *env_val;
+//	size_t count;
+
+//	dest_i = 0;
+//	while(*str && dest_i < len)
+//	{
+//		if(*str == '$' && count_envname(str)) //ptrがドルとき、かつcount_dollar_lastが2以上の時
+//		{
+//			count = count_envname(str);
+//			env_val = getenv_in_str(str, count, manager);
+//			if (env_val)
+//				dest_i += strlcat_ret_catlen(dest, env_val, len);
+//			str += sizeof(char) * count;
+//		}
+//		else
+//			dest[dest_i++] = *str;
+//		str++;
+//	}
+//	dest[dest_i] = '\0';
+//	return (dest_i);
+//}
+
 /// @brief  文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
 char	*expand_env_in_dquote(char *str, t_manager *manager)
 {
@@ -106,7 +165,7 @@ char	*expand_env_in_dquote(char *str, t_manager *manager)
 	if (str == NULL)
 		return (NULL);
 	expanded_len = strlen_env_expanded(str, manager);
-	expanded_str = (char *)ft_xmalloc(sizeof(char) * (expanded_len + 1));
+	expanded_str = (char *)ft_xcalloc(expanded_len + 1, sizeof(char));
 	strlcat_env_expanded(expanded_str, str, (expanded_len + 1), manager);
 	free(str);
 	return (expanded_str);
