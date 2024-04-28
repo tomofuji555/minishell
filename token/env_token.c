@@ -54,7 +54,7 @@ ssize_t	env_token(t_token **head, char *line)
 	}
 	else
 	{
-		while (*line != '\0' && !is_metachar (*line))
+		while (*line != '\0' && !is_metachar (*line) && *line != ':')
 			line++;
 		token_list (head, start, line - start, TKN_ENV);
 	}

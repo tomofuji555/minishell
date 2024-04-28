@@ -63,7 +63,7 @@ ssize_t	split_to_token(t_token **head, char *line)
 	mv_count = 0;
 	while (*line != '\0')
 	{
-		if (*line == ' ')
+		if (*line == ' ' || *line == '\t' || *line == '\n')
 			mv_count = space_token (head, line);
 		else if (*line == '>')
 			mv_count = output_token (head, line);
