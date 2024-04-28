@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:04:57 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 18:44:16 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/28 15:10:21 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	remove_env(t_env **head, t_env *target)
 	else
 		*head = target->next;
 	free_env_node(target);
-	print_env_list(*head);
 }
 
 int	do_unset(char **cmd_args, t_manager *manager)

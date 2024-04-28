@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
+#    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/26 21:49:09 by tozeki           ###   ########.fr        #
+#    Updated: 2024/04/28 16:06:48 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	minishell
 CC			:=	cc
- CFLAGS		:=	-Wall -Wextra -Werror 
+CFLAGS		:=	-Wall -Wextra -Werror 
 RL_LIB_FLAG	:=	-L $(shell brew --prefix readline)/lib
 RL_H_FLAG	:=	-I $(shell brew --prefix readline)/include
 RL_FLAGS	:=	-lreadline $(RL_LIB_FLAG) $(RL_H_FLAG)
