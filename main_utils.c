@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/26 18:55:57 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/29 18:30:07 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static char	*get_current_dir(void)
 	char	*buf;
 
 	buf = (char *)ft_xcalloc(PATH_MAX + 1, sizeof(char));
-	getcwd(buf, PATH_MAX + 1);
+	if (!getcwd(buf, PATH_MAX + 1))
+		perror_and_exit("getcwd", 1);
 	return (buf);
 }
 
