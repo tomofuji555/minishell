@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:07:30 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/28 15:05:43 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/28 23:26:37 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	print_tree(t_tree_node *root)
 	}
 	while (ptr != NULL)
 	{
-		print_init_data(ptr);
+		print_adv_data(ptr);
 		if (ptr->right != NULL)
-			print_init_data(ptr->right);
+			print_adv_data(ptr->right);
 		ptr = ptr->prev;
 	}
 }
