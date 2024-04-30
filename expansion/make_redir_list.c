@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 20:56:07 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/30 19:31:30 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/01 04:31:19 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "../utils/utils.h"
 
 // 両端のスペーストークンをtrimしたいため、substrする前に位置を動かす
-// firstからlastまでスペーストークンしかないのなら、firstはlastのスペーストークンまで
-// 移動する
 static void	update_first_and_last(t_token **first, t_token **last)
 {
 	t_token *old_last;
@@ -38,18 +36,10 @@ static void	update_first_and_last(t_token **first, t_token **last)
 // トークン中のスペーストークンのvalを修正する
 // 連続で存在するスペーストークンのvalは" "に圧縮するため、
 // 後続のスペーストークンは""に置き換える
-static void	compress_space(t_token *first, t_token *last)
+static void	compress_space(t_token *ptr, t_token *last)
 {
 	t_token	*prev;
-	t_token	*ptr;
-
-	if (first == last && first->kind == TKN_SPACE)
-	{
-		free(first->val);
-		first->val = ft_xstrdup("");
-		return ;
-	}
-	ptr = first;
+	
 	prev = NULL;
 	while (ptr != last)
 	{
@@ -66,7 +56,20 @@ static void	compress_space(t_token *first, t_token *last)
 	}
 }
 
-// (redir==last)は、リダイレクトしかトークンがない時
+// lastもredirを指しており、redirより先にトークンがない場合と
+// lastまで全てスペーストークンだけの場合、trueを返す
+static t_bool	is_no_val(t_token *redir, t_token *last)
+{
+	t_token *ptr;
+	
+	ptr = redir->next;
+	while (ptr != last->next && ptr->kind == TKN_SPACE)
+		ptr = ptr->next;
+	if (ptr != last->next)
+		return (FALSE);
+	return (TRUE);
+}
+
 static t_redir	*make_new_redir(t_token *redir, t_token *last)
 {
 	t_redir	*new;
@@ -75,7 +78,7 @@ static t_redir	*make_new_redir(t_token *redir, t_token *last)
 	new = (t_redir *)ft_xmalloc(sizeof(t_redir));
 	new->next = NULL;
 	new->kind = convert_redir_kind(redir);
-	if (redir == last)
+	if (is_no_val(redir, last)) 
 	{
 		new->val = ft_xstrdup("");
 		return (new);
