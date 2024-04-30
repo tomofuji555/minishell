@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_redir_list_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:04:22 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 18:50:18 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/30 19:27:08 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,21 @@ enum e_redir_kind	convert_redir_kind(t_token *first)
 		return (REDIR_OUT_FILE);
 	else
 		return (REDIR_APPEND_FILE);
+}
+
+static t_redir	*find_last_redir(t_redir *ptr)
+{
+	while (ptr->next != NULL)
+		ptr = ptr->next;
+	return (ptr);
+}
+
+void	add_redir_last(t_redir **head, t_redir *new)
+{
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
+	find_last_redir(*head)->next = new;
 }

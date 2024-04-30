@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_from_tkn.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 22:15:36 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/28 17:23:49 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/30 01:17:58 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*substr_from_tkn(t_token *first, t_token *last)
 	char	*str;
 
 	len = strlen_from_tkn(first, last);
-	str = (char *)ft_xmalloc(sizeof(char) * (len + 1));
+	str = (char *)ft_xcalloc(len + 1, sizeof(char));
 	strlcpy_from_tkn(str, first, (len + 1));
 	return (str);
 }

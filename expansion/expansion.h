@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 00:09:58 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 21:19:17 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/04/30 19:27:05 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char				**make_cmd_args(t_token *tkn_ptr);
 //make_redir_list.c
 t_redir				*make_redir_list(t_token *tkn_ptr);
 //make_redir_list_utils.c
+void				add_redir_last(t_redir **head, t_redir *new);
 enum e_redir_kind	convert_redir_kind(t_token *first);
 //utils_from_tokenize_tozeki.c
 ssize_t				count_ifs_last(char *first);

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 21:52:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/29 17:44:41 by toshi            ###   ########.fr       */
+/*   Updated: 2024/04/30 19:31:02 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	process_line(char *line, t_manager *manager)
 	}
 	tree_list = parse(tkn_list);
 	expansion(tree_list, manager);
+	// print_tree(tree_list);
 	execute(tree_list, manager);
 	free_tree(tree_list);
 }
