@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tofujiwa <tofujiwa@student.42.jp>          +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 00:16:16 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/20 17:50:54 by tofujiwa         ###   ########.fr       */
+/*   Updated: 2024/05/01 03:58:44 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		do_echo(char **cmd_args);
 
 int		do_env(char **cmd_args, t_manager *manager);
 
-int		do_exit(char **cmd_args, t_manager *manager);
+int		do_exit(char **cmd_args, t_manager *manager, t_bool parent_flag);
+void	try_print_exit(t_bool parent_flag);
 
 //~~~~export start~~~~
 int		do_export(char **cmd_args, t_manager *manager);

@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 13:24:13 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/27 12:56:04 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/01 03:59:01 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../utils/utils.h"
 
-static char	*find_start_and_sign(char *ptr, int *sign)
+static char	*find_start_and_set_sign(char *ptr, int *sign)
 {
 	while (*ptr && (*ptr == ' ' || *ptr == '\t' || *ptr == '\n' \
 			|| *ptr == '\v' || *ptr == '\f' || *ptr == '\r'))
@@ -28,6 +28,7 @@ static char	*find_start_and_sign(char *ptr, int *sign)
 	return (ptr);
 }
 
+//startからend内に数値が入っているか、またend移行スペース以外の文字が入っていないか確認
 static t_bool	validate_and_set_end(char *ptr, char **end)
 {
 	t_bool	flag;
@@ -73,7 +74,7 @@ static t_bool	validate_and_set_num(const char *str, int *ans_num)
 	long	num;
 
 	sign = 1;
-	start = find_start_and_sign((char *)str, &sign);
+	start = find_start_and_set_sign((char *)str, &sign);
 	if (!validate_and_set_end(start, &end))
 		return (FALSE);
 	num = 0;
@@ -88,7 +89,7 @@ static t_bool	validate_and_set_num(const char *str, int *ans_num)
 	return (TRUE);
 }
 
-int	do_exit(char **cmd_args, t_manager *manager)
+int	do_exit(char **cmd_args, t_manager *manager, t_bool parent_flag)
 {
 	size_t	argc;
 	int		num;
@@ -96,12 +97,12 @@ int	do_exit(char **cmd_args, t_manager *manager)
 	argc = count_strs(cmd_args);
 	if (argc == 1)
 	{
-		ft_putendl_fd("eixt", STDERR_FILENO);
+		try_print_exit(parent_flag);
 		exit (ft_atoi(manager->exit_status));
 	}
 	if (!validate_and_set_num(cmd_args[1], &num))
 	{
-		ft_putendl_fd("eixt", STDERR_FILENO);
+		try_print_exit(parent_flag);
 		perror_arg3("exit", cmd_args[1], "numeric argument required");
 		exit (2);
 	}
@@ -110,6 +111,6 @@ int	do_exit(char **cmd_args, t_manager *manager)
 		perror_arg2("exit", "too many arguments");
 		return (1);
 	}
-	ft_putendl_fd("eixt", STDERR_FILENO);
+	try_print_exit(parent_flag);
 	exit ((unsigned char)num);
 }

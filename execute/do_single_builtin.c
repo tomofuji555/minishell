@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:59:20 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/27 12:45:40 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/01 03:44:07 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../builtin/builtin.h"
 #include "../utils/utils.h"
 
-int	do_builtin(char **cmd_args, t_manager *manager)
+int	do_builtin(char **cmd_args, t_manager *manager, t_bool parent_flag)
 {
 	if (is_equal_str(*cmd_args, "cd"))
 		return (do_cd(cmd_args, manager));
@@ -24,7 +24,7 @@ int	do_builtin(char **cmd_args, t_manager *manager)
 	else if (is_equal_str(*cmd_args, "env"))
 		return (do_env(cmd_args, manager));
 	else if (is_equal_str(*cmd_args, "exit"))
-		return (do_exit(cmd_args, manager));
+		return (do_exit(cmd_args, manager, parent_flag));
 	else if (is_equal_str(*cmd_args, "export"))
 		return (do_export(cmd_args, manager));
 	else if (is_equal_str(*cmd_args, "unset"))
@@ -62,7 +62,7 @@ void	do_single_builtin(t_tree_node *root, t_manager *manager)
 	tmpfd_out = ft_xdup(STDOUT_FILENO);
 	exit_status = ERROR_STATUS;
 	if (_try_change_iostream_redirect(root->adv_data))
-		exit_status = do_builtin(root->adv_data.cmd_args, manager);
+		exit_status = do_builtin(root->adv_data.cmd_args, manager, TRUE);
 	update_exit_status(manager, exit_status);
 	ft_xdup2(tmpfd_in, STDIN_FILENO);
 	ft_xclose(tmpfd_in);

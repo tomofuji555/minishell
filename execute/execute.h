@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/04/25 20:16:12 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/05/01 03:43:08 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	wait_child(t_manager *manager, t_exec_data exec_data);
 void	exec_external_cmd(char **cmd_args, t_manager *manager);
 //do_sigle_builtin.c
 void	do_single_builtin(t_tree_node *root, t_manager *manager);
-int		do_builtin(char **cmd_args, t_manager *manager);
+int		do_builtin(char **cmd_args, t_manager *manager, t_bool parent_flag);
 //try_change_stream_redirect.c
 t_bool	try_change_stream_redirect(t_redir *redir_list, int dest_fd);
 //~~~~~~~~

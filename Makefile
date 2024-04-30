@@ -6,13 +6,13 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/04/29 19:11:13 by toshi            ###   ########.fr        #
+#    Updated: 2024/05/01 04:00:09 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	minishell
 CC			:=	cc -fsanitize=address
-#CFLAGS		:=	-Wall -Wextra -Werror 
+CFLAGS		:=	-Wall -Wextra -Werror 
 RL_LIB_FLAG	:=	-L $(shell brew --prefix readline)/lib
 RL_H_FLAG	:=	-I $(shell brew --prefix readline)/include
 RL_FLAGS	:=	-lreadline $(RL_LIB_FLAG) $(RL_H_FLAG)

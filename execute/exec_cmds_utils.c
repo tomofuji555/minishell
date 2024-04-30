@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:11:27 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/27 17:08:42 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/01 03:44:25 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_bool	_try_exec_builtin(char **cmd_args, t_manager *manager)
 {
 	int	exit_status;
 
-	exit_status = do_builtin(cmd_args, manager);
+	exit_status = do_builtin(cmd_args, manager, FALSE);
 	if (exit_status == -1)
 		return (FALSE);
 	exit(exit_status);
