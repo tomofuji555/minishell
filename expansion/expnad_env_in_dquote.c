@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expnad_env_in_dquote.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:26:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/28 20:00:41 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/05/01 02:38:39 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 #include "../utils/utils.h"
 #include "../token/tokenize.h"
 
-// size_t	count_envname(char *dollar_ptr)
-// {
-// 	return (count_dollar_last(dollar_ptr) - 1);
-// }
+// count_dollar_lastの返り値は$を含めたlenのため、1以下だと$のみ(1)、
+// またはエラー(-1)になりfalseを返す
+// *で渡したいlenは$を含まないenv_name_lenのため、-1して渡している
 static t_bool	is_envname_and_set_len(char *ptr, size_t *envname_len)
 {
 	ssize_t	env_len;
@@ -97,6 +96,21 @@ static size_t	strlcat_env_expanded(char *dest, char *str, \
 	return (dest_i);
 }
 
+/// @brief  文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
+char	*expand_env_in_dquote(char *str, t_manager *manager)
+{
+	size_t	expanded_len;
+	char	*expanded_str;
+
+	if (str == NULL)
+		return (NULL);
+	expanded_len = strlen_env_expanded(str, manager);
+	expanded_str = (char *)ft_xcalloc(expanded_len + 1, sizeof(char));
+	strlcat_env_expanded(expanded_str, str, (expanded_len + 1), manager);
+	free(str);
+	return (expanded_str);
+}
+
 //size_t count_envname(char *dollar_ptr)
 //{
 //	ssize_t ret;
@@ -155,18 +169,3 @@ static size_t	strlcat_env_expanded(char *dest, char *str, \
 //	dest[dest_i] = '\0';
 //	return (dest_i);
 //}
-
-/// @brief  文字列にENVが見つかれば、引数のstrをfreeして、新しいstringを返す
-char	*expand_env_in_dquote(char *str, t_manager *manager)
-{
-	size_t	expanded_len;
-	char	*expanded_str;
-
-	if (str == NULL)
-		return (NULL);
-	expanded_len = strlen_env_expanded(str, manager);
-	expanded_str = (char *)ft_xcalloc(expanded_len + 1, sizeof(char));
-	strlcat_env_expanded(expanded_str, str, (expanded_len + 1), manager);
-	free(str);
-	return (expanded_str);
-}
