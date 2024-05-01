@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parse_wrap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:20:50 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/26 19:28:25 by tozeki           ###   ########.fr       */
+/*   Updated: 2024/05/01 20:41:35 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "../utils/utils.h"
 
+// token_listの最後がリダイレクト->スペースになることは、
+// syntax_errorではじいているため、ない
 static void	remove_space_afrer_redir(t_token **tkn_head)
 {
-	t_token	*prev;
 	t_token	*ptr;
+	t_token	*target;
+	t_token	*target_prev;
 
-	prev = NULL;
-	ptr = *tkn_head;
+	target_prev = NULL;
+	target = *tkn_head;
+	ptr = target->next;
 	while (ptr != NULL)
 	{
-		if (prev != NULL && is_redir_tkn(prev->kind) && ptr->kind == TKN_SPACE)
-			remove_token(tkn_head, ptr, prev);
-		prev = ptr;
+		if (target_prev && is_redir_tkn(target_prev->kind) && target->kind == TKN_SPACE)
+			remove_token(tkn_head, target, target_prev);
+		target_prev = target;
+		target = ptr;
 		ptr = ptr->next;
 	}
 }
