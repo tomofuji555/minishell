@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:11:27 by toshi             #+#    #+#             */
-/*   Updated: 2024/05/01 03:44:25 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/01 14:51:23 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ pid_t	fork_and_exec_cmd(t_adv_data adv, t_manager *manager, t_exec_data *exec)
 	if (pid == CHILD)
 	{
 		ft_xclose(pipefd[R]);
-		_change_outstream(adv.outfile_paths, pipefd[W], exec->last_cmd_flag);
 		_change_instream(adv.infile_paths, exec->prevfd_in);
+		_change_outstream(adv.outfile_paths, pipefd[W], exec->last_cmd_flag);
 		if (adv.cmd_args != NULL && !_try_exec_builtin(adv.cmd_args, manager))
 			exec_external_cmd(adv.cmd_args, manager);
 		exit(0);
