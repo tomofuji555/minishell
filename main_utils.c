@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:37:45 by tozeki            #+#    #+#             */
-/*   Updated: 2024/04/29 18:30:07 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/01 14:37:18 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ t_manager	initialize(void)
 
 void	finalize(t_manager *manager)
 {
+	int	exit_status;
+
+	exit_status = ft_atoi(manager->exit_status);
 	free_env_list(manager->env_list);
 	free(manager->current_dir);
 	free(manager->exit_status);
+	ft_putendl_fd("exit", STDERR_FILENO);
+	exit(exit_status);
 }
