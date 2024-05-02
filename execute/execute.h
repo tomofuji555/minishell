@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:29:28 by tofujiwa          #+#    #+#             */
-/*   Updated: 2024/05/01 03:43:08 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/02 23:40:15 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	exec_cmds(t_tree_node *ptr, t_manager *manager);
 //exec_cmds_utils.c
 pid_t	fork_and_exec_cmd(t_adv_data adv, t_manager *manager, \
 		t_exec_data *exec);
-void	wait_child(t_manager *manager, t_exec_data exec_data);
+void	wait_child(t_manager *manager, t_exec_data exec);
 //exec_external_cmd.c
 void	exec_external_cmd(char **cmd_args, t_manager *manager);
 //do_sigle_builtin.c
@@ -51,10 +51,10 @@ t_bool	try_change_stream_redirect(t_redir *redir_list, int dest_fd);
 
 //~~~~heredoc start~~~~
 //try_heredoc.c
-void	try_heredoc(t_tree_node *tnode_head, t_manager *manager);
+void	try_heredoc(t_tree_node *ptr, t_manager *manager);
 //try_heredoc_utils.c
 char	*create_tmpfile_path(void);
 void	perror_eof_in_heredoc(t_manager *manager, char *delim);
-void	remove_heredoc_tmpfile(t_tree_node *tnode_head);
+void	remove_heredoc_tmpfile(t_tree_node *ptr);
 
 #endif

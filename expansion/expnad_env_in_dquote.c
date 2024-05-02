@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:26:32 by toshi             #+#    #+#             */
-/*   Updated: 2024/05/01 02:38:39 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/02 23:31:18 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,62 +110,3 @@ char	*expand_env_in_dquote(char *str, t_manager *manager)
 	free(str);
 	return (expanded_str);
 }
-
-//size_t count_envname(char *dollar_ptr)
-//{
-//	ssize_t ret;
-
-//	ret = count_dollar_last(dollar_ptr);
-//	if (ret == -1 || ret == 0)
-//		return (0);
-//	return ((size_t)(ret - 1));
-//}
-
-//static size_t _strlen_env_expanded(char *str, t_manager *manager)
-//{
-//	size_t len;
-//	char *env_val;
-//	size_t count;
-
-//	len = 0;
-//	while(*str)
-//	{
-//		if (*str == '$' && count_envname(str))
-//		{
-//			count = count_envname(str);
-//			env_val = getenv_in_str(str, count, manager);
-//			if (env_val)
-//				len += ft_strlen(env_val);
-//			str += sizeof(char) * count;
-//		}
-//		else
-//			len++;
-//		str++;
-//	}
-//	return (len);
-//}
-
-//static size_t _strlcat_env_expanded(char *dest, char *str, size_t len, t_manager *manager)
-//{
-//	size_t dest_i;
-//	char *env_val;
-//	size_t count;
-
-//	dest_i = 0;
-//	while(*str && dest_i < len)
-//	{
-//		if(*str == '$' && count_envname(str)) //ptrがドルとき、かつcount_dollar_lastが2以上の時
-//		{
-//			count = count_envname(str);
-//			env_val = getenv_in_str(str, count, manager);
-//			if (env_val)
-//				dest_i += strlcat_ret_catlen(dest, env_val, len);
-//			str += sizeof(char) * count;
-//		}
-//		else
-//			dest[dest_i++] = *str;
-//		str++;
-//	}
-//	dest[dest_i] = '\0';
-//	return (dest_i);
-//}

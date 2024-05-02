@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:16:20 by tozeki            #+#    #+#             */
-/*   Updated: 2024/05/01 01:41:50 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/03 00:16:08 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,3 @@ ssize_t	count_dollar_last(char *first)
 		return (1);
 	return (1 + count_env_last(next));
 }
-
-// //$"---"のパターンのみクォート内の文字数を数える
-// ssize_t	count_dollar_last(char *first)
-// {
-// 	char	*next;
-// 	ssize_t	count;
-
-// 	next = first + sizeof(char);
-// 	if (*next == '?' || *next == '$')
-// 		return (2);
-// 	if (is_quote(*next))
-// 	{
-// 		count = count_quote_last(next);
-// 		if (count == -1)
-// 			return (-1);
-// 		return (1 + count);
-// 	}
-// 	if (*next == '\0' || is_delim(*next))
-// 		return (1);
-// 	return (1 + count_text_last(next));
-// }

@@ -6,13 +6,13 @@
 #    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/05/02 22:22:48 by toshi            ###   ########.fr        #
+#    Updated: 2024/05/02 23:44:50 by toshi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	minishell
 
-CC		:=	cc -fsanitize=address
+CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror 
 
 ifeq ($(shell uname -s), Linux)
