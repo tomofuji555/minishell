@@ -6,7 +6,7 @@
 /*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:20:50 by toshi             #+#    #+#             */
-/*   Updated: 2024/05/01 20:41:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/02 22:19:18 by toshi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@ static void	remove_space_afrer_redir(t_token **tkn_head)
 	t_token	*target;
 	t_token	*target_prev;
 
-	target_prev = NULL;
 	target = *tkn_head;
 	ptr = target->next;
 	while (ptr != NULL)
 	{
+		target_prev = search_prev_token(*tkn_head, target);
 		if (target_prev && is_redir_tkn(target_prev->kind) && target->kind == TKN_SPACE)
 			remove_token(tkn_head, target, target_prev);
-		target_prev = target;
 		target = ptr;
 		ptr = ptr->next;
 	}
