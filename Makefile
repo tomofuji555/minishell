@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: toshi <toshi@student.42.fr>                +#+  +:+       +#+         #
+#    By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 15:18:29 by tofujiwa          #+#    #+#              #
-#    Updated: 2024/05/02 23:44:50 by toshi            ###   ########.fr        #
+#    Updated: 2024/05/03 12:22:05 by tozeki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror 
 
 ifeq ($(shell uname -s), Linux)
-    
+    RL_FLAGS	:=	-lreadline -lhistory
 else
 	RL_LIB_FLAG	:=	-L $(shell brew --prefix readline)/lib
 	RL_H_FLAG	:=	-I $(shell brew --prefix readline)/include
