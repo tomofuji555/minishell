@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_redir_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 20:56:07 by toshi             #+#    #+#             */
-/*   Updated: 2024/05/03 00:13:40 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/03 12:14:18 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 // 両端のスペーストークンをtrimしたいため、substrする前に位置を動かす
 static void	update_first_and_last(t_token **first, t_token **last)
 {
-	t_token *old_last;
-	t_token *ptr;
+	t_token	*old_last;
+	t_token	*ptr;
 
 	old_last = *last;
 	ptr = *first;
@@ -39,7 +39,7 @@ static void	update_first_and_last(t_token **first, t_token **last)
 static void	compress_space(t_token *ptr, t_token *last)
 {
 	t_token	*prev;
-	
+
 	prev = NULL;
 	while (ptr != last)
 	{
@@ -60,8 +60,8 @@ static void	compress_space(t_token *ptr, t_token *last)
 // lastまで全てスペーストークンだけの場合、trueを返す
 static t_bool	is_no_val(t_token *redir, t_token *last)
 {
-	t_token *ptr;
-	
+	t_token	*ptr;
+
 	ptr = redir->next;
 	while (ptr != last->next && ptr->kind == TKN_SPACE)
 		ptr = ptr->next;
@@ -78,7 +78,7 @@ static t_redir	*make_new_redir(t_token *redir, t_token *last)
 	new = (t_redir *)ft_xmalloc(sizeof(t_redir));
 	new->next = NULL;
 	new->kind = convert_redir_kind(redir);
-	if (is_no_val(redir, last)) 
+	if (is_no_val(redir, last))
 	{
 		new->val = ft_xstrdup("");
 		return (new);

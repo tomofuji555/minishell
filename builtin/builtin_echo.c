@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:45:02 by toshi             #+#    #+#             */
-/*   Updated: 2024/04/28 15:24:35 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/03 12:11:05 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	do_echo(char **cmd_args)
 		ft_putstr_fd(cmd_args[i], STDOUT_FILENO);
 		i++;
 		if (cmd_args[i] == NULL)
-			break;
+			break ;
 		ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	if (!opt_n_flag)

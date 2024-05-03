@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_wrap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:20:50 by toshi             #+#    #+#             */
-/*   Updated: 2024/05/02 22:19:18 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/03 12:13:15 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	remove_space_afrer_redir(t_token **tkn_head)
 	while (ptr != NULL)
 	{
 		target_prev = search_prev_token(*tkn_head, target);
-		if (target_prev && is_redir_tkn(target_prev->kind) && target->kind == TKN_SPACE)
+		if (target_prev && is_redir_tkn(target_prev->kind) \
+			&& target->kind == TKN_SPACE)
 			remove_token(tkn_head, target, target_prev);
 		target = ptr;
 		ptr = ptr->next;

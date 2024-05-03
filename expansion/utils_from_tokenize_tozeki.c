@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_from_tokenize_tozeki.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toshi <toshi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tozeki <tozeki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:16:20 by tozeki            #+#    #+#             */
-/*   Updated: 2024/05/03 00:16:08 by toshi            ###   ########.fr       */
+/*   Updated: 2024/05/03 12:12:39 by tozeki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ ssize_t	count_quote_last(char *first)
 static ssize_t	count_env_last(char *ptr)
 {
 	ssize_t	count;
-	
+
 	if (!(ft_isalpha(*ptr) || *ptr == '_'))
 		return (1);
 	count = 0;
